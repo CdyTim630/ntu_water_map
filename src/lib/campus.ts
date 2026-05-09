@@ -57,7 +57,8 @@ function parseGeoJSON() {
   const nodes: CampusNode[] = [];
   const edges: CampusEdge[] = [];
   for (const f of campusGeoJSON.features) {
-    const props = f.properties as NodeProps | EdgeProps;
+    // 先過 unknown 才能轉成不重疊的 union type — 否則 TS2352 在 prod build 會炸
+    const props = f.properties as unknown as NodeProps | EdgeProps;
     if (props.kind === 'node' && f.geometry.type === 'Point') {
       const [lng, lat] = f.geometry.coordinates;
       nodes.push({
