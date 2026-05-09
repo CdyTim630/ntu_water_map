@@ -9,7 +9,8 @@
     "lint": "next lint",
     "refresh-osm": "node scripts/refresh-campus-osm.mjs",
     "discover-osm": "node scripts/discover-osm-landmarks.mjs",
-    "build-paths": "node scripts/build-dense-graph.mjs"
+    "build-paths": "node scripts/build-dense-graph.mjs",
+    "refresh-water-stations": "node scripts/refresh-water-stations.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",

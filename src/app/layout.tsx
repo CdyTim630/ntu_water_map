@@ -45,6 +45,12 @@ export default function RootLayout({
                 雨天路徑
               </Link>
               <Link
+                href="/forecast"
+                className="rounded-lg px-3 py-1.5 text-slate-700 hover:bg-slate-100"
+              >
+                水災預警
+              </Link>
+              <Link
                 href="/dashboard"
                 className="rounded-lg px-3 py-1.5 text-slate-700 hover:bg-slate-100"
               >

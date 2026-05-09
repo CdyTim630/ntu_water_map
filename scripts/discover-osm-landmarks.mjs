@@ -76,6 +76,12 @@ const ANCHORS = {
 
   // 新生南路側門：OSM 沒有對應 named feature。保留手動。
   side_gate_xinsheng: null,
+
+  // 捷運公館站出口（railway=subway_entrance node），4 個正常出口；2 號電梯（node 8013101848）跟主出口太近，未列入避免 UI 雜訊
+  gongguan_exit_1: { type: 'node', id: 3055733035 }, // 1號出口 (水源市場)
+  gongguan_exit_2: { type: 'node', id: 3055733036 }, // 2號出口 (銘傳國小)
+  gongguan_exit_3: { type: 'node', id: 3055733037 }, // 3號出口 (臺灣大學) — 離校門口最近，標 primary
+  gongguan_exit_4: { type: 'node', id: 3055733038 }, // 4號出口 (三總汀州院區)
 };
 
 const DRY_RUN = process.argv.includes('--dry-run');

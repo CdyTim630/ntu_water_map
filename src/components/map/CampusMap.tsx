@@ -9,9 +9,10 @@ import {
 import { useEffect, useMemo } from 'react';
 import 'leaflet/dist/leaflet.css';
 import type { LatLngExpression } from 'leaflet';
-import type { Report } from '@/lib/types';
+import type { Report, WaterStation, WaterStationReportType } from '@/lib/types';
 import { getSeverityIcon } from './ReportMarker';
 import { ReportPopupContent } from './ReportPopup';
+import { WaterStationLayer } from './WaterStationLayer';
 
 const NTU_CENTER: LatLngExpression = [25.0173, 121.5397];
 const DEFAULT_ZOOM = 16;
@@ -22,6 +23,13 @@ interface Props {
   onConfirm: (id: string, type: 'still_exists' | 'resolved') => void;
   onOpenDetails: (report: Report) => void;
   busy?: boolean;
+  /** 飲水機資料（可選，傳了才會渲染 layer） */
+  waterStations?: WaterStation[];
+  showWaterStations?: boolean;
+  onWaterStationReport?: (id: string, type: WaterStationReportType) => void;
+  /** 地圖外部觸發 flyTo 用 */
+  flyToLat?: number | null;
+  flyToLng?: number | null;
 }
 
 function FocusController({
@@ -40,12 +48,32 @@ function FocusController({
   return null;
 }
 
+function ExternalFlyTo({
+  lat,
+  lng,
+}: {
+  lat?: number | null;
+  lng?: number | null;
+}) {
+  const map = useMap();
+  useEffect(() => {
+    if (typeof lat !== 'number' || typeof lng !== 'number') return;
+    map.flyTo([lat, lng], 18, { duration: 0.6 });
+  }, [lat, lng, map]);
+  return null;
+}
+
 export default function CampusMap({
   reports,
   focusReportId,
   onConfirm,
   onOpenDetails,
   busy,
+  waterStations,
+  showWaterStations,
+  onWaterStationReport,
+  flyToLat,
+  flyToLng,
 }: Props) {
   const items = useMemo(
     () =>
@@ -68,6 +96,14 @@ export default function CampusMap({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <FocusController reports={reports} focusReportId={focusReportId} />
+      <ExternalFlyTo lat={flyToLat} lng={flyToLng} />
+      {showWaterStations && waterStations?.length ? (
+        <WaterStationLayer
+          stations={waterStations}
+          onReport={onWaterStationReport}
+          busy={busy}
+        />
+      ) : null}
       {items.map(({ report, icon }) => (
         <Marker
           key={report.id}

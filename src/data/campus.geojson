@@ -445,6 +445,87 @@
     {
       "type": "Feature",
       "properties": {
+        "kind": "node",
+        "id": "gongguan_exit_1",
+        "name": "公館站 1 號出口",
+        "osmName": "1號出口 (水源市場)",
+        "osm": {
+          "type": "node",
+          "id": 3055733035
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.534212,
+          25.0145052
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "gongguan_exit_2",
+        "name": "公館站 2 號出口",
+        "osmName": "2號出口 (銘傳國小)",
+        "osm": {
+          "type": "node",
+          "id": 3055733036
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5348022,
+          25.0147043
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "gongguan_exit_3",
+        "name": "公館站 3 號出口（台大方向）",
+        "osmName": "3號出口 (臺灣大學)",
+        "osm": {
+          "type": "node",
+          "id": 3055733037
+        },
+        "primary": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5340979,
+          25.0153912
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "gongguan_exit_4",
+        "name": "公館站 4 號出口",
+        "osmName": "4號出口 (三總汀州院區)",
+        "osm": {
+          "type": "node",
+          "id": 3055733038
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5337267,
+          25.0151173
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "kind": "edge",
         "a": "main_gate",
         "b": "fu_bell",

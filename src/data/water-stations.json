@@ -1,0 +1,688 @@
+{
+  "comment": "NTU 校區飲水機 seed — OSM (amenity=drinking_water) + 北水處 OpenData (臺北市所屬直飲臺) 雙源融合。重跑：npm run refresh-water-stations",
+  "generatedAt": "2026-05-09T08:11:06.314Z",
+  "bbox": {
+    "minLat": 25.015,
+    "maxLat": 25.022,
+    "minLng": 121.535,
+    "maxLng": 121.542
+  },
+  "sources": {
+    "osm": "https://overpass-api.de/api/interpreter (amenity=drinking_water)",
+    "official": "data.taipei dataset 155999f2-3c5d-486b-af58-d7f4c0b0a4c9"
+  },
+  "counts": {
+    "osmKept": 25,
+    "officialKept": 1,
+    "mergedPairs": 0,
+    "total": 26
+  },
+  "stations": [
+    {
+      "id": "osm-6005615150",
+      "source": "osm",
+      "latitude": 25.021405,
+      "longitude": 121.5354194,
+      "kind": "fountain",
+      "name": "台大綜合體育館飲水機 1F",
+      "location_hint": "台大綜合體育館飲水機 · 1F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 6005615150,
+        "tags": {
+          "level": "1",
+          "indoor": "yes",
+          "description": "台大綜合體育館飲水機"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-4086120095",
+      "source": "osm",
+      "latitude": 25.0207899,
+      "longitude": 121.541948,
+      "kind": "hot_cold",
+      "name": "社科院一樓 1F",
+      "location_hint": "社科院一樓,廁所旁邊 · 1F · 戶外",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 4086120095,
+        "tags": {
+          "level": "1",
+          "indoor": "no",
+          "hot_water": "yes",
+          "description": "社科院一樓,廁所旁邊"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3426796835",
+      "source": "osm",
+      "latitude": 25.0198308,
+      "longitude": 121.5363429,
+      "kind": "fountain",
+      "name": "舊體育館 飲水機",
+      "location_hint": "舊體育館 附近 (20 m)",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3426796835,
+        "tags": {}
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3426796834",
+      "source": "osm",
+      "latitude": 25.0195918,
+      "longitude": 121.5363029,
+      "kind": "fountain",
+      "name": "舊體育館 飲水機",
+      "location_hint": "舊體育館 附近 (23 m)",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3426796834,
+        "tags": {}
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-8811218484",
+      "source": "osm",
+      "latitude": 25.0195527,
+      "longitude": 121.5418124,
+      "kind": "refill",
+      "name": "校園飲水機",
+      "location_hint": "辛亥路側門 附近 (105 m) · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 8811218484,
+        "tags": {
+          "indoor": "yes",
+          "bottle": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3450525699",
+      "source": "osm",
+      "latitude": 25.0186725,
+      "longitude": 121.5357919,
+      "kind": "fountain",
+      "name": "文學院 飲水機",
+      "location_hint": "文學院 附近 (78 m) · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3450525699,
+        "tags": {
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13697655722",
+      "source": "osm",
+      "latitude": 25.0184992,
+      "longitude": 121.5368639,
+      "kind": "fountain",
+      "name": "普通教學館 0F 飲水機",
+      "location_hint": "普通教學館 附近 (13 m) · 0F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13697655722,
+        "tags": {
+          "level": "0",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3686907629",
+      "source": "osm",
+      "latitude": 25.0184961,
+      "longitude": 121.5369767,
+      "kind": "fountain",
+      "name": "普通教學館 1F 飲水機",
+      "location_hint": "普通教學館 附近 (24 m) · 1F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3686907629,
+        "tags": {
+          "level": "1",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13697642680",
+      "source": "osm",
+      "latitude": 25.0184961,
+      "longitude": 121.5369767,
+      "kind": "fountain",
+      "name": "普通教學館 4F 飲水機",
+      "location_hint": "普通教學館 附近 (24 m) · 4F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13697642680,
+        "tags": {
+          "level": "4",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13697642686",
+      "source": "osm",
+      "latitude": 25.0184961,
+      "longitude": 121.5369767,
+      "kind": "fountain",
+      "name": "普通教學館 3F 飲水機",
+      "location_hint": "普通教學館 附近 (24 m) · 3F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13697642686,
+        "tags": {
+          "level": "3",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13697642692",
+      "source": "osm",
+      "latitude": 25.0184961,
+      "longitude": 121.5369767,
+      "kind": "fountain",
+      "name": "普通教學館 2F 飲水機",
+      "location_hint": "普通教學館 附近 (24 m) · 2F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13697642692,
+        "tags": {
+          "level": "2",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13697655721",
+      "source": "osm",
+      "latitude": 25.0184957,
+      "longitude": 121.5366652,
+      "kind": "fountain",
+      "name": "普通教學館 0F 飲水機",
+      "location_hint": "普通教學館 附近 (10 m) · 0F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13697655721,
+        "tags": {
+          "level": "0",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3686907630",
+      "source": "osm",
+      "latitude": 25.0184914,
+      "longitude": 121.536702,
+      "kind": "fountain",
+      "name": "普通教學館 飲水機",
+      "location_hint": "普通教學館 附近 (8 m) · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3686907630,
+        "tags": {
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13697642677",
+      "source": "osm",
+      "latitude": 25.018487,
+      "longitude": 121.5365132,
+      "kind": "fountain",
+      "name": "普通教學館 4F 飲水機",
+      "location_hint": "普通教學館 附近 (24 m) · 4F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13697642677,
+        "tags": {
+          "level": "4",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13697642683",
+      "source": "osm",
+      "latitude": 25.018487,
+      "longitude": 121.5365132,
+      "kind": "fountain",
+      "name": "普通教學館 3F 飲水機",
+      "location_hint": "普通教學館 附近 (24 m) · 3F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13697642683,
+        "tags": {
+          "level": "3",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13697642689",
+      "source": "osm",
+      "latitude": 25.018487,
+      "longitude": 121.5365132,
+      "kind": "fountain",
+      "name": "普通教學館 2F 飲水機",
+      "location_hint": "普通教學館 附近 (24 m) · 2F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13697642689,
+        "tags": {
+          "level": "2",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13697655705",
+      "source": "osm",
+      "latitude": 25.018487,
+      "longitude": 121.5365132,
+      "kind": "fountain",
+      "name": "普通教學館 1F 飲水機",
+      "location_hint": "普通教學館 附近 (24 m) · 1F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13697655705,
+        "tags": {
+          "level": "1",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "bwater-0468",
+      "source": "official",
+      "latitude": 25.018432,
+      "longitude": 121.533785,
+      "kind": "fountain",
+      "name": "台灣大學綜合體育場",
+      "location_hint": "台大新月台前人行道 · 臺北市大安區羅斯福路四段1號",
+      "external_url": "https://gismobile.water.gov.taipei:8443/W/S.aspx?SD=0468",
+      "official_status": "正常",
+      "official_status_at": "20260414T000000",
+      "last_water_test_at": "20260204T105600",
+      "photo_url": "https://gismobile.water.gov.taipei/WaterMap_drinkImg/0468.JPG",
+      "_bwater": {
+        "venue_id": "0468",
+        "coliform": "<1"
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13701724084",
+      "source": "osm",
+      "latitude": 25.0180987,
+      "longitude": 121.5401756,
+      "kind": "fountain",
+      "name": "第一學生活動中心 1F 飲水機",
+      "location_hint": "第一學生活動中心 附近 (11 m) · 1F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13701724084,
+        "tags": {
+          "level": "1",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-13701724332",
+      "source": "osm",
+      "latitude": 25.0179119,
+      "longitude": 121.5403566,
+      "kind": "fountain",
+      "name": "第一學生活動中心 0F 飲水機",
+      "location_hint": "第一學生活動中心 附近 (28 m) · 0F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 13701724332,
+        "tags": {
+          "level": "0",
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3842113211",
+      "source": "osm",
+      "latitude": 25.0178873,
+      "longitude": 121.5400086,
+      "kind": "refill",
+      "name": "台灣大學學生第一活動中心餐廳飲水機 0F",
+      "location_hint": "台灣大學學生第一活動中心餐廳飲水機 · 0F · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3842113211,
+        "tags": {
+          "level": "0",
+          "indoor": "yes",
+          "bottle": "yes",
+          "hot_water": "yes",
+          "cold_water": "yes",
+          "description": "台灣大學學生第一活動中心餐廳飲水機"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3686907626",
+      "source": "osm",
+      "latitude": 25.0174665,
+      "longitude": 121.5414104,
+      "kind": "fountain",
+      "name": "總圖書館 飲水機",
+      "location_hint": "總圖書館 附近 (48 m) · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3686907626,
+        "tags": {
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3686907627",
+      "source": "osm",
+      "latitude": 25.0172098,
+      "longitude": 121.5414104,
+      "kind": "fountain",
+      "name": "總圖書館 飲水機",
+      "location_hint": "總圖書館 附近 (60 m) · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3686907627,
+        "tags": {
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3686907638",
+      "source": "osm",
+      "latitude": 25.0168241,
+      "longitude": 121.5358732,
+      "kind": "fountain",
+      "name": "校園飲水機",
+      "location_hint": "傅鐘 附近 (97 m) · 室內",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3686907638,
+        "tags": {
+          "indoor": "yes"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-4347502397",
+      "source": "osm",
+      "latitude": 25.0162077,
+      "longitude": 121.5363529,
+      "kind": "fountain",
+      "name": "行政大樓 飲水機",
+      "location_hint": "行政大樓 附近 (48 m)",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 4347502397,
+        "tags": {}
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    },
+    {
+      "id": "osm-3426796836",
+      "source": "osm",
+      "latitude": 25.0158257,
+      "longitude": 121.5373781,
+      "kind": "refill",
+      "name": "共同教學館 飲水機",
+      "location_hint": "共同教學館 附近 (22 m)",
+      "external_url": null,
+      "official_status": null,
+      "official_status_at": null,
+      "last_water_test_at": null,
+      "photo_url": null,
+      "_osm": {
+        "node_id": 3426796836,
+        "tags": {
+          "brand": "賀眾",
+          "operator": "國立臺灣大學"
+        }
+      },
+      "status": "normal",
+      "busy_score": 0,
+      "last_reported_at": null,
+      "report_count": 0,
+      "bottles_saved": 0
+    }
+  ]
+}

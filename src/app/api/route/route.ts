@@ -9,6 +9,7 @@ import { dataApi } from '@/lib/supabase';
 import {
   fetchWeather,
   rainPenaltyFactor,
+  synthesizeMockSeries,
   type RainIntensity,
   type WeatherSnapshot,
 } from '@/lib/weather';
@@ -39,14 +40,24 @@ function applyMockRain(base: WeatherSnapshot, m: MockRain): WeatherSnapshot {
     heavy: { mm: 18, intensity: 'heavy', pop3h: 0.95, desc: '🌊 模擬：大雨' },
   };
   const pick = mapping[m];
-  return {
+  const next: WeatherSnapshot = {
     ...base,
     rainfall1h: pick.mm,
     isRaining: pick.mm > 0,
     rainIntensity: pick.intensity,
     pop3h: pick.pop3h,
     description: pick.desc,
+    // 重要：series 也要跟著改，不然 forecast.ts 拿到的是舊 weather 對應的序列
+    forecastSeries: synthesizeMockSeries({
+      ...base,
+      rainfall1h: pick.mm,
+      isRaining: pick.mm > 0,
+      rainIntensity: pick.intensity,
+      pop3h: pick.pop3h,
+      description: pick.desc,
+    }),
   };
+  return next;
 }
 
 export async function POST(req: NextRequest) {

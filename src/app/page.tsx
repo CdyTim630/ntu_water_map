@@ -9,11 +9,16 @@ import { ReportCard } from '@/components/reports/ReportCard';
 import { ReportForm } from '@/components/reports/ReportForm';
 import { ReportDetailModal } from '@/components/reports/ReportDetailModal';
 import { RiskRanking } from '@/components/dashboard/RiskRanking';
+import { NearbyFountainsCard } from '@/components/water/NearbyFountainsCard';
+import { TodayCommuteCard } from '@/components/commute/TodayCommuteCard';
+import { AddCommuteRouteModal } from '@/components/commute/AddCommuteRouteModal';
 import { buildRiskRanking } from '@/lib/risk';
 import type {
   Report,
   ReportFilterState,
   RiskRankingEntry,
+  WaterStation,
+  WaterStationReportType,
 } from '@/lib/types';
 
 const CampusMap = dynamic(() => import('@/components/map/CampusMap'), {
@@ -43,6 +48,16 @@ export default function HomePage() {
   const [busy, setBusy] = useState(false);
   const [focusReportId, setFocusReportId] = useState<string | null>(null);
 
+  // 飲水機 layer state
+  const [waterStations, setWaterStations] = useState<WaterStation[]>([]);
+  const [showWaterStations, setShowWaterStations] = useState(true);
+  const [mapFlyTo, setMapFlyTo] = useState<{ lat: number; lng: number } | null>(
+    null,
+  );
+
+  // 通勤路線 modal
+  const [addRouteOpen, setAddRouteOpen] = useState(false);
+
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -58,9 +73,48 @@ export default function HomePage() {
     }
   }, []);
 
+  const loadWaterStations = useCallback(async () => {
+    try {
+      const res = await fetch('/api/water-stations', { cache: 'no-store' });
+      if (!res.ok) return;
+      const data = (await res.json()) as { stations: WaterStation[] };
+      setWaterStations(data.stations);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const handleWaterStationReport = useCallback(
+    async (id: string, type: WaterStationReportType) => {
+      setBusy(true);
+      try {
+        const res = await fetch(`/api/water-stations/${id}/report`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ type }),
+        });
+        if (!res.ok) throw new Error('回報失敗');
+        const data = (await res.json()) as { station: WaterStation };
+        setWaterStations((arr) =>
+          arr.map((s) => (s.id === data.station.id ? data.station : s)),
+        );
+      } catch (e) {
+        alert(e instanceof Error ? e.message : '回報失敗');
+      } finally {
+        setBusy(false);
+      }
+    },
+    [],
+  );
+
+  const handleLocateFountain = useCallback((s: WaterStation) => {
+    setMapFlyTo({ lat: s.latitude, lng: s.longitude });
+  }, []);
+
   useEffect(() => {
     load();
-  }, [load]);
+    loadWaterStations();
+  }, [load, loadWaterStations]);
 
   const filtered = useMemo(() => {
     return reports.filter((r) => {
@@ -131,6 +185,20 @@ export default function HomePage() {
         filtered={filtered.length}
       />
 
+      {/* 圖層切換：水資源回報固定顯示，飲水機可切換 */}
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <span className="text-[11px] font-medium text-slate-500">地圖圖層</span>
+        <label className="flex cursor-pointer items-center gap-1 rounded-full bg-sky-50 px-2 py-1 text-[11px] text-sky-800 ring-1 ring-sky-200">
+          <input
+            type="checkbox"
+            checked={showWaterStations}
+            onChange={(e) => setShowWaterStations(e.target.checked)}
+            className="h-3 w-3 rounded border-sky-300 text-sky-600"
+          />
+          💧 飲水機 ({waterStations.length})
+        </label>
+      </div>
+
       <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-[1fr_360px]">
         {/* 地圖 */}
         <Card className="overflow-hidden p-0">
@@ -153,6 +221,11 @@ export default function HomePage() {
                 onConfirm={handleConfirm}
                 onOpenDetails={setDetail}
                 busy={busy}
+                waterStations={waterStations}
+                showWaterStations={showWaterStations}
+                onWaterStationReport={handleWaterStationReport}
+                flyToLat={mapFlyTo?.lat ?? null}
+                flyToLng={mapFlyTo?.lng ?? null}
               />
             )}
           </div>
@@ -160,6 +233,14 @@ export default function HomePage() {
 
         {/* 側欄 */}
         <div className="flex flex-col gap-3">
+          <TodayCommuteCard onAddRoute={() => setAddRouteOpen(true)} />
+
+          <NearbyFountainsCard
+            stations={waterStations}
+            onLocate={handleLocateFountain}
+            onRefill={(s) => handleWaterStationReport(s.id, 'refill')}
+          />
+
           <RiskRanking
             ranking={ranking}
             compact
@@ -217,6 +298,11 @@ export default function HomePage() {
         onClose={() => setDetail(null)}
         onConfirm={handleConfirm}
         busy={busy}
+      />
+
+      <AddCommuteRouteModal
+        open={addRouteOpen}
+        onClose={() => setAddRouteOpen(false)}
       />
     </div>
   );

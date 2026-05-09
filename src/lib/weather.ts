@@ -34,6 +34,22 @@ export interface WeatherSnapshot {
   pop3h: number;
   /** 文字描述（晴、多雲、短暫雨…） */
   description: string;
+  /** 多時段預報序列（CWA F-D0047-061 PoP6h × Wx 合成；mock 也會產一份簡化版） */
+  forecastSeries: ForecastSlot[];
+}
+
+/** 一段時間視窗的預報，給 forecast.ts 做 1h/3h/6h horizon 對齊 */
+export interface ForecastSlot {
+  /** ISO8601 — slot 開始時間 */
+  startTime: string;
+  /** ISO8601 — slot 結束時間 */
+  endTime: string;
+  /** 0~1 降雨機率（PoP）；CWA PoP6h 套用整個 6 小時視窗 */
+  pop: number;
+  /** Wx 文字（如「陰短暫陣雨」），mock 模式也會給一個 */
+  wx: string | null;
+  /** 由 Wx 推得的雨勢強度提示，給 horizon 計算用 */
+  intensityHint: RainIntensity;
 }
 
 const TAIPEI_CITY = '臺北市';
@@ -78,7 +94,7 @@ function mockWeather(): WeatherSnapshot {
   const day = new Date();
   const seed = day.getDate() + day.getMonth();
   const cycle = seed % 5;
-  const mocks: WeatherSnapshot[] = [
+  const baseList: Omit<WeatherSnapshot, 'forecastSeries'>[] = [
     {
       source: 'mock',
       observedAt: day.toISOString(),
@@ -135,7 +151,49 @@ function mockWeather(): WeatherSnapshot {
       description: '大雨特報',
     },
   ];
-  return mocks[cycle];
+  const base = baseList[cycle];
+  return { ...base, forecastSeries: synthesizeMockSeries(base) };
+}
+
+/**
+ * Mock 模式生成簡化版 forecast series：
+ * 取當下 weather 為 0–3h，3–6h 機率略衰減（模擬「不確定性增加」），
+ * 6–9h 進一步衰減；雨勢分類維持當下推估。
+ *
+ * 真實 CWA 路徑會 override 這個（fetchCWAForecastSeries 回傳完整 24h 序列）。
+ *
+ * Exported 給 applyMockRain 用：mockRain override 時要同步重生 series，
+ * 否則 forecast.ts 會吃到舊 weather 對應的 series，跟新雨勢不一致。
+ */
+export function synthesizeMockSeries(
+  base: Omit<WeatherSnapshot, 'forecastSeries'>,
+): ForecastSlot[] {
+  const start = new Date();
+  const isoOff = (h: number) =>
+    new Date(start.getTime() + h * 3600 * 1000).toISOString();
+  return [
+    {
+      startTime: isoOff(0),
+      endTime: isoOff(3),
+      pop: base.pop3h,
+      wx: base.description || null,
+      intensityHint: base.rainIntensity,
+    },
+    {
+      startTime: isoOff(3),
+      endTime: isoOff(6),
+      pop: Math.max(0, base.pop3h * 0.85),
+      wx: base.description || null,
+      intensityHint: base.rainIntensity,
+    },
+    {
+      startTime: isoOff(6),
+      endTime: isoOff(9),
+      pop: Math.max(0, base.pop3h * 0.7 + 0.05),
+      wx: base.description || null,
+      intensityHint: base.rainIntensity,
+    },
+  ];
 }
 
 interface CWAObservationResponse {
@@ -149,24 +207,6 @@ interface CWAObservationResponse {
         RelativeHumidity?: number;
         Weather?: string;
       };
-    }[];
-  };
-}
-
-interface CWAForecastResponse {
-  records?: {
-    locations?: {
-      location?: {
-        locationName?: string;
-        weatherElement?: {
-          elementName?: string;
-          time?: {
-            startTime?: string;
-            endTime?: string;
-            elementValue?: { value?: string }[];
-          }[];
-        }[];
-      }[];
     }[];
   };
 }
@@ -202,26 +242,138 @@ async function fetchCWAObservation(
   };
 }
 
-async function fetchCWAForecast(apiKey: string): Promise<Partial<WeatherSnapshot>> {
+/**
+ * 把 CWA Wx 文字（如「陰短暫陣雨」「午後短暫雷陣雨」「大雨」）粗略對應到 RainIntensity。
+ * 順序：先嚴重 → 後輕；只要碰到關鍵字就回傳。
+ */
+function wxToIntensity(wx: string | null | undefined): RainIntensity {
+  if (!wx) return 'none';
+  if (wx.includes('豪雨')) return 'heavy'; // 豪雨 / 大豪雨 / 超大豪雨
+  if (wx.includes('大雨')) return 'heavy'; // CWA 定義 80mm/24h
+  if (wx.includes('雷')) return 'moderate'; // 雷雨 / 雷陣雨
+  if (wx.includes('陣雨')) return 'moderate';
+  if (wx.includes('毛毛雨')) return 'drizzle';
+  if (wx.includes('短暫雨')) return 'light';
+  if (wx.includes('雨')) return 'light'; // 兜底
+  return 'none';
+}
+
+interface CWATimeEntry {
+  startTime?: string;
+  endTime?: string;
+  /** 部分 element 用 dataTime（瞬間時刻），但 PoP6h / Wx 都是 startTime/endTime */
+  dataTime?: string;
+  elementValue?: { value?: string }[];
+}
+
+interface CWAWeatherElement {
+  elementName?: string;
+  time?: CWATimeEntry[];
+}
+
+interface CWALocationFull {
+  locationName?: string;
+  weatherElement?: CWAWeatherElement[];
+}
+
+/**
+ * 抓 CWA F-D0047-061 完整序列：PoP6h（4 個 6h slot）× Wx（8 個 3h slot），merge 成 8 段。
+ *
+ * Returns: 0~24h 內、每 3h 一段的 ForecastSlot[]，依時間排序。
+ * pop 值由 PoP6h 對應到該 3h slot 的母窗（同一個 6h 母窗的兩段 3h 子窗共用同一個 pop）。
+ */
+async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
   const url = new URL(`${CWA_BASE}/F-D0047-061`);
   url.searchParams.set('Authorization', apiKey);
   url.searchParams.set('LocationName', TAIPEI_TOWN);
+  url.searchParams.set(
+    'ElementName',
+    ['天氣現象', '6小時降雨機率', '12小時降雨機率'].join(','),
+  );
   url.searchParams.set('format', 'JSON');
   const res = await fetch(url, { next: { revalidate: 600 } });
   if (!res.ok) throw new Error(`CWA forecast HTTP ${res.status}`);
-  const data = (await res.json()) as CWAForecastResponse;
-  const locs = data.records?.locations?.[0]?.location ?? [];
-  const target = locs.find((l) => l.locationName === TAIPEI_TOWN) ?? locs[0];
-  if (!target) return {};
-  const els = target.weatherElement ?? [];
-  const pop = els.find((e) => e.elementName === 'PoP6h' || e.elementName === 'PoP12h');
-  const wx = els.find((e) => e.elementName === 'Wx');
-  const popValueRaw = pop?.time?.[0]?.elementValue?.[0]?.value ?? '0';
-  const popPercent = Number.parseFloat(popValueRaw);
-  return {
-    pop3h: Number.isFinite(popPercent) ? popPercent / 100 : 0,
-    description: wx?.time?.[0]?.elementValue?.[0]?.value ?? undefined,
+  const data = (await res.json()) as {
+    records?: { Locations?: { Location?: CWALocationFull[] }[]; locations?: { location?: CWALocationFull[] }[] };
   };
+  // CWA 在 2024 把 records 改用首字大寫（Locations / Location），但部分 dataset 仍混用，雙路徑並讀
+  const locs =
+    data.records?.Locations?.[0]?.Location ??
+    data.records?.locations?.[0]?.location ??
+    [];
+  const target =
+    locs.find((l) => l.locationName === TAIPEI_TOWN) ?? locs[0];
+  if (!target) return [];
+  const els = target.weatherElement ?? [];
+
+  const wxEl = els.find(
+    (e) => e.elementName === 'Wx' || e.elementName === '天氣現象',
+  );
+  const pop6El = els.find(
+    (e) => e.elementName === 'PoP6h' || e.elementName === '6小時降雨機率',
+  );
+  const pop12El = els.find(
+    (e) => e.elementName === 'PoP12h' || e.elementName === '12小時降雨機率',
+  );
+
+  const wxSlots = (wxEl?.time ?? []).filter(
+    (t): t is Required<Pick<CWATimeEntry, 'startTime' | 'endTime'>> & CWATimeEntry =>
+      Boolean(t.startTime && t.endTime),
+  );
+  if (!wxSlots.length) return [];
+
+  // 把 PoP6h（或 12h fallback）的時間區間做成 [start..end, percent] 列表
+  type PopWindow = { start: number; end: number; pop: number };
+  const popWindows: PopWindow[] = [];
+  const addPopWindows = (el?: CWAWeatherElement) => {
+    if (!el?.time) return;
+    for (const t of el.time) {
+      if (!t.startTime || !t.endTime) continue;
+      const raw = t.elementValue?.[0]?.value;
+      const pct = raw ? Number.parseFloat(raw) : NaN;
+      if (!Number.isFinite(pct)) continue;
+      popWindows.push({
+        start: new Date(t.startTime).getTime(),
+        end: new Date(t.endTime).getTime(),
+        pop: Math.max(0, Math.min(1, pct / 100)),
+      });
+    }
+  };
+  addPopWindows(pop6El);
+  if (!popWindows.length) addPopWindows(pop12El); // 沒 6h 才退而求其次
+
+  function findPopForSlot(s: number, e: number): number {
+    // 該 slot 落在哪個 PoP 窗：取重疊時間最長的那個
+    let best: PopWindow | null = null;
+    let bestOverlap = 0;
+    for (const w of popWindows) {
+      const overlap = Math.max(0, Math.min(w.end, e) - Math.max(w.start, s));
+      if (overlap > bestOverlap) {
+        bestOverlap = overlap;
+        best = w;
+      }
+    }
+    return best?.pop ?? 0;
+  }
+
+  return wxSlots
+    .map((t) => {
+      const wx = t.elementValue?.[0]?.value ?? null;
+      const startMs = new Date(t.startTime).getTime();
+      const endMs = new Date(t.endTime).getTime();
+      return {
+        startTime: t.startTime,
+        endTime: t.endTime,
+        pop: findPopForSlot(startMs, endMs),
+        wx,
+        intensityHint: wxToIntensity(wx),
+      } satisfies ForecastSlot;
+    })
+    // 排序時間升冪
+    .sort(
+      (a, b) =>
+        new Date(a.startTime).getTime() - new Date(b.startTime).getTime(),
+    );
 }
 
 export async function fetchWeather(): Promise<WeatherSnapshot> {
@@ -230,12 +382,17 @@ export async function fetchWeather(): Promise<WeatherSnapshot> {
     return mockWeather();
   }
   try {
-    const [obs, fc] = await Promise.all([
-      fetchCWAObservation(apiKey).catch(() => ({})),
-      fetchCWAForecast(apiKey).catch(() => ({})),
+    const [obs, series] = await Promise.all([
+      fetchCWAObservation(apiKey).catch(() => ({} as Partial<WeatherSnapshot>)),
+      fetchCWAForecastSeries(apiKey).catch(() => [] as ForecastSlot[]),
     ]);
     const rainfall1h = obs.rainfall1h ?? null;
     const intensity = classifyIntensity(rainfall1h);
+    // pop3h 取 series 第一段（0–3h）的 pop；沒 series 退到 0
+    const firstSlot = series[0];
+    const pop3h = firstSlot ? firstSlot.pop : 0;
+    // description 優先用即時觀測 → 第一段 forecast Wx
+    const description = obs.description || firstSlot?.wx || '';
     return {
       source: 'cwa',
       observedAt: obs.observedAt ?? new Date().toISOString(),
@@ -244,8 +401,9 @@ export async function fetchWeather(): Promise<WeatherSnapshot> {
       rainfall1h,
       isRaining: rainfall1h !== null && rainfall1h > 0,
       rainIntensity: intensity,
-      pop3h: fc.pop3h ?? 0,
-      description: fc.description ?? obs.description ?? '',
+      pop3h,
+      description,
+      forecastSeries: series,
     };
   } catch {
     return mockWeather();
