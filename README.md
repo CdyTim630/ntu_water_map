@@ -102,6 +102,31 @@ npm run dev
 3. 重啟 dev server。`/route` 頁面右上角的氣象徽章會顯示 `CWA 即時`；沒設則顯示 `Mock 模擬`。
 4. 取得的資料 server-side 由 `/api/weather` 代理，金鑰不會暴露在 client。
 
+## 部署到 Vercel
+
+> 本專案 10 個 API route 全部需要 Node.js runtime，**不能** 用 GitHub Pages 之類純靜態託管。Vercel 是 Next.js 親兒子，hobby tier 免費就能跑。
+
+```bash
+# 1. 把本地 commit push 到 GitHub
+git add . && git commit -m "feat: deployment ready"
+git push -u origin main
+```
+
+```
+2. 到 https://vercel.com 用 GitHub 帳號登入 → Import Project → 選你的 repo
+3. 在 Settings → Environment Variables 加：
+     NEXT_PUBLIC_USE_MOCK = true              # 必填，沒接 Supabase 時用 mock
+     ADMIN_PASSWORD       = <你想要的密碼>     # 必填，admin 後台用
+     CWA_API_KEY          = <CWA 金鑰>         # 選填，有的話氣象資料即時
+4. 點 Deploy，等 1–2 分鐘給你一個 xxx.vercel.app
+```
+
+部署設定已寫死在 [vercel.json](vercel.json)：
+- `regions: ["hnd1"]` — Tokyo，離台灣最近
+- `/api/route` 與 `/api/forecast` 給 30s timeout（要載 3MB GeoJSON + Dijkstra）
+
+> ⚠️ Demo 注意：mock 模式下使用者回報（飲水機、淹水）存在 in-memory store，serverless cold start 會重置。要長期上線需接 Supabase。
+
 ## 專案結構
 
 ```
