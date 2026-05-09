@@ -1,0 +1,1155 @@
+{
+  "type": "FeatureCollection",
+  "name": "ntu-campus-paths",
+  "description": "NTU Water Risk Map 校園防雨路網。座標多數取自 OpenStreetMap (Overpass API)，以 properties.osm 記錄來源；可用 scripts/refresh-campus-osm.mjs 重新拉取。",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "main_gate",
+        "name": "校門口",
+        "primary": true,
+        "osmName": "台大正門",
+        "osm": {
+          "type": "relation",
+          "id": 2589022
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5338421,
+          25.0169224
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "fu_bell",
+        "name": "傅鐘",
+        "osmName": "傅鐘",
+        "osm": {
+          "type": "node",
+          "id": 472493077
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.536774,
+          25.0171283
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "admin",
+        "name": "行政大樓",
+        "primary": true,
+        "osm": {
+          "type": "relation",
+          "id": 2589021
+        },
+        "osmName": "行政大樓"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5367871,
+          25.0160401
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "history_hall",
+        "name": "校史館",
+        "osmName": "台大校史館",
+        "osm": {
+          "type": "node",
+          "id": 1707866520
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5353367,
+          25.0177677
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "liberal_arts",
+        "name": "文學院",
+        "osm": {
+          "type": "way",
+          "id": 191354839
+        },
+        "osmName": "文學院研究大樓"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5361396,
+          25.0180508
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "common_teach",
+        "name": "共同教學館",
+        "primary": true,
+        "osm": {
+          "type": "way",
+          "id": 191350727
+        },
+        "osmName": "共同教學館"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5375925,
+          25.01579
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "general_teach",
+        "name": "普通教學館",
+        "osm": {
+          "type": "way",
+          "id": 1303517415
+        },
+        "osmName": "普通教學館"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5367434,
+          25.0185476
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "main_library",
+        "name": "總圖書館",
+        "primary": true,
+        "osm": {
+          "type": "relation",
+          "id": 14045849
+        },
+        "osmName": "總圖書館"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5409457,
+          25.017549
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "student_center",
+        "name": "第一學生活動中心",
+        "primary": true,
+        "osmName": "第一學生活動中心",
+        "osm": {
+          "type": "relation",
+          "id": 14045855
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5401105,
+          25.0180245
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "second_student_center",
+        "name": "第二學生活動中心",
+        "osm": {
+          "type": "way",
+          "id": 454017681
+        },
+        "osmName": "第二學生活動中心"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5366082,
+          25.0129364
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "lu_ming",
+        "name": "鹿鳴堂",
+        "osm": {
+          "type": "way",
+          "id": 191358135
+        },
+        "osmName": "鹿鳴堂"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5376058,
+          25.0151093
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "old_gym",
+        "name": "舊體育館",
+        "osmName": "臺大體育館",
+        "osm": {
+          "type": "way",
+          "id": 1052252308
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5364886,
+          25.0197099
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "new_gym",
+        "name": "綜合體育館",
+        "osm": {
+          "type": "way",
+          "id": 39240218
+        },
+        "osmName": "綜合體育館"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5351748,
+          25.0216083
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "engineering",
+        "name": "工學院綜合大樓",
+        "primary": true,
+        "osmName": "臺大工綜館南側",
+        "osm": {
+          "type": "node",
+          "id": 8256951659
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.54059,
+          25.01857
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "civil_eng",
+        "name": "土木系館",
+        "osm": {
+          "type": "way",
+          "id": 191350725
+        },
+        "osmName": "土木系館"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5383099,
+          25.0178672
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "science",
+        "name": "生命科學大樓",
+        "osm": {
+          "type": "way",
+          "id": 191350734
+        },
+        "osmName": "生命科學大樓"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5387313,
+          25.0154153
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "social_science",
+        "name": "社科院",
+        "primary": true,
+        "osm": {
+          "type": "way",
+          "id": 158624113
+        },
+        "osmName": "社會科學院大樓"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5423076,
+          25.020759
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "drunk_moon_lake",
+        "name": "醉月湖",
+        "osm": {
+          "type": "relation",
+          "id": 206483
+        },
+        "osmName": "醉月湖"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5376081,
+          25.020174
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "small_palm",
+        "name": "小椰林道",
+        "osmName": "小椰林道",
+        "osm": {
+          "type": "way",
+          "id": 1320960190
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5389698,
+          25.0178279
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "palm_avenue_mid",
+        "name": "椰林大道(中段)",
+        "osmName": "椰林大道",
+        "osm": {
+          "type": "way",
+          "id": 1320961818
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5378173,
+          25.0173032
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "side_gate_xinhai",
+        "name": "辛亥路側門",
+        "primary": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.54285,
+          25.0195
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "node",
+        "id": "side_gate_xinsheng",
+        "name": "新生南路側門",
+        "primary": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.53531,
+          25.01294
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "main_gate",
+        "b": "fu_bell",
+        "covered": 0.05,
+        "lowLying": 0.1,
+        "bikeAllowed": true,
+        "via": "椰林大道入口"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5338421,
+            25.0169224
+          ],
+          [
+            121.536774,
+            25.0171283
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "fu_bell",
+        "b": "palm_avenue_mid",
+        "covered": 0.1,
+        "lowLying": 0.15,
+        "bikeAllowed": true,
+        "via": "椰林大道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.536774,
+            25.0171283
+          ],
+          [
+            121.5378173,
+            25.0173032
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "palm_avenue_mid",
+        "b": "liberal_arts",
+        "covered": 0.1,
+        "lowLying": 0.2,
+        "bikeAllowed": true,
+        "via": "椰林大道 ↔ 文學院"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5378173,
+            25.0173032
+          ],
+          [
+            121.5361396,
+            25.0180508
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "fu_bell",
+        "b": "history_hall",
+        "covered": 0.4,
+        "lowLying": 0.1,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.536774,
+            25.0171283
+          ],
+          [
+            121.5353367,
+            25.0177677
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "history_hall",
+        "b": "admin",
+        "covered": 0.7,
+        "lowLying": 0.05,
+        "bikeAllowed": false,
+        "via": "行政大樓迴廊"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5353367,
+            25.0177677
+          ],
+          [
+            121.5367871,
+            25.0160401
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "admin",
+        "b": "general_teach",
+        "covered": 0.55,
+        "lowLying": 0.2,
+        "bikeAllowed": true,
+        "via": "行政大樓 ↔ 普教 騎樓"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5367871,
+            25.0160401
+          ],
+          [
+            121.5367434,
+            25.0185476
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "general_teach",
+        "b": "common_teach",
+        "covered": 0.85,
+        "lowLying": 0.1,
+        "bikeAllowed": false,
+        "via": "普教 ↔ 共教 室內走廊"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5367434,
+            25.0185476
+          ],
+          [
+            121.5375925,
+            25.01579
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "common_teach",
+        "b": "palm_avenue_mid",
+        "covered": 0.2,
+        "lowLying": 0.4,
+        "bikeAllowed": true,
+        "via": "共教 → 椰林大道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5375925,
+            25.01579
+          ],
+          [
+            121.5378173,
+            25.0173032
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "common_teach",
+        "b": "student_center",
+        "covered": 0.95,
+        "lowLying": 0.05,
+        "bikeAllowed": false,
+        "via": "穿越第一學生活動中心"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5375925,
+            25.01579
+          ],
+          [
+            121.5401105,
+            25.0180245
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "student_center",
+        "b": "lu_ming",
+        "covered": 0.6,
+        "lowLying": 0.1,
+        "bikeAllowed": true,
+        "via": "活大 ↔ 鹿鳴堂 連接走道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5401105,
+            25.0180245
+          ],
+          [
+            121.5376058,
+            25.0151093
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "student_center",
+        "b": "second_student_center",
+        "covered": 0.5,
+        "lowLying": 0.15,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5401105,
+            25.0180245
+          ],
+          [
+            121.5366082,
+            25.0129364
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "second_student_center",
+        "b": "lu_ming",
+        "covered": 0.55,
+        "lowLying": 0.1,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5366082,
+            25.0129364
+          ],
+          [
+            121.5376058,
+            25.0151093
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "second_student_center",
+        "b": "side_gate_xinsheng",
+        "covered": 0.15,
+        "lowLying": 0.25,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5366082,
+            25.0129364
+          ],
+          [
+            121.53531,
+            25.01294
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "liberal_arts",
+        "b": "science",
+        "covered": 0.2,
+        "lowLying": 0.3,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5361396,
+            25.0180508
+          ],
+          [
+            121.5387313,
+            25.0154153
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "science",
+        "b": "civil_eng",
+        "covered": 0.25,
+        "lowLying": 0.25,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5387313,
+            25.0154153
+          ],
+          [
+            121.5383099,
+            25.0178672
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "civil_eng",
+        "b": "engineering",
+        "covered": 0.8,
+        "lowLying": 0.1,
+        "bikeAllowed": false,
+        "via": "土研 ↔ 工綜 室內動線"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5383099,
+            25.0178672
+          ],
+          [
+            121.54059,
+            25.01857
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "engineering",
+        "b": "social_science",
+        "covered": 0.15,
+        "lowLying": 0.25,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.54059,
+            25.01857
+          ],
+          [
+            121.5423076,
+            25.020759
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "engineering",
+        "b": "side_gate_xinhai",
+        "covered": 0.1,
+        "lowLying": 0.3,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.54059,
+            25.01857
+          ],
+          [
+            121.54285,
+            25.0195
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "social_science",
+        "b": "side_gate_xinhai",
+        "covered": 0.1,
+        "lowLying": 0.2,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5423076,
+            25.020759
+          ],
+          [
+            121.54285,
+            25.0195
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "science",
+        "b": "small_palm",
+        "covered": 0.05,
+        "lowLying": 0.85,
+        "bikeAllowed": true,
+        "via": "小椰林道（雨天易積水）"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5387313,
+            25.0154153
+          ],
+          [
+            121.5389698,
+            25.0178279
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "small_palm",
+        "b": "drunk_moon_lake",
+        "covered": 0.05,
+        "lowLying": 0.9,
+        "bikeAllowed": true,
+        "via": "通往醉月湖步道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5389698,
+            25.0178279
+          ],
+          [
+            121.5376081,
+            25.020174
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "drunk_moon_lake",
+        "b": "social_science",
+        "covered": 0.05,
+        "lowLying": 0.7,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5376081,
+            25.020174
+          ],
+          [
+            121.5423076,
+            25.020759
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "drunk_moon_lake",
+        "b": "palm_avenue_mid",
+        "covered": 0.05,
+        "lowLying": 0.55,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5376081,
+            25.020174
+          ],
+          [
+            121.5378173,
+            25.0173032
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "main_library",
+        "b": "fu_bell",
+        "covered": 0.1,
+        "lowLying": 0.3,
+        "bikeAllowed": true,
+        "via": "椰林大道（圖書館 ↔ 傅鐘）"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5409457,
+            25.017549
+          ],
+          [
+            121.536774,
+            25.0171283
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "main_library",
+        "b": "student_center",
+        "covered": 0.3,
+        "lowLying": 0.15,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5409457,
+            25.017549
+          ],
+          [
+            121.5401105,
+            25.0180245
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "main_library",
+        "b": "engineering",
+        "covered": 0.2,
+        "lowLying": 0.2,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5409457,
+            25.017549
+          ],
+          [
+            121.54059,
+            25.01857
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "old_gym",
+        "b": "history_hall",
+        "covered": 0.2,
+        "lowLying": 0.15,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5364886,
+            25.0197099
+          ],
+          [
+            121.5353367,
+            25.0177677
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "old_gym",
+        "b": "new_gym",
+        "covered": 0.2,
+        "lowLying": 0.15,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5364886,
+            25.0197099
+          ],
+          [
+            121.5351748,
+            25.0216083
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "edge",
+        "a": "new_gym",
+        "b": "liberal_arts",
+        "covered": 0.1,
+        "lowLying": 0.2,
+        "bikeAllowed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            121.5351748,
+            25.0216083
+          ],
+          [
+            121.5361396,
+            25.0180508
+          ]
+        ]
+      }
+    }
+  ]
+}

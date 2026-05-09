@@ -1,0 +1,626 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-05-08T13:03:59Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 6183250,
+  "bounds": {
+    "minlat": 25.0168597,
+    "minlon": 121.5333584,
+    "maxlat": 25.0169482,
+    "maxlon": 121.5337558
+  },
+  "nodes": [
+    738258959,
+    2179826563,
+    2179826588,
+    2179826580,
+    3873376196,
+    12248653644,
+    2179826562
+  ],
+  "geometry": [
+    { "lat": 25.0169482, "lon": 121.5337558 },
+    { "lat": 25.0168832, "lon": 121.5336882 },
+    { "lat": 25.0168597, "lon": 121.5336387 },
+    { "lat": 25.0168602, "lon": 121.5335843 },
+    { "lat": 25.0168874, "lon": 121.5334938 },
+    { "lat": 25.0169075, "lon": 121.5334200 },
+    { "lat": 25.0168931, "lon": 121.5333584 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "tertiary_link",
+    "motor_vehicle": "permissive",
+    "name": "椰林大道",
+    "name:en": "Royal Palm Boulevard",
+    "name:nan": "Iâ-nâ Tōa-tō",
+    "name:nan-Hant": "椰林大道",
+    "name:nan-Latn-pehoeji": "Iâ-nâ Tōa-tō",
+    "name:nan-Latn-tailo": "Iâ-nâ Tuā-tô",
+    "name:zh": "椰林大道",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 29235719,
+  "bounds": {
+    "minlat": 25.0162526,
+    "minlon": 121.5395465,
+    "maxlat": 25.0186634,
+    "maxlon": 121.5455828
+  },
+  "nodes": [
+    321562776,
+    13626299228,
+    3144916745,
+    13626299204,
+    12252667500,
+    3144916744,
+    3686907631,
+    13626299206,
+    12252667536,
+    3686907634,
+    13581584289,
+    13581584292,
+    321562775,
+    13581588726,
+    3502884073,
+    3039162597,
+    6969448137,
+    3039162596,
+    3039162594,
+    13581601931,
+    6969448139,
+    6969448140,
+    9670673765,
+    13629450286,
+    9670452747,
+    6969448142,
+    5284489840,
+    9670451176,
+    321565333,
+    13666928236,
+    6969448143,
+    3039162612,
+    3039162602
+  ],
+  "geometry": [
+    { "lat": 25.0186634, "lon": 121.5455828 },
+    { "lat": 25.0185717, "lon": 121.5453649 },
+    { "lat": 25.0184841, "lon": 121.5451566 },
+    { "lat": 25.0183811, "lon": 121.5449002 },
+    { "lat": 25.0183009, "lon": 121.5447006 },
+    { "lat": 25.0181563, "lon": 121.5443412 },
+    { "lat": 25.0179959, "lon": 121.5439487 },
+    { "lat": 25.0179526, "lon": 121.5438354 },
+    { "lat": 25.0179352, "lon": 121.5437900 },
+    { "lat": 25.0178737, "lon": 121.5436290 },
+    { "lat": 25.0178385, "lon": 121.5435455 },
+    { "lat": 25.0178308, "lon": 121.5435268 },
+    { "lat": 25.0178119, "lon": 121.5434822 },
+    { "lat": 25.0177986, "lon": 121.5434555 },
+    { "lat": 25.0177306, "lon": 121.5433190 },
+    { "lat": 25.0176811, "lon": 121.5432196 },
+    { "lat": 25.0176241, "lon": 121.5431052 },
+    { "lat": 25.0175527, "lon": 121.5428370 },
+    { "lat": 25.0174494, "lon": 121.5425140 },
+    { "lat": 25.0173931, "lon": 121.5424167 },
+    { "lat": 25.0172498, "lon": 121.5421504 },
+    { "lat": 25.0172084, "lon": 121.5419425 },
+    { "lat": 25.0170885, "lon": 121.5415851 },
+    { "lat": 25.0170654, "lon": 121.5415421 },
+    { "lat": 25.0168524, "lon": 121.5411445 },
+    { "lat": 25.0167746, "lon": 121.5408173 },
+    { "lat": 25.0166511, "lon": 121.5405117 },
+    { "lat": 25.0166146, "lon": 121.5404477 },
+    { "lat": 25.0165028, "lon": 121.5402347 },
+    { "lat": 25.0164735, "lon": 121.5401639 },
+    { "lat": 25.0163736, "lon": 121.5399228 },
+    { "lat": 25.0162780, "lon": 121.5396206 },
+    { "lat": 25.0162526, "lon": 121.5395465 }
+  ],
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "unclassified",
+    "lane_markings": "no",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Hant": "舟山路",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 59531681,
+  "bounds": {
+    "minlat": 25.0166491,
+    "minlon": 121.5333584,
+    "maxlat": 25.0168931,
+    "maxlon": 121.5338704
+  },
+  "nodes": [
+    2179826562,
+    2179826599,
+    2179826601,
+    2179826602,
+    2179826560,
+    2179826611,
+    738258960
+  ],
+  "geometry": [
+    { "lat": 25.0168931, "lon": 121.5333584 },
+    { "lat": 25.0168348, "lon": 121.5333732 },
+    { "lat": 25.0167761, "lon": 121.5334458 },
+    { "lat": 25.0166673, "lon": 121.5335695 },
+    { "lat": 25.0166491, "lon": 121.5336300 },
+    { "lat": 25.0166703, "lon": 121.5336921 },
+    { "lat": 25.0168440, "lon": 121.5338704 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "tertiary_link",
+    "motor_vehicle": "permissive",
+    "name": "椰林大道",
+    "name:en": "Royal Palm Boulevard",
+    "name:nan": "Iâ-nâ Tōa-tō",
+    "name:nan-Hant": "椰林大道",
+    "name:nan-Latn-pehoeji": "Iâ-nâ Tōa-tō",
+    "name:nan-Latn-tailo": "Iâ-nâ Tuā-tô",
+    "name:zh": "椰林大道",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 94598255,
+  "bounds": {
+    "minlat": 25.0173191,
+    "minlon": 121.5389717,
+    "maxlat": 25.0175737,
+    "maxlon": 121.5389761
+  },
+  "nodes": [
+    345178437,
+    1707866535
+  ],
+  "geometry": [
+    { "lat": 25.0173191, "lon": 121.5389761 },
+    { "lat": 25.0175737, "lon": 121.5389717 }
+  ],
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "name": "小椰林道",
+    "name:en": "Palm Avene",
+    "name:nan": "Sió-iâ-nâ-tō",
+    "name:nan-Hant": "小椰林道",
+    "name:nan-Latn-pehoeji": "Sió-iâ-nâ-tō",
+    "name:nan-Latn-tailo": "Sió-iâ-nâ-tō",
+    "name:zh": "小椰林道",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 158624112,
+  "bounds": {
+    "minlat": 25.0180822,
+    "minlon": 121.5389253,
+    "maxlat": 25.0204947,
+    "maxlon": 121.5389679
+  },
+  "nodes": [
+    12224084726,
+    311449104,
+    13686207590,
+    4308551738,
+    12248835006,
+    2021410830,
+    12248835005,
+    4308547688,
+    4308548689,
+    12245849753,
+    13634021199,
+    321562761,
+    13634021200,
+    12245849755
+  ],
+  "geometry": [
+    { "lat": 25.0180822, "lon": 121.5389679 },
+    { "lat": 25.0184020, "lon": 121.5389625 },
+    { "lat": 25.0184877, "lon": 121.5389614 },
+    { "lat": 25.0189475, "lon": 121.5389554 },
+    { "lat": 25.0192562, "lon": 121.5389479 },
+    { "lat": 25.0193368, "lon": 121.5389460 },
+    { "lat": 25.0194506, "lon": 121.5389436 },
+    { "lat": 25.0195860, "lon": 121.5389408 },
+    { "lat": 25.0198783, "lon": 121.5389346 },
+    { "lat": 25.0202229, "lon": 121.5389273 },
+    { "lat": 25.0202566, "lon": 121.5389266 },
+    { "lat": 25.0203167, "lon": 121.5389253 },
+    { "lat": 25.0203776, "lon": 121.5389256 },
+    { "lat": 25.0204947, "lon": 121.5389262 }
+  ],
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "name": "小椰林道",
+    "name:en": "Palm Avene",
+    "name:nan": "Sió-iâ-nâ-tō",
+    "name:nan-Hant": "小椰林道",
+    "name:nan-Latn-pehoeji": "Sió-iâ-nâ-tō",
+    "name:nan-Latn-tailo": "Sió-iâ-nâ-tō",
+    "name:zh": "小椰林道",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 299837902,
+  "bounds": {
+    "minlat": 25.0161539,
+    "minlon": 121.5392992,
+    "maxlat": 25.0162526,
+    "maxlon": 121.5395465
+  },
+  "nodes": [
+    3039162601,
+    3039162602
+  ],
+  "geometry": [
+    { "lat": 25.0161539, "lon": 121.5392992 },
+    { "lat": 25.0162526, "lon": 121.5395465 }
+  ],
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "bridge": "yes",
+    "foot": "yes",
+    "highway": "unclassified",
+    "lane_markings": "no",
+    "layer": "1",
+    "maxweight:signed": "no",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路",
+    "oneway": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 299837906,
+  "bounds": {
+    "minlat": 25.0156530,
+    "minlon": 121.5380635,
+    "maxlat": 25.0161539,
+    "maxlon": 121.5392992
+  },
+  "nodes": [
+    3039162601,
+    12241699948,
+    3039162613,
+    321562778
+  ],
+  "geometry": [
+    { "lat": 25.0161539, "lon": 121.5392992 },
+    { "lat": 25.0160950, "lon": 121.5391621 },
+    { "lat": 25.0160588, "lon": 121.5390780 },
+    { "lat": 25.0156530, "lon": 121.5380635 }
+  ],
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "unclassified",
+    "lane_markings": "no",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路",
+    "name:zh-Hans": "舟山路",
+    "name:zh-Hant": "舟山路",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 301520433,
+  "bounds": {
+    "minlat": 25.0143660,
+    "minlon": 121.5348806,
+    "maxlat": 25.0144484,
+    "maxlon": 121.5350809
+  },
+  "nodes": [
+    321700380,
+    3854483397,
+    321565321
+  ],
+  "geometry": [
+    { "lat": 25.0144484, "lon": 121.5350809 },
+    { "lat": 25.0143997, "lon": 121.5349749 },
+    { "lat": 25.0143660, "lon": 121.5348806 }
+  ],
+  "tags": {
+    "access": "permissive",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路"
+  }
+},
+{
+  "type": "way",
+  "id": 350219797,
+  "bounds": {
+    "minlat": 25.0145992,
+    "minlon": 121.5355059,
+    "maxlat": 25.0156530,
+    "maxlon": 121.5380635
+  },
+  "nodes": [
+    321562778,
+    12243679679,
+    6969436676,
+    13629450020,
+    5203438325,
+    13666928024,
+    6969436674,
+    13666928022,
+    736774430,
+    5456186751,
+    13760868498,
+    12234739899,
+    5587503992,
+    12234568141,
+    12234742705,
+    12234739896,
+    321565320,
+    5587503949,
+    5587503963,
+    321565347,
+    2281072959,
+    9670452746,
+    9670452745,
+    321565322
+  ],
+  "geometry": [
+    { "lat": 25.0156530, "lon": 121.5380635 },
+    { "lat": 25.0156338, "lon": 121.5380136 },
+    { "lat": 25.0156201, "lon": 121.5379777 },
+    { "lat": 25.0156123, "lon": 121.5379578 },
+    { "lat": 25.0156000, "lon": 121.5379263 },
+    { "lat": 25.0155963, "lon": 121.5379171 },
+    { "lat": 25.0155516, "lon": 121.5378064 },
+    { "lat": 25.0155167, "lon": 121.5377200 },
+    { "lat": 25.0154555, "lon": 121.5375683 },
+    { "lat": 25.0153335, "lon": 121.5372800 },
+    { "lat": 25.0153063, "lon": 121.5372161 },
+    { "lat": 25.0153001, "lon": 121.5372015 },
+    { "lat": 25.0152756, "lon": 121.5371437 },
+    { "lat": 25.0152682, "lon": 121.5371264 },
+    { "lat": 25.0152178, "lon": 121.5370053 },
+    { "lat": 25.0151181, "lon": 121.5367656 },
+    { "lat": 25.0150749, "lon": 121.5366633 },
+    { "lat": 25.0150705, "lon": 121.5366528 },
+    { "lat": 25.0150603, "lon": 121.5366258 },
+    { "lat": 25.0149802, "lon": 121.5364288 },
+    { "lat": 25.0149278, "lon": 121.5363014 },
+    { "lat": 25.0146977, "lon": 121.5357171 },
+    { "lat": 25.0146223, "lon": 121.5356085 },
+    { "lat": 25.0145992, "lon": 121.5355059 }
+  ],
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 556821305,
+  "bounds": {
+    "minlat": 25.0171222,
+    "minlon": 121.5340514,
+    "maxlat": 25.0172874,
+    "maxlon": 121.5366585
+  },
+  "nodes": [
+    12224128817,
+    12234568157,
+    51413397,
+    12252572486,
+    12248791252,
+    12252572488,
+    2345439941,
+    12248947079,
+    51413385,
+    12248947075,
+    3341088200,
+    12248947076,
+    12248653642
+  ],
+  "geometry": [
+    { "lat": 25.0172874, "lon": 121.5366585 },
+    { "lat": 25.0172856, "lon": 121.5365284 },
+    { "lat": 25.0172770, "lon": 121.5358978 },
+    { "lat": 25.0172714, "lon": 121.5354836 },
+    { "lat": 25.0172690, "lon": 121.5353130 },
+    { "lat": 25.0172667, "lon": 121.5351437 },
+    { "lat": 25.0172611, "lon": 121.5347278 },
+    { "lat": 25.0172577, "lon": 121.5344818 },
+    { "lat": 25.0172552, "lon": 121.5342988 },
+    { "lat": 25.0172474, "lon": 121.5342278 },
+    { "lat": 25.0172237, "lon": 121.5341748 },
+    { "lat": 25.0171945, "lon": 121.5341272 },
+    { "lat": 25.0171222, "lon": 121.5340514 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "tertiary",
+    "lanes": "2",
+    "motor_vehicle": "permissive",
+    "motorcycle": "no",
+    "name": "椰林大道",
+    "name:en": "Royal Palm Boulevard",
+    "name:nan": "Iâ-nâ Tōa-tō",
+    "name:nan-Hant": "椰林大道",
+    "name:nan-Latn-pehoeji": "Iâ-nâ Tōa-tō",
+    "name:nan-Latn-tailo": "Iâ-nâ Tuā-tô",
+    "name:zh": "椰林大道",
+    "surface": "asphalt",
+    "width": "15.5"
+  }
+},
+{
+  "type": "way",
+  "id": 1320960190,
+  "bounds": {
+    "minlat": 25.0175737,
+    "minlon": 121.5389679,
+    "maxlat": 25.0180822,
+    "maxlon": 121.5389717
+  },
+  "nodes": [
+    1707866535,
+    12224084726
+  ],
+  "geometry": [
+    { "lat": 25.0175737, "lon": 121.5389717 },
+    { "lat": 25.0180822, "lon": 121.5389679 }
+  ],
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "lane_markings": "yes",
+    "lanes": "2",
+    "name": "小椰林道",
+    "name:en": "Palm Avene",
+    "name:nan": "Sió-iâ-nâ-tō",
+    "name:nan-Hant": "小椰林道",
+    "name:nan-Latn-pehoeji": "Sió-iâ-nâ-tō",
+    "name:nan-Latn-tailo": "Sió-iâ-nâ-tō",
+    "name:zh": "小椰林道",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1320960191,
+  "bounds": {
+    "minlat": 25.0170601,
+    "minlon": 121.5389761,
+    "maxlat": 25.0173191,
+    "maxlon": 121.5390102
+  },
+  "nodes": [
+    345178437,
+    12253427191,
+    1333091064
+  ],
+  "geometry": [
+    { "lat": 25.0173191, "lon": 121.5389761 },
+    { "lat": 25.0170859, "lon": 121.5389801 },
+    { "lat": 25.0170601, "lon": 121.5390102 }
+  ],
+  "tags": {
+    "highway": "service",
+    "name": "小椰林道",
+    "name:en": "Palm Avene",
+    "name:nan": "Sió-iâ-nâ-tō",
+    "name:nan-Hant": "小椰林道",
+    "name:nan-Latn-pehoeji": "Sió-iâ-nâ-tō",
+    "name:nan-Latn-tailo": "Sió-iâ-nâ-tō",
+    "name:zh": "小椰林道",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1320961818,
+  "bounds": {
+    "minlat": 25.0172874,
+    "minlon": 121.5366585,
+    "maxlat": 25.0173191,
+    "maxlon": 121.5389761
+  },
+  "nodes": [
+    345178437,
+    13183777781,
+    12253401762,
+    13183777780,
+    12245782705,
+    12234568151,
+    12234568154,
+    12253532777,
+    12234568156,
+    12224128817
+  ],
+  "geometry": [
+    { "lat": 25.0173191, "lon": 121.5389761 },
+    { "lat": 25.0173128, "lon": 121.5385144 },
+    { "lat": 25.0173101, "lon": 121.5383153 },
+    { "lat": 25.0173074, "lon": 121.5381218 },
+    { "lat": 25.0173008, "lon": 121.5376416 },
+    { "lat": 25.0172923, "lon": 121.5370121 },
+    { "lat": 25.0172900, "lon": 121.5368494 },
+    { "lat": 25.0172889, "lon": 121.5367699 },
+    { "lat": 25.0172879, "lon": 121.5366910 },
+    { "lat": 25.0172874, "lon": 121.5366585 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "tertiary",
+    "lanes": "2",
+    "motor_vehicle": "permissive",
+    "motorcycle": "no",
+    "name": "椰林大道",
+    "name:en": "Royal Palm Boulevard",
+    "name:nan": "Iâ-nâ Tōa-tō",
+    "name:nan-Hant": "椰林大道",
+    "name:nan-Latn-pehoeji": "Iâ-nâ Tōa-tō",
+    "name:nan-Latn-tailo": "Iâ-nâ Tuā-tô",
+    "name:zh": "椰林大道",
+    "surface": "asphalt",
+    "width": "16"
+  }
+}
+
+  ]
+}

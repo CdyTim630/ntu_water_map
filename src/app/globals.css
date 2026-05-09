@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 15, 23, 42;
+  --background-rgb: 248, 250, 252;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC',
+    'Microsoft JhengHei', 'Noto Sans TC', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Leaflet popup 客製化 */
+.leaflet-popup-content-wrapper {
+  border-radius: 14px !important;
+  padding: 4px !important;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.25) !important;
+}
+
+.leaflet-popup-content {
+  margin: 8px 10px !important;
+  font-family: inherit !important;
+}
+
+.leaflet-popup-tip {
+  box-shadow: 0 4px 10px -4px rgba(15, 23, 42, 0.2) !important;
+}
+
+.ntu-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Leaflet container 預設高度修補 */
+.leaflet-container {
+  background: #eaf3fb;
+}
+
+/* scrollbar (webkit) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}

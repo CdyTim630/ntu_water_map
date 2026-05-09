@@ -1,0 +1,1774 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-05-08T13:03:00Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 6183250,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "tertiary_link",
+    "motor_vehicle": "permissive",
+    "name": "椰林大道",
+    "name:en": "Royal Palm Boulevard",
+    "name:nan": "Iâ-nâ Tōa-tō",
+    "name:nan-Hant": "椰林大道",
+    "name:nan-Latn-pehoeji": "Iâ-nâ Tōa-tō",
+    "name:nan-Latn-tailo": "Iâ-nâ Tuā-tô",
+    "name:zh": "椰林大道",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 8062517,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "goods": "yes",
+    "hgv": "yes",
+    "highway": "secondary",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "motorcycle": "yes",
+    "name": "復興南路二段",
+    "name:en": "Section 2, Fuxing South Road",
+    "name:nan": "Ho̍k-heng-lâm-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Ho̍k-heng-lâm-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Ho̍k-hing-lâm-lōo-2-tuānn",
+    "name:zh": "復興南路二段",
+    "oneway": "yes",
+    "smoothness": "excellent",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23241821,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "基隆路四段",
+    "name:en": "Section 4, Keelung Road",
+    "name:etymology": "基隆市",
+    "name:etymology:wikidata": "Q249996",
+    "name:etymology:wikipedia": "zh:基隆市",
+    "name:nan": "Ke-lâng-lō͘-4-tōaⁿ",
+    "name:nan-Hant": "基隆路四段",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn",
+    "name:zh": "基隆路四段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 28357584,
+  "tags": {
+    "access": "permissive",
+    "bicycle": "designated",
+    "foot": "designated",
+    "highway": "pedestrian",
+    "name": "蒲葵道",
+    "name:en": "Fan Palm Avene",
+    "name:nan": "Pô͘-kûi-tō",
+    "name:nan-Hant": "蒲葵道",
+    "name:nan-Latn-pehoeji": "Pô͘-kûi-tō",
+    "name:nan-Latn-tailo": "Pôo-kuî-tō",
+    "name:zh": "蒲葵道",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 29235719,
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "unclassified",
+    "lane_markings": "no",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Hant": "舟山路",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 29235845,
+  "tags": {
+    "access": "permissive",
+    "highway": "service",
+    "name": "基隆路四段144巷50弄",
+    "name:en": "Alley 50, Lane 144, Section 4, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng 50-lōng",
+    "name:nan-Hant": "基隆路四段144巷50弄",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng 50-lōng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 144-hāng 50-lōng",
+    "name:zh": "基隆路四段144巷50弄",
+    "name:zh-Hans": "基隆路四段144巷50弄",
+    "name:zh-Hant": "基隆路四段144巷50弄"
+  }
+},
+{
+  "type": "way",
+  "id": 34241518,
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "name": "基隆路三段155巷",
+    "name:en": "Lane 155, Section 3, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-3-tōaⁿ 155-hāng",
+    "name:nan-Hant": "基隆路三段155巷",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-3-tōaⁿ 155-hāng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-3-tuānn 155-hāng",
+    "name:zh": "基隆路三段155巷",
+    "name:zh-Hans": "基隆路三段155巷",
+    "name:zh-Hant": "基隆路三段155巷",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 34241530,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "secondary",
+    "lit": "yes",
+    "name": "基隆路四段",
+    "name:en": "Section 4, Keelung Road",
+    "name:etymology": "基隆市",
+    "name:etymology:wikidata": "Q249996",
+    "name:etymology:wikipedia": "zh:基隆市",
+    "name:nan": "Ke-lâng-lō͘-4-tōaⁿ",
+    "name:nan-Hant": "基隆路四段",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn",
+    "name:zh": "基隆路四段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 36230045,
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "name": "羅斯福路四段90巷",
+    "name:en": "Lane 90, Section 4, Roosevelt Road",
+    "name:nan": "Roosevelt-lō͘-4-tōaⁿ 90-hāng",
+    "name:nan-Hant": "羅斯福路四段90巷",
+    "name:nan-Latn-pehoeji": "Roosevelt-lō͘-4-tōaⁿ 90-hāng",
+    "name:nan-Latn-tailo": "Roosevelt-lōo-4-tuānn 90-hāng",
+    "name:zh": "羅斯福路四段90巷",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 39456638,
+  "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "辛亥路二段171巷",
+    "name:en": "Lane 171, Section 2, Xinhai Road",
+    "name:zh": "辛亥路二段171巷",
+    "oneway": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 39456639,
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "辛亥路二段171巷6弄",
+    "name:en": "Alley 6, Lane 171, Section 2, Xinhai Road",
+    "name:zh": "辛亥路二段171巷6弄",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 39519610,
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "residential",
+    "name": "垂葉榕道",
+    "name:en": "Banyan Ave",
+    "name:nan": "Sûi-hio̍h-iông-tō",
+    "name:nan-Hant": "垂葉榕道",
+    "name:nan-Latn-pehoeji": "Sûi-hio̍h-iông-tō",
+    "name:nan-Latn-tailo": "Suî-hio̍h-iông-tō",
+    "name:zh": "垂葉榕道",
+    "oneway": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 49695625,
+  "tags": {
+    "bicycle": "no",
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "name": "辛亥路二段",
+    "name:en": "Xinhai Road Section 2",
+    "name:nan": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-2-tuānn",
+    "name:zh": "辛亥路二段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 49695694,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "cycleway:left": "no",
+    "cycleway:right": "lane",
+    "highway": "secondary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "name": "辛亥路二段",
+    "name:en": "Xinhai Road Section 2",
+    "name:nan": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-2-tuānn",
+    "name:zh": "辛亥路二段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 49698314,
+  "tags": {
+    "highway": "residential",
+    "name": "和平東路二段76巷23弄",
+    "name:en": "Alley 23, Lane 76, Section 2, Heping East Road",
+    "name:zh": "和平東路二段76巷23弄",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 49698315,
+  "tags": {
+    "highway": "residential",
+    "name": "和平東路二段76巷29弄",
+    "name:en": "Alley 29, Lane 76, Section 2, Heping East Road",
+    "name:zh": "和平東路二段76巷29弄",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 49698316,
+  "tags": {
+    "highway": "residential",
+    "name": "和平東路二段76巷31弄",
+    "name:en": "Alley 31, Lane 76, Section 2, Heping East Road",
+    "name:zh": "和平東路二段76巷31弄",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 49698317,
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lanes:backward": "1",
+    "lanes:forward": "1",
+    "name": "和平東路二段76巷",
+    "name:en": "Lane 76 Section 2 Heping East Road",
+    "name:zh": "和平東路二段76巷"
+  }
+},
+{
+  "type": "way",
+  "id": 49698361,
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "和平東路二段118巷52弄",
+    "name:en": "Alley 52, Lane 118, Section 2, Heping East Road",
+    "name:zh": "和平東路二段118巷52弄",
+    "oneway": "yes",
+    "sidewalk": "left",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 49698362,
+  "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "residential",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "和平東路二段96巷",
+    "name:en": "Lane 96 Section 2 Heping East Road",
+    "name:zh": "和平東路二段96巷",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 49730778,
+  "tags": {
+    "cycleway:both": "no",
+    "foot": "no",
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "辛亥路三段",
+    "name:en": "Xinhai Road Section 3",
+    "name:nan": "Sin-hāi-lō͘-3-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-3-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-3-tuānn",
+    "name:zh": "辛亥路三段",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 49730783,
+  "tags": {
+    "bicycle": "no",
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "name": "辛亥路二段",
+    "name:en": "Xinhai Road Section 2",
+    "name:nan": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-2-tuānn",
+    "name:zh": "辛亥路二段",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 49730784,
+  "tags": {
+    "cycleway:both": "no",
+    "foot": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "辛亥路三段",
+    "name:en": "Xinhai Road Section 3",
+    "name:nan": "Sin-hāi-lō͘-3-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-3-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-3-tuānn",
+    "name:zh": "辛亥路三段",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 55029242,
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "name": "基隆路四段73巷",
+    "name:en": "Lane 73, Section 4, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-4-tōaⁿ 73-hāng",
+    "name:nan-Hant": "基隆路四段73巷",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 73-hāng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 73-hāng",
+    "name:zh": "基隆路四段73巷",
+    "name:zh-Hans": "基隆路四段73巷",
+    "name:zh-Hant": "基隆路四段73巷",
+    "oneway": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 59411766,
+  "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "pedestrian",
+    "name": "欒樹道",
+    "name:en": "Golden rain Ave",
+    "name:nan": "Loân-chhiū-tō",
+    "name:nan-Hant": "欒樹道",
+    "name:nan-Latn-pehoeji": "Loân-chhiū-tō",
+    "name:nan-Latn-tailo": "Luân-tshiū-tō",
+    "name:zh": "欒樹道",
+    "name:zh-Hans": "栾树道",
+    "old_name": "基隆路四段144巷",
+    "old_name:en": "Lane 144, Section 4, Keelung Road",
+    "old_name:nan": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Hant": "基隆路四段144巷",
+    "old_name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 144-hāng",
+    "old_name:zh": "基隆路四段144巷",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 59531681,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "tertiary_link",
+    "motor_vehicle": "permissive",
+    "name": "椰林大道",
+    "name:en": "Royal Palm Boulevard",
+    "name:nan": "Iâ-nâ Tōa-tō",
+    "name:nan-Hant": "椰林大道",
+    "name:nan-Latn-pehoeji": "Iâ-nâ Tōa-tō",
+    "name:nan-Latn-tailo": "Iâ-nâ Tuā-tô",
+    "name:zh": "椰林大道",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 59685843,
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "name": "羅斯福路四段108巷",
+    "name:en": "Lane 108, Section 4, Roosevelt Road",
+    "name:nan": "Roosevelt-lō͘-4-tōaⁿ 108-hāng",
+    "name:nan-Hant": "羅斯福路四段108巷",
+    "name:nan-Latn-pehoeji": "Roosevelt-lō͘-4-tōaⁿ 108-hāng",
+    "name:nan-Latn-tailo": "Roosevelt-lōo-4-tuānn 108-hāng",
+    "name:zh": "羅斯福路四段108巷",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 59687811,
+  "tags": {
+    "area": "yes",
+    "highway": "pedestrian",
+    "name": "二活後廣場"
+  }
+},
+{
+  "type": "way",
+  "id": 94598255,
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "name": "小椰林道",
+    "name:en": "Palm Avene",
+    "name:nan": "Sió-iâ-nâ-tō",
+    "name:nan-Hant": "小椰林道",
+    "name:nan-Latn-pehoeji": "Sió-iâ-nâ-tō",
+    "name:nan-Latn-tailo": "Sió-iâ-nâ-tō",
+    "name:zh": "小椰林道",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 158624107,
+  "tags": {
+    "access": "permissive",
+    "highway": "service",
+    "name": "桃花心木道",
+    "name:en": "Mahogany Avene",
+    "name:nan": "Thô-hoe-sim-bo̍k-tō",
+    "name:nan-Hant": "桃花心木道",
+    "name:nan-Latn-pehoeji": "Thô-hoe-sim-bo̍k-tō",
+    "name:nan-Latn-tailo": "Thô-hue-sim-bo̍k-tō",
+    "name:zh": "桃花心木道",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 158624109,
+  "tags": {
+    "access": "permissive",
+    "bicycle": "designated",
+    "foot": "designated",
+    "highway": "pedestrian",
+    "name": "楓香道",
+    "name:en": "Sweetgum Avene",
+    "name:nan": "Hong-hiong-tō",
+    "name:nan-Hant": "楓香道",
+    "name:nan-Latn-pehoeji": "Hong-hiong-tō",
+    "name:nan-Latn-tailo": "Hong-hiong-tō",
+    "name:zh": "楓香道",
+    "segregated": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 158624112,
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "name": "小椰林道",
+    "name:en": "Palm Avene",
+    "name:nan": "Sió-iâ-nâ-tō",
+    "name:nan-Hant": "小椰林道",
+    "name:nan-Latn-pehoeji": "Sió-iâ-nâ-tō",
+    "name:nan-Latn-tailo": "Sió-iâ-nâ-tō",
+    "name:zh": "小椰林道",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 158624115,
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "highway": "service",
+    "motorcar": "designated",
+    "name": "欒樹道 (基隆路四段144巷)",
+    "name:en": "Golden rain Ave",
+    "name:nan": "Loân-chhiū-tō",
+    "name:nan-Hant": "欒樹道",
+    "name:nan-Latn-pehoeji": "Loân-chhiū-tō",
+    "name:nan-Latn-tailo": "Luân-tshiū-tō",
+    "name:zh": "欒樹道",
+    "name:zh-Hans": "栾树道",
+    "name:zh-Hant": "欒樹道",
+    "old_name": "基隆路四段144巷",
+    "old_name:en": "Lane 144, Section 4, Keelung Road",
+    "old_name:nan": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Hant": "基隆路四段144巷",
+    "old_name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 144-hāng",
+    "old_name:zh": "基隆路四段144巷",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 193424493,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "secondary",
+    "lane_markings": "yes",
+    "lanes": "4",
+    "lit": "yes",
+    "name": "基隆路三段",
+    "name:en": "Section 3, Keelung Road",
+    "name:etymology": "基隆市",
+    "name:etymology:wikidata": "Q249996",
+    "name:etymology:wikipedia": "zh:基隆市",
+    "name:nan": "Ke-lâng-lō͘-3-tōaⁿ",
+    "name:nan-Hant": "基隆路三段",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-3-tōaⁿ",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-3-tuānn",
+    "name:zh": "基隆路三段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 194580836,
+  "tags": {
+    "cycleway:left": "track",
+    "cycleway:right": "lane",
+    "highway": "residential",
+    "name": "長興街",
+    "name:en": "Changxing Street",
+    "name:nan": "Tiông-heng-koe",
+    "name:nan-Hant": "長興街",
+    "name:nan-Latn-pehoeji": "Tiông-heng-koe",
+    "name:nan-Latn-tailo": "Tiông-hing-kue",
+    "name:zh": "長興街",
+    "oneway": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 198876034,
+  "tags": {
+    "alt_name": "羅斯福路公車專用道",
+    "alt_name:nan": "Lô-su-hok-lō͘ Kong-chhia choan-ēng-tō",
+    "alt_name:nan-Hant": "羅斯福路公車專用道",
+    "alt_name:nan-Latn-pehoeji": "Lô-su-hok-lō͘ Kong-chhia choan-ēng-tō",
+    "alt_name:nan-Latn-tailo": "Lô-su-hok-lōo Kong-tshia tsuan-īng-tō",
+    "alt_name:zh": "羅斯福路公車專用道",
+    "bus": "designated",
+    "highway": "primary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "sign",
+    "name": "羅斯福路大客車專用道",
+    "name:en": "Bus Exclusive Lane, Roosevelt Road",
+    "name:nan": "Lô-su-hok-lō͘ Tōa-kheh-chhia Choan-iōng-tō",
+    "name:nan-Hant": "羅斯福路大客車專用道",
+    "name:nan-Latn-pehoeji": "Lô-su-hok-lō͘ Tōa-kheh-chhia Choan-iōng-tō",
+    "name:nan-Latn-tailo": "Lô-su-hok-lōo Tuā-kheh-tshia Tsuan-iōng-tō",
+    "name:zh": "羅斯福路大客車專用道",
+    "oneway": "yes",
+    "ref": "9",
+    "ref:en": "Provincial Highway 9",
+    "ref:zh": "台9線",
+    "sidewalk": "no",
+    "start_date": "2025-09-29",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 198876042,
+  "tags": {
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "60",
+    "name": "羅斯福路四段",
+    "name:en": "Section 4, Roosevelt Road",
+    "name:nan": "Roosevelt-lō͘-4-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Roosevelt-lō͘-4-tōaⁿ",
+    "name:nan-Latn-tailo": "Roosevelt-lōo-4-tuānn",
+    "name:zh": "羅斯福路四段",
+    "oneway": "yes",
+    "ref": "9",
+    "ref:en": "Provincial Highway 9",
+    "ref:nan": "9",
+    "ref:nan-Hant": "9",
+    "ref:nan-Latn-pehoeji": "9",
+    "ref:nan-Latn-tailo": "9",
+    "ref:zh": "台9線",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 207574201,
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "name": "長興街",
+    "name:en": "Changxing Street",
+    "name:nan": "Tiông-heng-koe",
+    "name:nan-Hant": "長興街",
+    "name:nan-Latn-pehoeji": "Tiông-heng-koe",
+    "name:nan-Latn-tailo": "Tiông-hing-kue",
+    "name:zh": "長興街",
+    "oneway": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 218903392,
+  "tags": {
+    "highway": "service",
+    "name": "舟山路272巷",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 222682219,
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxheight": "default",
+    "maxheight:signed": "no",
+    "maxspeed": "60",
+    "name": "羅斯福路四段",
+    "name:en": "Section 4, Roosevelt Road",
+    "name:nan": "Roosevelt-lō͘-4-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Roosevelt-lō͘-4-tōaⁿ",
+    "name:nan-Latn-tailo": "Roosevelt-lōo-4-tuānn",
+    "name:zh": "羅斯福路四段",
+    "oneway": "yes",
+    "ref": "9",
+    "ref:en": "Provincial Highway 9",
+    "ref:nan": "9",
+    "ref:nan-Hant": "9",
+    "ref:nan-Latn-pehoeji": "9",
+    "ref:nan-Latn-tailo": "9",
+    "ref:zh": "台9線",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 222682221,
+  "tags": {
+    "access": "no",
+    "alt_name": "羅斯福路公車專用道",
+    "alt_name:nan": "Lô-su-hok-lō͘ Kong-chhia choan-ēng-tō",
+    "alt_name:nan-Hant": "羅斯福路公車專用道",
+    "alt_name:nan-Latn-pehoeji": "Lô-su-hok-lō͘ Kong-chhia choan-ēng-tō",
+    "alt_name:nan-Latn-tailo": "Lô-su-hok-lōo Kong-tshia tsuan-īng-tō",
+    "alt_name:zh": "羅斯福路公車專用道",
+    "bus": "yes",
+    "highway": "primary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxheight": "6",
+    "maxspeed": "50",
+    "maxspeed:type": "sign",
+    "name": "羅斯福路大客車專用道",
+    "name:en": "Bus Exclusive Lane, Roosevelt Road",
+    "name:nan": "Lô-su-hok-lō͘ Tōa-kheh-chhia Choan-iōng-tō",
+    "name:nan-Hant": "羅斯福路大客車專用道",
+    "name:nan-Latn-pehoeji": "Lô-su-hok-lō͘ Tōa-kheh-chhia Choan-iōng-tō",
+    "name:nan-Latn-tailo": "Lô-su-hok-lōo Tuā-kheh-tshia Tsuan-iōng-tō",
+    "name:zh": "羅斯福路大客車專用道",
+    "oneway": "yes",
+    "ref": "9",
+    "ref:en": "Provincial Highway 9",
+    "ref:zh": "台9線",
+    "sidewalk": "no",
+    "start_date": "2006-03",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 222683861,
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "60",
+    "name": "羅斯福路四段",
+    "name:en": "Section 4, Roosevelt Road",
+    "name:nan": "Roosevelt-lō͘-4-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Roosevelt-lō͘-4-tōaⁿ",
+    "name:nan-Latn-tailo": "Roosevelt-lōo-4-tuānn",
+    "name:zh": "羅斯福路四段",
+    "oneway": "yes",
+    "ref": "9",
+    "ref:en": "Provincial Highway 9",
+    "ref:nan": "9",
+    "ref:nan-Hant": "9",
+    "ref:nan-Latn-pehoeji": "9",
+    "ref:nan-Latn-tailo": "9",
+    "ref:zh": "台9線",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 223397079,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "secondary",
+    "lit": "yes",
+    "name": "基隆路四段",
+    "name:en": "Section 4, Keelung Road",
+    "name:etymology": "基隆市",
+    "name:etymology:wikidata": "Q249996",
+    "name:etymology:wikipedia": "zh:基隆市",
+    "name:nan": "Ke-lâng-lō͘-4-tōaⁿ",
+    "name:nan-Hant": "基隆路四段",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn",
+    "name:zh": "基隆路四段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 223397080,
+  "tags": {
+    "access": "permissive",
+    "highway": "service",
+    "name": "基隆路三段156巷",
+    "name:en": "Lane 156, Section 3, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-3-tōaⁿ 156-hāng",
+    "name:nan-Hant": "基隆路三段156巷",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-3-tōaⁿ 156-hāng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-3-tuānn 156-hāng",
+    "name:zh": "基隆路三段156巷",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 223397081,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "name": "基隆路三段",
+    "name:en": "Section 3, Keelung Road",
+    "name:etymology": "基隆市",
+    "name:etymology:wikidata": "Q249996",
+    "name:etymology:wikipedia": "zh:基隆市",
+    "name:nan": "Ke-lâng-lō͘-3-tōaⁿ",
+    "name:nan-Hant": "基隆路三段",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-3-tōaⁿ",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-3-tuānn",
+    "name:zh": "基隆路三段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 223397082,
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "lanes": "2",
+    "maxheight": "3.4",
+    "name": "基隆路三段155巷",
+    "name:en": "Lane 155, Section 3, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-3-tōaⁿ 155-hāng",
+    "name:nan-Hant": "基隆路三段155巷",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-3-tōaⁿ 155-hāng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-3-tuānn 155-hāng",
+    "name:zh": "基隆路三段155巷",
+    "name:zh-Hans": "基隆路三段155巷",
+    "name:zh-Hant": "基隆路三段155巷",
+    "oneway": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 229193802,
+  "tags": {
+    "highway": "secondary_link",
+    "lit": "yes",
+    "name": "基隆路四段73巷",
+    "name:en": "Lane 73, Section 4, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-4-tōaⁿ 73-hāng",
+    "name:nan-Hant": "基隆路四段73巷",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 73-hāng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 73-hāng",
+    "name:zh": "基隆路四段73巷",
+    "name:zh-Hans": "基隆路四段73巷",
+    "name:zh-Hant": "基隆路四段73巷",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 229193803,
+  "tags": {
+    "highway": "secondary_link",
+    "name": "基隆路四段73巷",
+    "name:en": "Lane 73, Section 4, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-4-tōaⁿ 73-hāng",
+    "name:nan-Hant": "基隆路四段73巷",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 73-hāng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 73-hāng",
+    "name:zh": "基隆路四段73巷",
+    "name:zh-Hans": "基隆路四段73巷",
+    "name:zh-Hant": "基隆路四段73巷"
+  }
+},
+{
+  "type": "way",
+  "id": 232454542,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "cycleway:both": "no",
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "name": "辛亥路二段",
+    "name:en": "Xinhai Road Section 2",
+    "name:nan": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-2-tuānn",
+    "name:zh": "辛亥路二段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 238689696,
+  "tags": {
+    "bridge": "yes",
+    "highway": "trunk",
+    "lanes": "2",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "70",
+    "name": "基隆路高架道路",
+    "name:en": "Keelung Road Elevated Road",
+    "name:nan": "Koe-lâng-lō͘ Ko-kè Tō-lō͘",
+    "name:nan-Latn-pehoeji": "Koe-lâng-lō͘ Ko-kè Tō-lō͘",
+    "name:nan-Latn-tailo": "Kue-lâng-lōo Ko-kè Tō-lōo",
+    "name:zh": "基隆路高架道路",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 289018380,
+  "tags": {
+    "highway": "primary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxheight": "default",
+    "maxheight:signed": "no",
+    "maxspeed": "50",
+    "name": "羅斯福路四段",
+    "name:en": "Section 4, Roosevelt Road",
+    "name:nan": "Roosevelt-lō͘-4-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Roosevelt-lō͘-4-tōaⁿ",
+    "name:nan-Latn-tailo": "Roosevelt-lōo-4-tuānn",
+    "name:zh": "羅斯福路四段",
+    "oneway": "yes",
+    "ref": "9",
+    "ref:en": "Provincial Highway 9",
+    "ref:nan": "9",
+    "ref:nan-Hant": "9",
+    "ref:nan-Latn-pehoeji": "9",
+    "ref:nan-Latn-tailo": "9",
+    "ref:zh": "台9線",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 299837902,
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "bridge": "yes",
+    "foot": "yes",
+    "highway": "unclassified",
+    "lane_markings": "no",
+    "layer": "1",
+    "maxweight:signed": "no",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路",
+    "oneway": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 299837906,
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "unclassified",
+    "lane_markings": "no",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路",
+    "name:zh-Hans": "舟山路",
+    "name:zh-Hant": "舟山路",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 301520433,
+  "tags": {
+    "access": "permissive",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路"
+  }
+},
+{
+  "type": "way",
+  "id": 303701010,
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "辛亥路二段171巷16弄",
+    "name:en": "Alley 16, Lane 171, Section 2, Xinhai Road",
+    "name:zh": "辛亥路二段171巷16弄",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 303701012,
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "和平東路二段118巷54弄",
+    "name:en": "Alley 54, Lane 118, Section 2, Heping East Road",
+    "name:zh": "和平東路二段118巷54弄",
+    "oneway": "yes",
+    "sidewalk": "right"
+  }
+},
+{
+  "type": "way",
+  "id": 307467647,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "cycleway:left": "no",
+    "cycleway:right": "lane",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "name": "辛亥路二段",
+    "name:en": "Xinhai Road Section 2",
+    "name:nan": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-2-tuānn",
+    "name:zh": "辛亥路二段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 307467652,
+  "tags": {
+    "highway": "secondary",
+    "lit": "yes",
+    "name": "辛亥路三段",
+    "name:en": "Xinhai Road Section 3",
+    "name:nan": "Sin-hāi-lō͘-3-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-3-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-3-tuānn",
+    "name:zh": "辛亥路三段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 309157613,
+  "tags": {
+    "access": "private",
+    "highway": "service",
+    "name": "基隆路三段40巷",
+    "name:en": "Lane 40, Section 3, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-3-tōaⁿ 40-hāng",
+    "name:nan-Hant": "基隆路三段40巷",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-3-tōaⁿ 40-hāng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-3-tuānn 40-hāng",
+    "name:zh": "基隆路三段40巷"
+  }
+},
+{
+  "type": "way",
+  "id": 309157614,
+  "tags": {
+    "access": "private",
+    "highway": "service",
+    "name": "基隆路三段60巷",
+    "name:en": "Lane 60, Section 3, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-3-tōaⁿ 60-hāng",
+    "name:nan-Hant": "基隆路三段60巷",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-3-tōaⁿ 60-hāng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-3-tuānn 60-hāng",
+    "name:zh": "基隆路三段60巷"
+  }
+},
+{
+  "type": "way",
+  "id": 311438969,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "highway": "secondary",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "name": "辛亥路二段",
+    "name:en": "Xinhai Road Section 2",
+    "name:nan": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-2-tuānn",
+    "name:zh": "辛亥路二段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 312467349,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "goods": "yes",
+    "hgv": "yes",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "motorcycle": "yes",
+    "name": "復興南路二段",
+    "name:en": "Section 2, Fuxing South Road",
+    "name:nan": "Ho̍k-heng-lâm-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Ho̍k-heng-lâm-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Ho̍k-hing-lâm-lōo-2-tuānn",
+    "name:zh": "復興南路二段",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "smoothness": "excellent",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 324901102,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "goods": "yes",
+    "hgv": "yes",
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "motorcycle": "yes",
+    "name": "復興南路二段",
+    "name:en": "Section 2, Fuxing South Road",
+    "name:nan": "Ho̍k-heng-lâm-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Ho̍k-heng-lâm-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Ho̍k-hing-lâm-lōo-2-tuānn",
+    "name:zh": "復興南路二段",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "smoothness": "excellent",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 327119608,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "cycleway:left": "no",
+    "cycleway:right": "lane",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "name": "辛亥路二段",
+    "name:en": "Xinhai Road Section 2",
+    "name:nan": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-2-tuānn",
+    "name:zh": "辛亥路二段",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 329242533,
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "name": "水杉道",
+    "name:en": "Water fir Avene",
+    "name:nan": "Chúi-sam-tō",
+    "name:nan-Hant": "水杉道",
+    "name:nan-Latn-pehoeji": "Chúi-sam-tō",
+    "name:nan-Latn-tailo": "Tsuí-sam-tō",
+    "name:zh": "水杉道",
+    "oneway": "no",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 336475136,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "goods": "yes",
+    "hgv": "yes",
+    "highway": "secondary",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "motorcycle": "yes",
+    "name": "復興南路二段",
+    "name:en": "Section 2, Fuxing South Road",
+    "name:nan": "Ho̍k-heng-lâm-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Ho̍k-heng-lâm-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Ho̍k-hing-lâm-lōo-2-tuānn",
+    "name:zh": "復興南路二段",
+    "oneway": "yes",
+    "smoothness": "excellent",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 336475189,
+  "tags": {
+    "bicycle": "use_sidepath",
+    "highway": "secondary",
+    "lane_markings": "no",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxspeed:type": "TW:urban",
+    "name": "辛亥路二段",
+    "name:en": "Xinhai Road Section 2",
+    "name:nan": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-pehoeji": "Sin-hāi-lō͘-2-tōaⁿ",
+    "name:nan-Latn-tailo": "Sin-hāi-lōo-2-tuānn",
+    "name:zh": "辛亥路二段",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 350219797,
+  "tags": {
+    "access": "permissive",
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "舟山路",
+    "name:en": "Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo",
+    "name:zh": "舟山路",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 363983111,
+  "tags": {
+    "highway": "service",
+    "name": "汽車出入口/機車出口"
+  }
+},
+{
+  "type": "way",
+  "id": 410061508,
+  "tags": {
+    "access": "permissive",
+    "highway": "cycleway",
+    "name": "舟山路100巷",
+    "name:en": "Lane 100, Zhoushan Road",
+    "name:nan": "Chiu-san-lō͘ 100-hāng",
+    "name:nan-Hant": "舟山路100巷",
+    "name:nan-Latn-pehoeji": "Chiu-san-lō͘ 100-hāng",
+    "name:nan-Latn-tailo": "Tsiu-san-lōo 100-hāng",
+    "name:zh": "舟山路100巷"
+  }
+},
+{
+  "type": "way",
+  "id": 431622196,
+  "tags": {
+    "area": "yes",
+    "highway": "pedestrian",
+    "name": "新體前廣場"
+  }
+},
+{
+  "type": "way",
+  "id": 446228601,
+  "tags": {
+    "bicycle": "designated",
+    "highway": "cycleway",
+    "name": "辛亥路自行車道(南側)",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 446240469,
+  "tags": {
+    "highway": "residential",
+    "name": "和平東路二段76巷19弄",
+    "name:en": "Alley 19, Lane 76, Section 2, Heping East Road",
+    "name:zh": "和平東路二段76巷19弄",
+    "oneway": "yes",
+    "sidewalk": "left"
+  }
+},
+{
+  "type": "way",
+  "id": 446361623,
+  "tags": {
+    "highway": "path",
+    "name": "辛亥路二段131巷3弄"
+  }
+},
+{
+  "type": "way",
+  "id": 474177274,
+  "tags": {
+    "highway": "path",
+    "name": "基隆路三段129巷"
+  }
+},
+{
+  "type": "way",
+  "id": 474177276,
+  "tags": {
+    "highway": "path",
+    "name": "基隆路三段119巷"
+  }
+},
+{
+  "type": "way",
+  "id": 474177277,
+  "tags": {
+    "highway": "path",
+    "name": "基隆路三段107巷"
+  }
+},
+{
+  "type": "way",
+  "id": 505215737,
+  "tags": {
+    "highway": "service",
+    "motorcar": "designated",
+    "name": "欒樹道 (基隆路四段144巷)",
+    "name:en": "Golden rain Ave",
+    "name:nan": "Loân-chhiū-tō",
+    "name:nan-Hant": "欒樹道",
+    "name:nan-Latn-pehoeji": "Loân-chhiū-tō",
+    "name:nan-Latn-tailo": "Luân-tshiū-tō",
+    "name:zh": "欒樹道",
+    "old_name": "基隆路四段144巷",
+    "old_name:en": "Lane 144, Section 4, Keelung Road",
+    "old_name:nan": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Hant": "基隆路四段144巷",
+    "old_name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 144-hāng",
+    "old_name:zh": "基隆路四段144巷",
+    "oneway": "yes",
+    "service": "driveway",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 505215738,
+  "tags": {
+    "access": "permissive",
+    "highway": "service",
+    "motorcar": "designated",
+    "name": "欒樹道 (基隆路四段144巷)",
+    "name:en": "Golden rain Ave",
+    "name:nan": "Loân-chhiū-tō",
+    "name:nan-Hant": "欒樹道",
+    "name:nan-Latn-pehoeji": "Loân-chhiū-tō",
+    "name:nan-Latn-tailo": "Luân-tshiū-tō",
+    "name:zh": "欒樹道",
+    "name:zh-Hans": "栾树道",
+    "name:zh-Hant": "欒樹道",
+    "old_name": "基隆路四段144巷",
+    "old_name:en": "Lane 144, Section 4, Keelung Road",
+    "old_name:nan": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Hant": "基隆路四段144巷",
+    "old_name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 144-hāng",
+    "old_name:zh": "基隆路四段144巷",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 505215739,
+  "tags": {
+    "highway": "service",
+    "motorcar": "designated",
+    "name": "欒樹道 (基隆路四段144巷)",
+    "name:en": "Golden rain Ave",
+    "name:nan": "Loân-chhiū-tō",
+    "name:nan-Hant": "欒樹道",
+    "name:nan-Latn-pehoeji": "Loân-chhiū-tō",
+    "name:nan-Latn-tailo": "Luân-tshiū-tō",
+    "name:zh": "欒樹道",
+    "old_name": "基隆路四段144巷",
+    "old_name:en": "Lane 144, Section 4, Keelung Road",
+    "old_name:nan": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Hant": "基隆路四段144巷",
+    "old_name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 144-hāng",
+    "old_name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 144-hāng",
+    "old_name:zh": "基隆路四段144巷",
+    "oneway": "yes",
+    "service": "driveway",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 543880289,
+  "tags": {
+    "highway": "residential",
+    "name": "辛亥路二段131巷",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 543880291,
+  "tags": {
+    "highway": "residential",
+    "name": "和平東路二段96巷20弄",
+    "name:en": "Alley 20, Lane 96, Section 2, Heping East Road",
+    "name:zh": "和平東路二段96巷20弄",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 543938357,
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "name": "楓香道",
+    "name:en": "Sweetgum Avene",
+    "name:nan": "Hong-hiong-tō",
+    "name:nan-Hant": "楓香道",
+    "name:nan-Latn-pehoeji": "Hong-hiong-tō",
+    "name:nan-Latn-tailo": "Hong-hiong-tō",
+    "name:zh": "楓香道",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 556821305,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "tertiary",
+    "lanes": "2",
+    "motor_vehicle": "permissive",
+    "motorcycle": "no",
+    "name": "椰林大道",
+    "name:en": "Royal Palm Boulevard",
+    "name:nan": "Iâ-nâ Tōa-tō",
+    "name:nan-Hant": "椰林大道",
+    "name:nan-Latn-pehoeji": "Iâ-nâ Tōa-tō",
+    "name:nan-Latn-tailo": "Iâ-nâ Tuā-tô",
+    "name:zh": "椰林大道",
+    "surface": "asphalt",
+    "width": "15.5"
+  }
+},
+{
+  "type": "way",
+  "id": 601951760,
+  "tags": {
+    "highway": "path",
+    "name": "萬才小徑 (辛亥路三段66巷)"
+  }
+},
+{
+  "type": "way",
+  "id": 712593157,
+  "tags": {
+    "bridge": "yes",
+    "highway": "trunk",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "80",
+    "name": "基隆路高架道路",
+    "name:en": "Keelung Road Elevated Road",
+    "name:nan": "Koe-lâng-lō͘ Ko-kè Tō-lō͘",
+    "name:nan-Latn-pehoeji": "Koe-lâng-lō͘ Ko-kè Tō-lō͘",
+    "name:nan-Latn-tailo": "Kue-lâng-lōo Ko-kè Tō-lōo",
+    "name:zh": "基隆路高架道路",
+    "name:zh-Hans": "基隆路高架道路",
+    "name:zh-Hant": "基隆路高架道路",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 721488131,
+  "tags": {
+    "bridge": "yes",
+    "highway": "trunk",
+    "lanes": "2",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "80",
+    "name": "基隆路高架道路",
+    "name:en": "Keelung Road Elevated Road",
+    "name:nan": "Koe-lâng-lō͘ Ko-kè Tō-lō͘",
+    "name:nan-Latn-pehoeji": "Koe-lâng-lō͘ Ko-kè Tō-lō͘",
+    "name:nan-Latn-tailo": "Kue-lâng-lōo Ko-kè Tō-lōo",
+    "name:zh": "基隆路高架道路",
+    "name:zh-Hans": "基隆路高架道路",
+    "name:zh-Hant": "基隆路高架道路",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 769717215,
+  "tags": {
+    "access": "private",
+    "highway": "service",
+    "name": "基隆路三段30巷5弄",
+    "name:en": "Alley 5, Lane 30, Section 3, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-3-tōaⁿ 30-hāng 5-lōng",
+    "name:nan-Hant": "基隆路三段30巷5弄",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-3-tōaⁿ 30-hāng 5-lōng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-3-tuānn 30-hāng 5-lōng",
+    "name:zh": "基隆路三段30巷5弄",
+    "service": "alley"
+  }
+},
+{
+  "type": "way",
+  "id": 843142194,
+  "tags": {
+    "highway": "residential",
+    "name": "基隆路四段41巷68弄",
+    "name:en": "Alley 68, Lane 41, Section 4, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-4-tōaⁿ 41-hāng 68-lōng",
+    "name:nan-Hant": "基隆路四段41巷68弄",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 41-hāng 68-lōng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 41-hāng 68-lōng",
+    "name:zh": "基隆路四段41巷68弄",
+    "name:zh-Hans": "基隆路四段41巷68弄",
+    "name:zh-Hant": "基隆路四段41巷68弄",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 978888064,
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "name": "蒲葵道",
+    "name:en": "Fan Palm Avene",
+    "name:nan": "Pô͘-kûi-tō",
+    "name:nan-Hant": "蒲葵道",
+    "name:nan-Latn-pehoeji": "Pô͘-kûi-tō",
+    "name:nan-Latn-tailo": "Pôo-kuî-tō",
+    "name:zh": "蒲葵道"
+  }
+},
+{
+  "type": "way",
+  "id": 978888067,
+  "tags": {
+    "highway": "path",
+    "name": "基隆路三段107巷"
+  }
+},
+{
+  "type": "way",
+  "id": 1052261081,
+  "tags": {
+    "access": "private",
+    "highway": "service",
+    "name": "基隆路三段30巷3弄",
+    "name:en": "Alley 3, Lane 30, Section 3, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-3-tōaⁿ 30-hāng 3-lōng",
+    "name:nan-Hant": "基隆路三段30巷3弄",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-3-tōaⁿ 30-hāng 3-lōng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-3-tuānn 30-hāng 3-lōng",
+    "name:zh": "基隆路三段30巷3弄",
+    "service": "alley"
+  }
+},
+{
+  "type": "way",
+  "id": 1052288229,
+  "tags": {
+    "highway": "service",
+    "name": "基隆路四段42巷",
+    "name:en": "Lane 42, Section 4, Keelung Road",
+    "name:nan": "Ke-lâng-lō͘-4-tōaⁿ 42-hāng",
+    "name:nan-Hant": "基隆路四段42巷",
+    "name:nan-Latn-pehoeji": "Ke-lâng-lō͘-4-tōaⁿ 42-hāng",
+    "name:nan-Latn-tailo": "Ke-lâng-lōo-4-tuānn 42-hāng",
+    "name:zh": "基隆路四段42巷",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1320960190,
+  "tags": {
+    "access": "permissive",
+    "highway": "residential",
+    "lane_markings": "yes",
+    "lanes": "2",
+    "name": "小椰林道",
+    "name:en": "Palm Avene",
+    "name:nan": "Sió-iâ-nâ-tō",
+    "name:nan-Hant": "小椰林道",
+    "name:nan-Latn-pehoeji": "Sió-iâ-nâ-tō",
+    "name:nan-Latn-tailo": "Sió-iâ-nâ-tō",
+    "name:zh": "小椰林道",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1320960191,
+  "tags": {
+    "highway": "service",
+    "name": "小椰林道",
+    "name:en": "Palm Avene",
+    "name:nan": "Sió-iâ-nâ-tō",
+    "name:nan-Hant": "小椰林道",
+    "name:nan-Latn-pehoeji": "Sió-iâ-nâ-tō",
+    "name:nan-Latn-tailo": "Sió-iâ-nâ-tō",
+    "name:zh": "小椰林道",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1320961818,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "tertiary",
+    "lanes": "2",
+    "motor_vehicle": "permissive",
+    "motorcycle": "no",
+    "name": "椰林大道",
+    "name:en": "Royal Palm Boulevard",
+    "name:nan": "Iâ-nâ Tōa-tō",
+    "name:nan-Hant": "椰林大道",
+    "name:nan-Latn-pehoeji": "Iâ-nâ Tōa-tō",
+    "name:nan-Latn-tailo": "Iâ-nâ Tuā-tô",
+    "name:zh": "椰林大道",
+    "surface": "asphalt",
+    "width": "16"
+  }
+},
+{
+  "type": "way",
+  "id": 1321845982,
+  "tags": {
+    "area": "yes",
+    "highway": "pedestrian",
+    "name": "大一女廣場"
+  }
+},
+{
+  "type": "way",
+  "id": 1322109486,
+  "tags": {
+    "bicycle": "yes",
+    "highway": "service",
+    "name": "基隆路四段144巷58弄",
+    "name:zh": "基隆路四段144巷58弄",
+    "name:zh-Hans": "基隆路四段144巷58弄",
+    "name:zh-Hant": "基隆路四段144巷58弄"
+  }
+},
+{
+  "type": "way",
+  "id": 1322112055,
+  "tags": {
+    "highway": "footway",
+    "name": "土地公小徑"
+  }
+},
+{
+  "type": "way",
+  "id": 1322287026,
+  "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "和平東路二段118巷",
+    "name:en": "Lane 118 Section 2 Heping East Road",
+    "name:zh": "和平東路二段118巷",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+}
+
+  ]
+}
