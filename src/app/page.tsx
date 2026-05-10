@@ -30,7 +30,7 @@ const CampusMap = dynamic(() => import('@/components/map/CampusMap'), {
 
 function MapPlaceholder({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid h-full w-full place-items-center bg-slate-100 text-sm text-slate-500">
+    <div className="grid h-full w-full place-items-center bg-slate-50 text-sm text-slate-400">
       {children}
     </div>
   );
@@ -50,14 +50,12 @@ export default function HomePage() {
   const [busy, setBusy] = useState(false);
   const [focusReportId, setFocusReportId] = useState<string | null>(null);
 
-  // 飲水機 layer state
   const [waterStations, setWaterStations] = useState<WaterStation[]>([]);
   const [showWaterStations, setShowWaterStations] = useState(true);
   const [mapFlyTo, setMapFlyTo] = useState<{ lat: number; lng: number } | null>(
     null,
   );
 
-  // 通勤路線 modal
   const [addRouteOpen, setAddRouteOpen] = useState(false);
 
   const load = useCallback(async () => {
@@ -100,7 +98,6 @@ export default function HomePage() {
         setWaterStations((arr) =>
           arr.map((s) => (s.id === data.station.id ? data.station : s)),
         );
-        // hook stats: 飲水機 +1 / 故障標記 → 累積到 /me
         if (type === 'refill') incrementStat('water_refill');
         else if (type === 'broken') incrementStat('broken_reported');
       } catch (e) {
@@ -172,47 +169,47 @@ export default function HomePage() {
   };
 
   return (
-    <div className="px-4 py-4">
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <h1 className="text-lg font-semibold text-slate-900">校園水資源問題地圖</h1>
-          <p className="text-xs text-slate-500">
-            點選地圖 marker 查看詳情；遇到問題請按右上角「我要回報」協助校園更安全。
-          </p>
-        </div>
-        <Button onClick={() => setReportFormOpen(true)}>＋ 我要回報</Button>
-      </div>
-
-      {/* Today Briefing — daily trigger + streak ：擺最上面，每天打開第一眼看到 */}
-      <div className="mb-3">
+    <div className="px-4 py-4 sm:px-6">
+      {/* ─── 1. 今日水情報（hero） ─── */}
+      <div className="mb-4 animate-fade-in">
         <TodayBriefingCard waterStations={waterStations} />
       </div>
 
-      <ReportFilter
-        value={filter}
-        onChange={setFilter}
-        total={reports.length}
-        filtered={filtered.length}
-      />
-
-      {/* 圖層切換：水資源回報固定顯示，飲水機可切換 */}
-      <div className="mt-2 flex flex-wrap items-center gap-2">
-        <span className="text-[11px] font-medium text-slate-500">地圖圖層</span>
-        <label className="flex cursor-pointer items-center gap-1 rounded-full bg-sky-50 px-2 py-1 text-[11px] text-sky-800 ring-1 ring-sky-200">
-          <input
-            type="checkbox"
-            checked={showWaterStations}
-            onChange={(e) => setShowWaterStations(e.target.checked)}
-            className="h-3 w-3 rounded border-sky-300 text-sky-600"
-          />
-          💧 飲水機 ({waterStations.length})
-        </label>
+      {/* ─── 2. 工具列：filter + 圖層 + 主 CTA 三合一 ─── */}
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <ReportFilter
+          value={filter}
+          onChange={setFilter}
+          total={reports.length}
+          filtered={filtered.length}
+        />
+        <div className="flex items-center gap-2">
+          <label className="flex h-9 cursor-pointer items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-[12.5px] font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50">
+            <input
+              type="checkbox"
+              checked={showWaterStations}
+              onChange={(e) => setShowWaterStations(e.target.checked)}
+              className="h-3.5 w-3.5 rounded border-slate-300 text-brand-600 focus:ring-brand-500/40"
+            />
+            <span>💧 飲水機</span>
+            <span className="text-[10px] text-slate-400 tabular">
+              {waterStations.length}
+            </span>
+          </label>
+        </div>
+        <Button
+          size="sm"
+          onClick={() => setReportFormOpen(true)}
+          className="ml-auto"
+        >
+          ＋ 我要回報
+        </Button>
       </div>
 
-      <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-[1fr_360px]">
-        {/* 地圖 */}
+      {/* ─── 3. 地圖 + 側欄 ─── */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_360px]">
         <Card className="overflow-hidden p-0">
-          <div className="relative h-[60vh] min-h-[420px] lg:h-[calc(100vh-220px)]">
+          <div className="relative h-[55vh] min-h-[420px] lg:h-[calc(100vh-260px)]">
             {loading ? (
               <MapPlaceholder>讀取中…</MapPlaceholder>
             ) : error ? (
@@ -241,7 +238,6 @@ export default function HomePage() {
           </div>
         </Card>
 
-        {/* 側欄 */}
         <div className="flex flex-col gap-3">
           <TodayCommuteCard onAddRoute={() => setAddRouteOpen(true)} />
 
@@ -259,15 +255,13 @@ export default function HomePage() {
 
           <Card>
             <div className="mb-2 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-slate-900">
-                最新回報
-              </h3>
-              <span className="text-[11px] text-slate-400">
+              <h3 className="text-sm font-semibold text-slate-900">最新回報</h3>
+              <span className="text-[11px] text-slate-400 tabular">
                 {filtered.length} 筆
               </span>
             </div>
             {filtered.length === 0 ? (
-              <p className="py-6 text-center text-sm text-slate-400">
+              <p className="py-6 text-center text-[13px] text-slate-400">
                 目前沒有符合篩選條件的回報。
               </p>
             ) : (

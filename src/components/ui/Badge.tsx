@@ -2,15 +2,16 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-type Tone = 'gray' | 'red' | 'orange' | 'blue' | 'green' | 'slate';
+type Tone = 'gray' | 'red' | 'orange' | 'blue' | 'green' | 'slate' | 'brand';
 
 const toneClasses: Record<Tone, string> = {
-  gray: 'bg-slate-100 text-slate-700',
+  gray: 'bg-slate-100 text-slate-700 ring-1 ring-slate-200/70',
   slate: 'bg-slate-200 text-slate-800',
   red: 'bg-red-50 text-red-700 ring-1 ring-red-100',
   orange: 'bg-amber-50 text-amber-800 ring-1 ring-amber-100',
   blue: 'bg-blue-50 text-blue-700 ring-1 ring-blue-100',
   green: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100',
+  brand: 'bg-brand-50 text-brand-700 ring-1 ring-brand-100',
 };
 
 export function Badge({
@@ -25,7 +26,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium',
+        'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium',
         toneClasses[tone],
         className,
       )}
