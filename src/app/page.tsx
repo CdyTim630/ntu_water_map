@@ -12,6 +12,8 @@ import { RiskRanking } from '@/components/dashboard/RiskRanking';
 import { NearbyFountainsCard } from '@/components/water/NearbyFountainsCard';
 import { TodayCommuteCard } from '@/components/commute/TodayCommuteCard';
 import { AddCommuteRouteModal } from '@/components/commute/AddCommuteRouteModal';
+import { TodayBriefingCard } from '@/components/today/TodayBriefingCard';
+import { incrementStat } from '@/lib/statsStore';
 import { buildRiskRanking } from '@/lib/risk';
 import type {
   Report,
@@ -98,6 +100,9 @@ export default function HomePage() {
         setWaterStations((arr) =>
           arr.map((s) => (s.id === data.station.id ? data.station : s)),
         );
+        // hook stats: 飲水機 +1 / 故障標記 → 累積到 /me
+        if (type === 'refill') incrementStat('water_refill');
+        else if (type === 'broken') incrementStat('broken_reported');
       } catch (e) {
         alert(e instanceof Error ? e.message : '回報失敗');
       } finally {
@@ -176,6 +181,11 @@ export default function HomePage() {
           </p>
         </div>
         <Button onClick={() => setReportFormOpen(true)}>＋ 我要回報</Button>
+      </div>
+
+      {/* Today Briefing — daily trigger + streak ：擺最上面，每天打開第一眼看到 */}
+      <div className="mb-3">
+        <TodayBriefingCard waterStations={waterStations} />
       </div>
 
       <ReportFilter

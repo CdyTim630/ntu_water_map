@@ -10,6 +10,7 @@ import {
   type ReportSeverity,
 } from '@/lib/types';
 import { uploadReportImage } from '@/lib/supabase';
+import { incrementStat } from '@/lib/statsStore';
 
 const LocationPicker = dynamic(
   () => import('@/components/map/LocationPicker').then((m) => m.LocationPicker),
@@ -86,6 +87,8 @@ export function ReportForm({ initialLocation, onSubmitted, onCancel }: Props) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data.error ?? '送出失敗');
       }
+      // hook stats: 累積到 /me 個人成績單
+      incrementStat('report_filed');
       onSubmitted();
     } catch (err) {
       setError(err instanceof Error ? err.message : '發生未知錯誤');

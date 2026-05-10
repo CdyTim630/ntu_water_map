@@ -57,6 +57,12 @@ export default function RootLayout({
                 儀表板
               </Link>
               <Link
+                href="/me"
+                className="rounded-lg px-3 py-1.5 text-slate-700 hover:bg-slate-100"
+              >
+                我的
+              </Link>
+              <Link
                 href="/admin"
                 className="rounded-lg px-3 py-1.5 text-slate-700 hover:bg-slate-100"
               >

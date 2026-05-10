@@ -5,6 +5,7 @@ import { Card, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { useCommuteRoutes } from '@/lib/commuteStore';
 import { CAMPUS_NODES, getNode } from '@/lib/campus';
+import { incrementStat } from '@/lib/statsStore';
 import type { CommuteRoute } from '@/lib/types';
 import {
   RAIN_INTENSITY_LABEL,
@@ -310,6 +311,7 @@ export function TodayCommuteCard({ onAddRoute }: Props) {
                   )}
                   <Link
                     href={`/route?startNode=${encodeURIComponent(o.route.startNodeId)}&endNode=${encodeURIComponent(o.route.endNodeId)}&mode=${o.route.mode}`}
+                    onClick={() => incrementStat('commute_run')}
                     className="ml-auto font-medium text-brand-600 hover:text-brand-700"
                   >
                     在地圖開啟 →
