@@ -1,4 +1,5 @@
 'use client';
+import { MapPin, ThumbsUp, CheckCircle2 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import {
   CATEGORY_LABEL,
@@ -44,13 +45,23 @@ export function ReportCard({ report, onClick }: Props) {
         {report.title}
       </h4>
       {report.location_name && (
-        <p className="mt-0.5 truncate text-xs text-slate-500">
-          📍 {report.location_name}
+        <p className="mt-0.5 inline-flex items-center gap-1 truncate text-xs text-slate-500">
+          <MapPin className="h-3 w-3 flex-none" strokeWidth={2.2} />
+          {report.location_name}
         </p>
       )}
       <div className="mt-2 flex items-center justify-between text-[11px] text-slate-400">
         <span>{formatRelative(report.created_at)}</span>
-        <span>👍 {report.upvote_count} · ✅ {report.resolved_count}</span>
+        <span className="inline-flex items-center gap-2 tabular">
+          <span className="inline-flex items-center gap-0.5">
+            <ThumbsUp className="h-3 w-3" strokeWidth={2.2} />
+            {report.upvote_count}
+          </span>
+          <span className="inline-flex items-center gap-0.5">
+            <CheckCircle2 className="h-3 w-3" strokeWidth={2.2} />
+            {report.resolved_count}
+          </span>
+        </span>
       </div>
     </button>
   );

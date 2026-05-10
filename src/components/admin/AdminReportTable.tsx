@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { ThumbsUp, CheckCircle2, MessageSquare, MapPin } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { StatusBadge } from './StatusBadge';
@@ -84,7 +85,7 @@ export function AdminReportTable({ reports, password, onChanged }: Props) {
             <th className="px-3 py-2 text-left font-medium">類別</th>
             <th className="px-3 py-2 text-left font-medium">嚴重</th>
             <th className="px-3 py-2 text-left font-medium">狀態</th>
-            <th className="px-3 py-2 text-left font-medium">📍</th>
+            <th className="px-3 py-2 text-left font-medium">位置</th>
             <th className="px-3 py-2 text-left font-medium">建立</th>
             <th className="px-3 py-2 text-left font-medium">統計</th>
             <th className="px-3 py-2 text-right font-medium">操作</th>
@@ -128,8 +129,9 @@ export function AdminReportTable({ reports, password, onChanged }: Props) {
                     </div>
                   </div>
                 ) : r.admin_note ? (
-                  <div className="mt-1 rounded-md bg-amber-50 px-2 py-1 text-[11px] text-amber-800">
-                    📝 {r.admin_note}
+                  <div className="mt-1 inline-flex items-start gap-1 rounded-md bg-amber-50 px-2 py-1 text-[11px] text-amber-800">
+                    <MessageSquare className="mt-0.5 h-3 w-3 flex-none" strokeWidth={2.2} />
+                    <span>{r.admin_note}</span>
                   </div>
                 ) : null}
               </td>
@@ -170,7 +172,16 @@ export function AdminReportTable({ reports, password, onChanged }: Props) {
                 {formatDateTime(r.created_at)}
               </td>
               <td className="px-3 py-3 text-xs text-slate-600">
-                👍 {r.upvote_count} / ✅ {r.resolved_count}
+                <span className="inline-flex items-center gap-2 tabular">
+                  <span className="inline-flex items-center gap-0.5">
+                    <ThumbsUp className="h-3 w-3" strokeWidth={2.2} />
+                    {r.upvote_count}
+                  </span>
+                  <span className="inline-flex items-center gap-0.5">
+                    <CheckCircle2 className="h-3 w-3" strokeWidth={2.2} />
+                    {r.resolved_count}
+                  </span>
+                </span>
               </td>
               <td className="px-3 py-3 text-right">
                 <div className="flex flex-col items-end gap-1">

@@ -1,7 +1,17 @@
 'use client';
 import Link from 'next/link';
+import {
+  RefreshCw,
+  Sun,
+  CloudDrizzle,
+  CloudRain,
+  CloudLightning,
+  AlertTriangle,
+  ArrowRight,
+  type LucideIcon,
+} from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
-import { Card, CardHeader } from '@/components/ui/Card';
+import { Card, CardHeader, SectionLabel } from '@/components/ui/Card';
 import { CAMPUS_NODES } from '@/lib/campus';
 import {
   HORIZON_LABEL,
@@ -11,6 +21,15 @@ import {
   type HorizonForecast,
 } from '@/lib/forecast';
 import { RAIN_INTENSITY_LABEL, type WeatherSnapshot } from '@/lib/weather';
+
+const MOCK_RAIN_OPTIONS: { value: MockRain; label: string; Icon: LucideIcon }[] = [
+  { value: null, label: '自動', Icon: RefreshCw },
+  { value: 'none', label: '無雨', Icon: Sun },
+  { value: 'drizzle', label: '毛毛雨', Icon: CloudDrizzle },
+  { value: 'light', label: '小雨', Icon: CloudRain },
+  { value: 'moderate', label: '中雨', Icon: CloudRain },
+  { value: 'heavy', label: '大雨', Icon: CloudLightning },
+];
 
 export type MockRain = null | 'none' | 'drizzle' | 'light' | 'moderate' | 'heavy';
 
@@ -170,10 +189,8 @@ export function ForecastPanel({
       {/* 雨勢模擬（mock 才顯示） */}
       {isMockSource && (
         <Card className="border-amber-200 bg-amber-50/40">
-          <div className="mb-1 flex items-center justify-between">
-            <span className="text-[11px] font-medium text-amber-900">
-              🧪 雨勢模擬（mock 模式可即時切換）
-            </span>
+          <div className="mb-1.5 flex items-center justify-between">
+            <SectionLabel className="text-amber-800">雨勢模擬</SectionLabel>
             {mockRain && (
               <button
                 className="text-[10px] text-amber-700 underline"
@@ -184,28 +201,20 @@ export function ForecastPanel({
             )}
           </div>
           <div className="grid grid-cols-3 gap-1.5">
-            {(
-              [
-                { value: null, label: '自動', emoji: '🔄' },
-                { value: 'none', label: '無雨', emoji: '☀️' },
-                { value: 'drizzle', label: '毛毛雨', emoji: '🌦' },
-                { value: 'light', label: '小雨', emoji: '🌧' },
-                { value: 'moderate', label: '中雨', emoji: '⛈' },
-                { value: 'heavy', label: '大雨', emoji: '🌊' },
-              ] as { value: MockRain; label: string; emoji: string }[]
-            ).map((opt) => {
+            {MOCK_RAIN_OPTIONS.map((opt) => {
               const active = mockRain === opt.value;
+              const Icon = opt.Icon;
               return (
                 <button
                   key={opt.label}
                   onClick={() => onChangeMockRain(opt.value)}
-                  className={`flex flex-col items-center gap-0.5 rounded-lg border px-2 py-1.5 text-[11px] transition-colors ${
+                  className={`flex flex-col items-center gap-1 rounded-lg border px-2 py-1.5 text-[11px] transition-colors ${
                     active
                       ? 'border-amber-400 bg-white text-amber-900 shadow-sm'
-                      : 'border-amber-100 bg-white/60 text-amber-800 hover:bg-white'
+                      : 'border-amber-100/70 bg-white/60 text-amber-800 hover:bg-white'
                   }`}
                 >
-                  <span className="text-base">{opt.emoji}</span>
+                  <Icon className="h-4 w-4" strokeWidth={2} />
                   <span>{opt.label}</span>
                 </button>
               );
@@ -266,7 +275,7 @@ export function ForecastPanel({
           <Legend color="#f97316" label="高 50–70%" />
           <Legend color="#ef4444" label="極高 70–85%" />
           <Legend color="#b91c1c" label="爆表 ≥85%" />
-          <Legend color="#dc2626" label="⚠ 熱區" pin />
+          <LegendHotspot color="#dc2626" label="熱區" />
         </div>
         <p className="mt-2 text-[10px] leading-relaxed text-slate-400">
           每格 50m × 50m。分數由低窪×雨勢、歷史回報密度、現場 active
@@ -299,27 +308,32 @@ function Stat({
   );
 }
 
-function Legend({
-  color,
-  label,
-  pin,
-}: {
-  color: string;
-  label: string;
-  pin?: boolean;
-}) {
+function Legend({ color, label }: { color: string; label: string }) {
   return (
     <span className="flex items-center gap-1.5">
       <span
         style={{
-          background: pin ? color : color,
-          width: pin ? 14 : 18,
-          height: pin ? 14 : 10,
-          borderRadius: pin ? 999 : 3,
-          boxShadow: pin ? `0 0 0 2px white, 0 0 0 3px ${color}` : 'none',
-          opacity: pin ? 1 : 0.7,
+          background: color,
+          width: 18,
+          height: 10,
+          borderRadius: 3,
+          opacity: 0.7,
         }}
       />
+      <span>{label}</span>
+    </span>
+  );
+}
+
+function LegendHotspot({ color, label }: { color: string; label: string }) {
+  return (
+    <span className="flex items-center gap-1.5">
+      <span
+        className="grid h-4 w-4 place-items-center rounded-full text-white"
+        style={{ background: color }}
+      >
+        <AlertTriangle className="h-2.5 w-2.5" strokeWidth={3} />
+      </span>
       <span>{label}</span>
     </span>
   );
@@ -389,9 +403,10 @@ function HotspotItem({
             <Link
               href={`/route?endNode=${encodeURIComponent(nearestNodeId)}&mockRain=${selectedHorizonToMockRain(spot.peakScore)}`}
               onClick={(e) => e.stopPropagation()}
-              className="mt-1 inline-flex items-center gap-1 text-[11px] font-medium text-brand-600 hover:text-brand-700"
+              className="mt-1 inline-flex items-center gap-0.5 text-[11px] font-medium text-brand-600 hover:text-brand-700"
             >
-              查看避開此處的建議路線 →
+              查看避開此處的建議路線
+              <ArrowRight className="h-3 w-3" strokeWidth={2.4} />
             </Link>
           )}
         </div>

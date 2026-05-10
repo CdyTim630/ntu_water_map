@@ -185,18 +185,15 @@ export default function RoutePage() {
   );
 
   return (
-    <div className="px-4 py-4 space-y-3">
-      <div className="flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h1 className="text-lg font-semibold text-slate-900">
-            雨天路徑規劃
-          </h1>
-          <p className="text-xs text-slate-500">
-            真實 OSM 校園路網（{CAMPUS_NODES.length} 個地標、6000+ 路徑節點）
-            ＋ 中央氣象署即時氣象 ＋ 校園積水回報，沿實際道路為你導航最少淋雨的走法。
-            可從地標選擇，或<span className="font-medium text-brand-600">直接在地圖上點選任意位置</span>。
-          </p>
-        </div>
+    <div className="px-4 py-4 sm:px-6 space-y-3 animate-fade-in">
+      <div>
+        <h1 className="text-lg font-semibold tracking-tight text-slate-900">
+          雨天路徑規劃
+        </h1>
+        <p className="mt-0.5 text-[11.5px] text-slate-500">
+          結合即時氣象與校園積水回報，導航最少淋雨的走法。
+          可從 {CAMPUS_NODES.length} 個地標選起終點，或直接在地圖上點選任意位置。
+        </p>
       </div>
 
       <WeatherBadge weather={weather} loading={routing && !weather} />

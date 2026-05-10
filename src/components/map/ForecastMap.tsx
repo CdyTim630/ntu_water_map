@@ -63,6 +63,8 @@ function scoreToStyle(score: number): {
 function hotspotIcon(score: number): L.DivIcon {
   const ring =
     score >= 0.75 ? '#b91c1c' : score >= 0.5 ? '#dc2626' : '#f59e0b';
+  // SVG triangle warning glyph (lucide-style)
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path d="M12 4l10 17H2L12 4z" fill="white"/><path d="M12 10v5M12 18v.5" stroke="${ring}" stroke-width="2" stroke-linecap="round"/></svg>`;
   return L.divIcon({
     className: 'ntu-hotspot',
     iconSize: [34, 34],
@@ -70,12 +72,11 @@ function hotspotIcon(score: number): L.DivIcon {
     html: `
       <div style="
         width:34px;height:34px;border-radius:999px;
-        background:${ring};color:white;
+        background:${ring};
         display:flex;align-items:center;justify-content:center;
-        font-size:16px;font-weight:700;
         box-shadow:0 2px 10px rgba(127,29,29,0.45);
         border:3px solid white;
-      ">⚠</div>`,
+      ">${svg}</div>`,
   });
 }
 

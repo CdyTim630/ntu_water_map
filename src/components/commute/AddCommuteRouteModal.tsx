@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { Footprints, Bike } from 'lucide-react';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 import { CAMPUS_NODES } from '@/lib/campus';
@@ -143,24 +144,26 @@ export function AddCommuteRouteModal({ open, onClose }: Props) {
             <button
               type="button"
               onClick={() => setMode('walk')}
-              className={`flex h-10 items-center justify-center gap-1 rounded-lg border text-sm transition-colors ${
+              className={`inline-flex h-10 items-center justify-center gap-1.5 rounded-lg border text-sm transition-colors ${
                 mode === 'walk'
                   ? 'border-brand-500 bg-brand-50 text-brand-700'
-                  : 'border-slate-200 bg-white text-slate-600'
+                  : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
               }`}
             >
-              🚶 步行
+              <Footprints className="h-4 w-4" strokeWidth={2.2} />
+              步行
             </button>
             <button
               type="button"
               onClick={() => setMode('bike')}
-              className={`flex h-10 items-center justify-center gap-1 rounded-lg border text-sm transition-colors ${
+              className={`inline-flex h-10 items-center justify-center gap-1.5 rounded-lg border text-sm transition-colors ${
                 mode === 'bike'
                   ? 'border-brand-500 bg-brand-50 text-brand-700'
-                  : 'border-slate-200 bg-white text-slate-600'
+                  : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
               }`}
             >
-              🚴 腳踏車
+              <Bike className="h-4 w-4" strokeWidth={2.2} />
+              腳踏車
             </button>
           </div>
         </div>

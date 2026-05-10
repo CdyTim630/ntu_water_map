@@ -13,6 +13,7 @@ import { NearbyFountainsCard } from '@/components/water/NearbyFountainsCard';
 import { TodayCommuteCard } from '@/components/commute/TodayCommuteCard';
 import { AddCommuteRouteModal } from '@/components/commute/AddCommuteRouteModal';
 import { TodayBriefingCard } from '@/components/today/TodayBriefingCard';
+import { Plus, Droplet } from 'lucide-react';
 import { incrementStat } from '@/lib/statsStore';
 import { buildRiskRanking } from '@/lib/risk';
 import type {
@@ -184,14 +185,15 @@ export default function HomePage() {
           filtered={filtered.length}
         />
         <div className="flex items-center gap-2">
-          <label className="flex h-9 cursor-pointer items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-[12.5px] font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50">
+          <label className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 text-[12.5px] font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50">
             <input
               type="checkbox"
               checked={showWaterStations}
               onChange={(e) => setShowWaterStations(e.target.checked)}
               className="h-3.5 w-3.5 rounded border-slate-300 text-brand-600 focus:ring-brand-500/40"
             />
-            <span>💧 飲水機</span>
+            <Droplet className="h-3.5 w-3.5 text-brand-500" strokeWidth={2.2} fill="currentColor" />
+            <span>飲水機</span>
             <span className="text-[10px] text-slate-400 tabular">
               {waterStations.length}
             </span>
@@ -202,7 +204,8 @@ export default function HomePage() {
           onClick={() => setReportFormOpen(true)}
           className="ml-auto"
         >
-          ＋ 我要回報
+          <Plus className="h-3.5 w-3.5" strokeWidth={2.4} />
+          我要回報
         </Button>
       </div>
 

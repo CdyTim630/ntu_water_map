@@ -1,4 +1,5 @@
 'use client';
+import { MapPin, ThumbsUp, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import {
@@ -50,7 +51,10 @@ export function ReportPopupContent({
         {report.title}
       </h3>
       {report.location_name && (
-        <p className="text-xs text-slate-500">📍 {report.location_name}</p>
+        <p className="inline-flex items-center gap-1 text-xs text-slate-500">
+          <MapPin className="h-3 w-3 flex-none" strokeWidth={2.2} />
+          {report.location_name}
+        </p>
       )}
       {report.description && (
         <p className="line-clamp-3 text-xs text-slate-600">{report.description}</p>
@@ -65,7 +69,16 @@ export function ReportPopupContent({
       )}
       <div className="flex items-center justify-between pt-1 text-[11px] text-slate-400">
         <span>{formatRelative(report.created_at)}</span>
-        <span>👍 {report.upvote_count} · ✅ {report.resolved_count}</span>
+        <span className="inline-flex items-center gap-2 tabular">
+          <span className="inline-flex items-center gap-0.5">
+            <ThumbsUp className="h-3 w-3" strokeWidth={2.2} />
+            {report.upvote_count}
+          </span>
+          <span className="inline-flex items-center gap-0.5">
+            <CheckCircle2 className="h-3 w-3" strokeWidth={2.2} />
+            {report.resolved_count}
+          </span>
+        </span>
       </div>
       <div className="flex gap-1.5 pt-1">
         <Button
@@ -93,7 +106,8 @@ export function ReportPopupContent({
         onClick={() => onOpenDetails(report)}
         className="w-full"
       >
-        查看完整詳情 →
+        查看完整詳情
+        <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.2} />
       </Button>
     </div>
   );

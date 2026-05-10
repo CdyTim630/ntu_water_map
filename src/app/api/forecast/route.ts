@@ -18,11 +18,11 @@ function applyMockRain(base: WeatherSnapshot, m: MockRain): WeatherSnapshot {
     MockRain,
     { mm: number; intensity: RainIntensity; pop3h: number; desc: string }
   > = {
-    none: { mm: 0, intensity: 'none', pop3h: 0.05, desc: '☀️ 模擬：無雨' },
-    drizzle: { mm: 0.3, intensity: 'drizzle', pop3h: 0.55, desc: '🌦 模擬：毛毛雨' },
-    light: { mm: 1.5, intensity: 'light', pop3h: 0.8, desc: '🌧 模擬：小雨' },
-    moderate: { mm: 6, intensity: 'moderate', pop3h: 0.9, desc: '⛈ 模擬：中雨' },
-    heavy: { mm: 18, intensity: 'heavy', pop3h: 0.95, desc: '🌊 模擬：大雨' },
+    none: { mm: 0, intensity: 'none', pop3h: 0.05, desc: '模擬：無雨' },
+    drizzle: { mm: 0.3, intensity: 'drizzle', pop3h: 0.55, desc: '模擬：毛毛雨' },
+    light: { mm: 1.5, intensity: 'light', pop3h: 0.8, desc: '模擬：小雨' },
+    moderate: { mm: 6, intensity: 'moderate', pop3h: 0.9, desc: '模擬：中雨' },
+    heavy: { mm: 18, intensity: 'heavy', pop3h: 0.95, desc: '模擬：大雨' },
   };
   const pick = mapping[m];
   const next: WeatherSnapshot = {

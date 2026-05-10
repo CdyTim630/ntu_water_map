@@ -104,12 +104,13 @@ export default function ForecastPage() {
   }, []);
 
   return (
-    <div className="px-4 py-4 space-y-3">
+    <div className="px-4 py-4 sm:px-6 space-y-3 animate-fade-in">
       <div>
-        <h1 className="text-lg font-semibold text-slate-900">水災預警地圖</h1>
-        <p className="text-xs text-slate-500">
-          融合過去 90 天回報密度、OSM 路網低窪標記、即時 / 預報雨勢，
-          推估校園各區未來 1 / 3 / 6 小時積水機率。可切換時段或模擬不同雨勢測試。
+        <h1 className="text-lg font-semibold tracking-tight text-slate-900">
+          水災預警地圖
+        </h1>
+        <p className="mt-0.5 text-[11.5px] text-slate-500">
+          融合 90 天回報密度、OSM 低窪標記與即時氣象，推估校園各區未來 1 / 3 / 6 小時積水機率。
         </p>
       </div>
 

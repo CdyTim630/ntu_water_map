@@ -9,6 +9,7 @@ import {
   Home,
   AlertTriangle,
   ArrowRight,
+  Plus,
   type LucideIcon,
 } from 'lucide-react';
 import { Card, CardHeader } from '@/components/ui/Card';
@@ -254,7 +255,8 @@ export function TodayCommuteCard({ onAddRoute }: Props) {
             還沒設定通勤路線。
           </p>
           <Button size="sm" className="mt-2" onClick={onAddRoute}>
-            ＋ 新增第一條路線
+            <Plus className="h-3.5 w-3.5" strokeWidth={2.4} />
+            新增第一條路線
           </Button>
         </div>
       </Card>
@@ -268,7 +270,8 @@ export function TodayCommuteCard({ onAddRoute }: Props) {
         description={`${routes.length} 條路線 · 即時計算`}
         action={
           <Button size="sm" variant="ghost" onClick={onAddRoute}>
-            ＋ 新增
+            <Plus className="h-3.5 w-3.5" strokeWidth={2.4} />
+            新增
           </Button>
         }
       />
