@@ -67,13 +67,49 @@ export interface RiskRankingEntry {
 }
 
 export interface DashboardStats {
+  // Reports — 概覽
   totalReports: number;
   activeReports: number;
   resolvedReports: number;
   highSeverityReports: number;
+  /** 近 7 天回報數 */
+  pastWeekReports: number;
+  /** 前一個 7 天（給 WoW 變化 indicator 用） */
+  prevWeekReports: number;
+  /** 已解決 reports 的平均處理時間（天）；不夠資料時為 null */
+  avgResolveDays: number | null;
+  /** 已解決比例 0..1 */
+  resolveRate: number;
+
+  // Reports — 分布
   byCategory: { category: ReportCategory; count: number }[];
-  trend7d: { date: string; count: number }[];
+  byStatus: { status: ReportStatus; count: number }[];
+  bySeverity: { severity: ReportSeverity; count: number }[];
+
+  // Trend — 14 天每日新增
+  trend14d: { date: string; count: number }[];
+
+  // 高風險排行
   ranking: RiskRankingEntry[];
+
+  // 飲水機健康度
+  waterStations: {
+    total: number;
+    normal: number;
+    broken: number;
+    filterDue: number;
+    /** 累積眾包減塑寶特瓶數 */
+    totalBottlesSaved: number;
+    /** 故障清單 — 上限 5 筆，依 last_reported_at 排序 */
+    brokenList: {
+      id: string;
+      name: string;
+      location_hint: string | null;
+      daysSinceReport: number | null;
+    }[];
+    /** 來源組成（OSM / 官方 / 雙源） */
+    bySource: { source: 'osm' | 'official' | 'merged'; count: number }[];
+  };
 }
 
 export const CATEGORY_LABEL: Record<ReportCategory, string> = {

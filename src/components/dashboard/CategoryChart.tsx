@@ -2,7 +2,7 @@
 import {
   Bar,
   BarChart,
-  CartesianGrid,
+  Cell,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -15,30 +15,64 @@ interface Props {
   data: DashboardStats['byCategory'];
 }
 
+const CATEGORY_COLOR: Record<string, string> = {
+  flooding: '#1668cc',
+  standing_water: '#4d9cf5',
+  facility_leak: '#f59e0b',
+  poor_drainage: '#a855f7',
+  other: '#94a3b8',
+};
+
 export function CategoryChart({ data }: Props) {
-  const chartData = data.map((d) => ({
-    name: CATEGORY_LABEL[d.category],
-    count: d.count,
-  }));
+  // 排序：count 大→小，視覺更舒適
+  const chartData = [...data]
+    .sort((a, b) => b.count - a.count)
+    .map((d) => ({
+      name: CATEGORY_LABEL[d.category],
+      count: d.count,
+      key: d.category,
+    }));
 
   return (
     <Card>
-      <CardHeader title="各類別回報數量" description="按問題類別統計" />
-      <div className="h-64 w-full">
+      <CardHeader title="問題類別" description="校園回報依問題型態統計" />
+      <div className="h-56 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-            <XAxis dataKey="name" tick={{ fontSize: 11 }} stroke="#94a3b8" />
-            <YAxis allowDecimals={false} tick={{ fontSize: 11 }} stroke="#94a3b8" />
+          <BarChart
+            data={chartData}
+            layout="vertical"
+            margin={{ top: 4, right: 12, left: -12, bottom: 0 }}
+          >
+            <XAxis
+              type="number"
+              hide
+              allowDecimals={false}
+            />
+            <YAxis
+              type="category"
+              dataKey="name"
+              tick={{ fontSize: 12, fill: '#475569' }}
+              tickLine={false}
+              axisLine={false}
+              width={80}
+            />
             <Tooltip
               contentStyle={{
-                borderRadius: 12,
+                borderRadius: 10,
                 border: '1px solid #e2e8f0',
                 fontSize: 12,
+                padding: '6px 10px',
               }}
-              cursor={{ fill: 'rgba(59,130,246,0.06)' }}
+              cursor={{ fill: 'rgba(38,128,227,0.06)' }}
             />
-            <Bar dataKey="count" fill="#2569e6" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="count" radius={[0, 6, 6, 0]} maxBarSize={20}>
+              {chartData.map((entry) => (
+                <Cell
+                  key={entry.key}
+                  fill={CATEGORY_COLOR[entry.key] ?? '#94a3b8'}
+                />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
