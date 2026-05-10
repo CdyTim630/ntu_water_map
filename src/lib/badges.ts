@@ -3,22 +3,38 @@
  *
  * 加新徽章只需在這裡 + 一行條件，UI 會自動列出。
  */
+import {
+  Flame,
+  Sparkles,
+  Trophy,
+  Crown,
+  Star,
+  Droplet,
+  Recycle,
+  Leaf,
+  Award,
+  Footprints,
+  Bike,
+  Eye,
+  Megaphone,
+  Wrench,
+  type LucideIcon,
+} from 'lucide-react';
 import type { StatsState } from './statsStore';
 import type { StreakState } from './streakStore';
 
 export interface Badge {
   id: string;
   name: string;
-  emoji: string;
+  Icon: LucideIcon;
   description: string;
-  /** 解鎖條件 — 給定 streak/stats 是否達成 */
   isUnlocked: (s: StreakState, stats: StatsState) => boolean;
-  /** 顯示用：完成度 0..1（給徽章牆 progress bar） */
   progress: (s: StreakState, stats: StatsState) => number;
   category: 'streak' | 'water' | 'commute' | 'community';
 }
 
 const STREAK_THRESHOLDS = [3, 7, 30, 100, 365];
+const STREAK_ICONS: LucideIcon[] = [Sparkles, Flame, Star, Trophy, Crown];
 
 function pct(cur: number, target: number) {
   return Math.min(1, cur / target);
@@ -39,7 +55,7 @@ export const BADGES: Badge[] = [
               : d >= 7
                 ? '一週水文'
                 : '初次入流',
-      emoji: ['🔰', '🔥', '⭐', '🏆', '👑'][i] || '🎖',
+      Icon: STREAK_ICONS[i] ?? Flame,
       description: `連續打開 ${d} 天`,
       isUnlocked: (s) => s.currentStreak >= d || s.longestStreak >= d,
       progress: (s) => pct(Math.max(s.currentStreak, s.longestStreak), d),
@@ -51,7 +67,7 @@ export const BADGES: Badge[] = [
   {
     id: 'refill_1',
     name: '初次裝水',
-    emoji: '💧',
+    Icon: Droplet,
     description: '在飲水機按下第一個 +1',
     isUnlocked: (_, st) => st.water_refill >= 1,
     progress: (_, st) => pct(st.water_refill, 1),
@@ -60,7 +76,7 @@ export const BADGES: Badge[] = [
   {
     id: 'refill_10',
     name: '減塑入門',
-    emoji: '♻',
+    Icon: Recycle,
     description: '累積裝水 10 次（省 10 個 600ml 寶特瓶）',
     isUnlocked: (_, st) => st.water_refill >= 10,
     progress: (_, st) => pct(st.water_refill, 10),
@@ -69,7 +85,7 @@ export const BADGES: Badge[] = [
   {
     id: 'refill_50',
     name: '減塑達人',
-    emoji: '🌱',
+    Icon: Leaf,
     description: '累積裝水 50 次（省下 ~700g CO₂）',
     isUnlocked: (_, st) => st.water_refill >= 50,
     progress: (_, st) => pct(st.water_refill, 50),
@@ -78,7 +94,7 @@ export const BADGES: Badge[] = [
   {
     id: 'refill_100',
     name: '減塑王',
-    emoji: '🏆',
+    Icon: Award,
     description: '累積裝水 100 次',
     isUnlocked: (_, st) => st.water_refill >= 100,
     progress: (_, st) => pct(st.water_refill, 100),
@@ -89,7 +105,7 @@ export const BADGES: Badge[] = [
   {
     id: 'commute_5',
     name: '通勤新手',
-    emoji: '🚶',
+    Icon: Footprints,
     description: '使用通勤路線規劃 5 次',
     isUnlocked: (_, st) => st.commute_run >= 5,
     progress: (_, st) => pct(st.commute_run, 5),
@@ -98,7 +114,7 @@ export const BADGES: Badge[] = [
   {
     id: 'commute_30',
     name: '通勤老手',
-    emoji: '🚴',
+    Icon: Bike,
     description: '使用通勤路線規劃 30 次',
     isUnlocked: (_, st) => st.commute_run >= 30,
     progress: (_, st) => pct(st.commute_run, 30),
@@ -109,7 +125,7 @@ export const BADGES: Badge[] = [
   {
     id: 'report_1',
     name: '校園守護者',
-    emoji: '👀',
+    Icon: Eye,
     description: '提交第 1 筆水資源回報',
     isUnlocked: (_, st) => st.report_filed >= 1,
     progress: (_, st) => pct(st.report_filed, 1),
@@ -118,7 +134,7 @@ export const BADGES: Badge[] = [
   {
     id: 'report_5',
     name: '回報達人',
-    emoji: '📣',
+    Icon: Megaphone,
     description: '提交 5 筆回報',
     isUnlocked: (_, st) => st.report_filed >= 5,
     progress: (_, st) => pct(st.report_filed, 5),
@@ -127,7 +143,7 @@ export const BADGES: Badge[] = [
   {
     id: 'broken_3',
     name: '故障獵人',
-    emoji: '🔧',
+    Icon: Wrench,
     description: '標出 3 台故障飲水機',
     isUnlocked: (_, st) => st.broken_reported >= 3,
     progress: (_, st) => pct(st.broken_reported, 3),

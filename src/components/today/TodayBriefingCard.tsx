@@ -1,6 +1,17 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import {
+  Sun,
+  Umbrella,
+  CloudRain,
+  Flame,
+  CheckCircle2,
+  AlertTriangle,
+  Sparkles,
+  Hand,
+  type LucideIcon,
+} from 'lucide-react';
 import { Card, SectionLabel } from '@/components/ui/Card';
 import { useStreak, nextBadgeProgress } from '@/lib/streakStore';
 import {
@@ -10,7 +21,6 @@ import {
 import type { WaterStation } from '@/lib/types';
 
 interface Props {
-  /** 主頁已抓的飲水機資料，避免重複 fetch */
   waterStations?: WaterStation[];
 }
 
@@ -22,8 +32,9 @@ interface ForecastHorizon {
 }
 
 /**
- * 主頁最上方「今日水情報」— Daily Trigger 引擎的具現化。
- * 設計重點：左側 verdict hero + 右側 streak hero 雙焦點，下方三條輔助資訊。
+ * 今日水情報 — 主頁 hero。
+ * 雙焦點：左 verdict（圖示 + 標語）/ 右 streak（火焰 + 大數字）
+ * 底部 chip 列：飲水機運作狀態、徽章解鎖、新人引導。
  */
 export function TodayBriefingCard({ waterStations = [] }: Props) {
   const { state: streak, newlyUnlocked, hydrated } = useStreak();
@@ -31,7 +42,6 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
   const [horizons, setHorizons] = useState<ForecastHorizon[]>([]);
   const [dateLabel, setDateLabel] = useState<string>('');
 
-  // 客端才產日期字串，避免 hydration mismatch
   useEffect(() => {
     setDateLabel(
       new Date().toLocaleDateString('zh-TW', {
@@ -60,29 +70,37 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
     [waterStations],
   );
 
-  const verdict = useMemo(() => {
+  type VerdictTone = 'rose' | 'sky' | 'emerald';
+  interface Verdict {
+    Icon: LucideIcon;
+    label: string;
+    sub: string;
+    tone: VerdictTone;
+  }
+
+  const verdict: Verdict = useMemo(() => {
     const peak = horizons.reduce((mx, h) => Math.max(mx, h.rainFactor), 0);
     if (peak >= 0.55) {
       return {
-        emoji: '☔',
+        Icon: CloudRain,
         label: '強烈建議帶傘',
         sub: '今天會下中雨以上',
-        tone: 'rose' as const,
+        tone: 'rose',
       };
     }
     if (peak >= 0.25) {
       return {
-        emoji: '☂',
+        Icon: Umbrella,
         label: '建議帶傘',
         sub: '部分時段有雨機率',
-        tone: 'sky' as const,
+        tone: 'sky',
       };
     }
     return {
-      emoji: '☀',
+      Icon: Sun,
       label: '不必帶傘',
       sub: '今天雨勢輕微',
-      tone: 'emerald' as const,
+      tone: 'emerald',
     };
   }, [horizons]);
 
@@ -102,35 +120,44 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
   const isFirstDay =
     streak.currentStreak === 1 && streak.totalDistinctDays === 1;
 
-  // 主色 token by verdict
   const verdictAccent = {
     rose: {
       bg: 'bg-rose-50',
+      iconBg: 'bg-rose-100',
+      iconText: 'text-rose-600',
       text: 'text-rose-700',
       ring: 'ring-rose-100',
     },
     sky: {
       bg: 'bg-brand-50',
+      iconBg: 'bg-brand-100',
+      iconText: 'text-brand-600',
       text: 'text-brand-700',
       ring: 'ring-brand-100',
     },
     emerald: {
       bg: 'bg-emerald-50',
+      iconBg: 'bg-emerald-100',
+      iconText: 'text-emerald-600',
       text: 'text-emerald-700',
       ring: 'ring-emerald-100',
     },
   }[verdict.tone];
 
+  const VerdictIcon = verdict.Icon;
+
   return (
     <Card className="overflow-hidden bg-gradient-to-br from-white via-white to-brand-50/40 p-0 ring-1 ring-slate-200/60">
-      {/* Hero 區：左 verdict / 右 streak — 兩個視覺焦點並列 */}
       <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] sm:items-stretch">
         {/* 左：今天該不該帶傘 */}
         <div className="flex items-center gap-4 p-4 sm:p-5">
           <div
-            className={`grid h-14 w-14 flex-none place-items-center rounded-2xl text-3xl ring-1 ${verdictAccent.bg} ${verdictAccent.ring}`}
+            className={`grid h-14 w-14 flex-none place-items-center rounded-2xl ring-1 ${verdictAccent.iconBg} ${verdictAccent.ring}`}
           >
-            {verdict.emoji}
+            <VerdictIcon
+              className={`h-7 w-7 ${verdictAccent.iconText}`}
+              strokeWidth={2}
+            />
           </div>
           <div className="min-w-0 flex-1">
             <SectionLabel className="text-slate-500">
@@ -149,14 +176,14 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
           </div>
         </div>
 
-        {/* 右：streak hero — 在 sm+ 才顯示在右 */}
+        {/* 右：streak hero */}
         <Link
           href="/me"
           className="group flex items-center justify-between gap-3 border-t border-slate-200/60 bg-gradient-to-br from-orange-50/70 to-amber-50/70 p-4 transition-colors hover:from-orange-100/70 hover:to-amber-100/70 sm:min-w-[180px] sm:flex-col sm:items-center sm:justify-center sm:border-l sm:border-t-0 sm:p-5"
         >
           <div className="text-center">
-            <div className="flex items-baseline justify-center gap-1">
-              <span className="text-3xl">🔥</span>
+            <div className="flex items-baseline justify-center gap-1.5">
+              <Flame className="h-7 w-7 text-orange-500" strokeWidth={2.2} fill="currentColor" />
               <span className="text-3xl font-bold text-orange-600 tabular">
                 {streak.currentStreak}
               </span>
@@ -171,22 +198,24 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
                 距下徽章 <b>{next.remaining}</b> 天
               </>
             ) : (
-              <>已蒐集全部徽章 🏆</>
+              <>已蒐集全部徽章</>
             )}
           </div>
         </Link>
       </div>
 
-      {/* 底部 chip 列：飲水機異常 + onboarding（如果是新使用者） */}
+      {/* 底部 chip 列 */}
       <div className="flex flex-wrap items-center gap-2 border-t border-slate-200/60 bg-white px-4 py-2.5 text-[12px]">
         <SectionLabel>校園水況</SectionLabel>
         {brokenStations.length === 0 ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-700 ring-1 ring-emerald-100">
-            ✓ 飲水機 {waterStations.length} 台運作中
+            <CheckCircle2 className="h-3 w-3" strokeWidth={2.4} />
+            飲水機 {waterStations.length} 台運作中
           </span>
         ) : (
           <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2 py-0.5 text-[11px] font-medium text-rose-700 ring-1 ring-rose-100">
-            ⚠ {brokenStations.length} 台需注意
+            <AlertTriangle className="h-3 w-3" strokeWidth={2.4} />
+            {brokenStations.length} 台需注意
             <span className="text-rose-500/80">
               · {brokenStations[0].name.slice(0, 12)}
               {brokenStations[0].name.length > 12 && '…'}
@@ -196,7 +225,8 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
 
         {newlyUnlocked.length > 0 && (
           <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-800 ring-1 ring-amber-100 animate-fade-in">
-            🎉 解鎖新徽章
+            <Sparkles className="h-3 w-3" strokeWidth={2.4} />
+            解鎖新徽章
             <Link href="/me" className="underline">
               查看
             </Link>
@@ -204,8 +234,9 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
         )}
 
         {isFirstDay && (
-          <span className="ml-auto text-[11px] text-slate-500">
-            👋 歡迎，每天打開累積徽章 →{' '}
+          <span className="ml-auto inline-flex items-center gap-1 text-[11px] text-slate-500">
+            <Hand className="h-3 w-3" strokeWidth={2.2} />
+            歡迎，每天打開累積徽章 →{' '}
             <Link
               href="/me"
               className="font-medium text-brand-700 hover:underline"

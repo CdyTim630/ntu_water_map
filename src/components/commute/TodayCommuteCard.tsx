@@ -1,6 +1,16 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
+import {
+  Sun,
+  Umbrella,
+  CloudRain,
+  Ruler,
+  Home,
+  AlertTriangle,
+  ArrowRight,
+  type LucideIcon,
+} from 'lucide-react';
 import { Card, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { useCommuteRoutes } from '@/lib/commuteStore';
@@ -82,39 +92,39 @@ function buildVerdict(
     if (coverage < 0.4) parts.push(`沿途遮蔽率僅 ${Math.round(coverage * 100)}%`);
     return {
       verdict: 'strong_warn',
-      advice: `🚨 強烈建議帶傘並走推薦路徑。${parts.join('、')}。`,
+      advice: `強烈建議帶傘並走推薦路徑。${parts.join('、')}。`,
     };
   }
 
   return {
     verdict: 'take_umbrella',
-    advice: `☂ 建議帶傘。沿推薦路徑遮蔽率 ${Math.round(coverage * 100)}%，比最短路徑省約 ${Math.max(0, Math.round(detourMeters))} m 暴露。`,
+    advice: `建議帶傘。沿推薦路徑遮蔽率 ${Math.round(coverage * 100)}%，比最短路徑省約 ${Math.max(0, Math.round(detourMeters))} m 暴露。`,
   };
 }
 
 const VERDICT_STYLE: Record<
   RouteOutcome['verdict'],
-  { bg: string; border: string; text: string; emoji: string; label: string }
+  { bg: string; border: string; text: string; Icon: LucideIcon; label: string }
 > = {
   no_umbrella: {
     bg: 'bg-emerald-50',
     border: 'border-emerald-200',
     text: 'text-emerald-800',
-    emoji: '☀️',
+    Icon: Sun,
     label: '不必帶傘',
   },
   take_umbrella: {
-    bg: 'bg-sky-50',
-    border: 'border-sky-200',
-    text: 'text-sky-800',
-    emoji: '☂',
+    bg: 'bg-brand-50',
+    border: 'border-brand-200',
+    text: 'text-brand-800',
+    Icon: Umbrella,
     label: '建議帶傘',
   },
   strong_warn: {
     bg: 'bg-rose-50',
     border: 'border-rose-200',
     text: 'text-rose-800',
-    emoji: '🚨',
+    Icon: CloudRain,
     label: '強烈建議',
   },
 };
@@ -265,6 +275,7 @@ export function TodayCommuteCard({ onAddRoute }: Props) {
       <ul className="flex flex-col gap-2">
         {outcomes.map((o) => {
           const style = VERDICT_STYLE[o.verdict];
+          const VerdictIcon = style.Icon;
           const start = CAMPUS_NODES.find((n) => n.id === o.route.startNodeId);
           const end = CAMPUS_NODES.find((n) => n.id === o.route.endNodeId);
           return (
@@ -278,16 +289,17 @@ export function TodayCommuteCard({ onAddRoute }: Props) {
                 </span>
                 <span className="flex items-center gap-1">
                   <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${style.text}`}
+                    className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold ${style.text}`}
                   >
-                    {style.emoji} {style.label}
+                    <VerdictIcon className="h-3 w-3" strokeWidth={2.4} />
+                    {style.label}
                   </span>
                   <button
                     onClick={() => remove(o.route.id)}
                     className="text-slate-300 hover:text-rose-500"
                     title="移除"
                   >
-                    ✕
+                    ×
                   </button>
                 </span>
               </div>
@@ -299,22 +311,30 @@ export function TodayCommuteCard({ onAddRoute }: Props) {
                 {o.loading ? '計算中…' : o.error ?? o.advice}
               </p>
               {!o.loading && !o.error && o.totalDistance != null && (
-                <div className="mt-1 flex flex-wrap gap-2 text-[10px] text-slate-500">
-                  <span>📏 {Math.round(o.totalDistance)} m</span>
+                <div className="mt-1 flex flex-wrap items-center gap-2 text-[10px] text-slate-500">
+                  <span className="inline-flex items-center gap-0.5 tabular">
+                    <Ruler className="h-3 w-3" strokeWidth={2.2} />
+                    {Math.round(o.totalDistance)} m
+                  </span>
                   {o.coverageScore != null && (
-                    <span>🏠 遮蔽 {Math.round(o.coverageScore * 100)}%</span>
+                    <span className="inline-flex items-center gap-0.5">
+                      <Home className="h-3 w-3" strokeWidth={2.2} />
+                      遮蔽 {Math.round(o.coverageScore * 100)}%
+                    </span>
                   )}
                   {o.avoidedFloodReports! > 0 && (
-                    <span className="text-rose-600">
-                      ⚠ 避開 {o.avoidedFloodReports} 個積水
+                    <span className="inline-flex items-center gap-0.5 text-rose-600">
+                      <AlertTriangle className="h-3 w-3" strokeWidth={2.2} />
+                      避開 {o.avoidedFloodReports} 個積水
                     </span>
                   )}
                   <Link
                     href={`/route?startNode=${encodeURIComponent(o.route.startNodeId)}&endNode=${encodeURIComponent(o.route.endNodeId)}&mode=${o.route.mode}`}
                     onClick={() => incrementStat('commute_run')}
-                    className="ml-auto font-medium text-brand-600 hover:text-brand-700"
+                    className="ml-auto inline-flex items-center gap-0.5 font-medium text-brand-600 hover:text-brand-700"
                   >
-                    在地圖開啟 →
+                    在地圖開啟
+                    <ArrowRight className="h-3 w-3" strokeWidth={2.4} />
                   </Link>
                 </div>
               )}

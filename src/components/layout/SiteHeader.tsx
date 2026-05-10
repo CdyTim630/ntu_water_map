@@ -1,24 +1,34 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import {
+  Map as MapIcon,
+  Footprints,
+  AlertTriangle,
+  User,
+  BarChart3,
+  Settings,
+  Droplet,
+  type LucideIcon,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface NavItem {
   href: string;
   label: string;
-  icon: string;
+  icon: LucideIcon;
 }
 
 const PRIMARY_NAV: NavItem[] = [
-  { href: '/', label: '地圖', icon: '🗺' },
-  { href: '/route', label: '雨天路徑', icon: '🚶' },
-  { href: '/forecast', label: '水災預警', icon: '⚠' },
-  { href: '/me', label: '我的', icon: '👤' },
+  { href: '/', label: '地圖', icon: MapIcon },
+  { href: '/route', label: '雨天路徑', icon: Footprints },
+  { href: '/forecast', label: '水災預警', icon: AlertTriangle },
+  { href: '/me', label: '我的', icon: User },
 ];
 
 const SECONDARY_NAV: NavItem[] = [
-  { href: '/dashboard', label: '儀表板', icon: '📊' },
-  { href: '/admin', label: '管理', icon: '⚙' },
+  { href: '/dashboard', label: '儀表板', icon: BarChart3 },
+  { href: '/admin', label: '管理', icon: Settings },
 ];
 
 export function SiteHeader() {
@@ -27,20 +37,13 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-[1400px] items-center gap-4 px-4">
-        {/* Logo + 標題 */}
+        {/* Logo */}
         <Link
           href="/"
           className="group flex items-center gap-2.5 transition-opacity hover:opacity-80"
         >
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-sm transition-transform group-hover:scale-105">
-            <svg
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="currentColor"
-              aria-hidden
-            >
-              <path d="M12 2.5c-1 1.4-5.5 7.4-5.5 11.5a5.5 5.5 0 1 0 11 0c0-4.1-4.5-10.1-5.5-11.5z" />
-            </svg>
+            <Droplet className="h-[18px] w-[18px]" strokeWidth={2.4} fill="currentColor" />
           </span>
           <div className="hidden leading-tight sm:block">
             <p className="text-[14px] font-semibold tracking-tight text-slate-900">
@@ -50,7 +53,7 @@ export function SiteHeader() {
           </div>
         </Link>
 
-        {/* Primary nav — 主要 daily 用 */}
+        {/* Primary nav */}
         <nav className="ml-auto flex items-center gap-0.5 overflow-x-auto">
           {PRIMARY_NAV.map((item) => (
             <NavLink
@@ -61,7 +64,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        {/* Secondary nav — desktop only，較少用 */}
+        {/* Secondary nav — desktop only */}
         <nav className="hidden items-center gap-0.5 border-l border-slate-200 pl-2 md:flex">
           {SECONDARY_NAV.map((item) => (
             <NavLink
@@ -92,11 +95,12 @@ function NavLink({
   active: boolean;
   compact?: boolean;
 }) {
+  const Icon = item.icon;
   return (
     <Link
       href={item.href}
       className={cn(
-        'flex items-center gap-1 rounded-lg px-3 py-1.5 text-[13px] font-medium',
+        'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-medium',
         'transition-all duration-150 ease-soft-out',
         active
           ? 'bg-brand-50 text-brand-700 ring-1 ring-brand-100'
@@ -104,9 +108,7 @@ function NavLink({
         compact && 'px-2.5',
       )}
     >
-      <span className="text-[13px]" aria-hidden>
-        {item.icon}
-      </span>
+      <Icon className="h-3.5 w-3.5" strokeWidth={2.2} />
       <span>{item.label}</span>
     </Link>
   );

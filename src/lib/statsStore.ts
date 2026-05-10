@@ -16,6 +16,14 @@
  */
 'use client';
 import { useCallback, useEffect, useState } from 'react';
+import {
+  Droplet,
+  Droplets,
+  Waves,
+  Wind,
+  Crown,
+  type LucideIcon,
+} from 'lucide-react';
 
 const KEY = 'ntu-water-stats-v1';
 
@@ -86,7 +94,7 @@ export function actionScore(stats: StatsState, streakDays: number): number {
 export interface LevelInfo {
   level: 0 | 1 | 2 | 3 | 4;
   name: string;
-  emoji: string;
+  Icon: LucideIcon;
   threshold: number;
   /** 升級到下一級還差多少分 */
   nextThreshold: number | null;
@@ -94,12 +102,17 @@ export interface LevelInfo {
   remainingToNext: number | null;
 }
 
-const LEVELS: { level: 0 | 1 | 2 | 3 | 4; name: string; emoji: string; threshold: number }[] = [
-  { level: 0, name: '水文小白', emoji: '💧', threshold: 0 },
-  { level: 1, name: '水文學徒', emoji: '🪣', threshold: 10 },
-  { level: 2, name: '水文達人', emoji: '🌊', threshold: 50 },
-  { level: 3, name: '水文宗師', emoji: '🌀', threshold: 200 },
-  { level: 4, name: '水文神話', emoji: '🐉', threshold: 500 },
+const LEVELS: {
+  level: 0 | 1 | 2 | 3 | 4;
+  name: string;
+  Icon: LucideIcon;
+  threshold: number;
+}[] = [
+  { level: 0, name: '水文小白', Icon: Droplet, threshold: 0 },
+  { level: 1, name: '水文學徒', Icon: Droplets, threshold: 10 },
+  { level: 2, name: '水文達人', Icon: Waves, threshold: 50 },
+  { level: 3, name: '水文宗師', Icon: Wind, threshold: 200 },
+  { level: 4, name: '水文神話', Icon: Crown, threshold: 500 },
 ];
 
 export function computeLevel(score: number): LevelInfo {
@@ -111,7 +124,7 @@ export function computeLevel(score: number): LevelInfo {
   return {
     level: cur.level,
     name: cur.name,
-    emoji: cur.emoji,
+    Icon: cur.Icon,
     threshold: cur.threshold,
     nextThreshold: next?.threshold ?? null,
     nextName: next?.name ?? null,

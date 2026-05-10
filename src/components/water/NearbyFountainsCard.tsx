@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
+import { MapPin, X, Recycle, Landmark } from 'lucide-react';
 import { Card, CardHeader } from '@/components/ui/Card';
 import {
   WATER_STATION_STATUS_LABEL,
@@ -94,9 +95,10 @@ export function NearbyFountainsCard({ stations, onLocate, onRefill }: Props) {
           geoState !== 'granted' && (
             <button
               onClick={requestGeo}
-              className="rounded-md bg-sky-50 px-2 py-1 text-[11px] font-medium text-sky-700 ring-1 ring-sky-200 hover:bg-sky-100"
+              className="inline-flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-[11px] font-medium text-brand-700 ring-1 ring-brand-100 transition-colors hover:bg-brand-100"
             >
-              📍 開啟定位
+              <MapPin className="h-3 w-3" strokeWidth={2.4} />
+              開啟定位
             </button>
           )
         }
@@ -124,10 +126,10 @@ export function NearbyFountainsCard({ stations, onLocate, onRefill }: Props) {
                     className={`grid h-6 w-6 flex-none place-items-center rounded-md text-[11px] font-semibold ${
                       broken
                         ? 'bg-rose-100 text-rose-700'
-                        : 'bg-sky-100 text-sky-700'
+                        : 'bg-brand-100 text-brand-700'
                     }`}
                   >
-                    {broken ? '✕' : i + 1}
+                    {broken ? <X className="h-3 w-3" strokeWidth={3} /> : i + 1}
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
@@ -151,11 +153,15 @@ export function NearbyFountainsCard({ stations, onLocate, onRefill }: Props) {
                         {WATER_STATION_STATUS_LABEL[r.s.status]}
                       </span>
                       {(r.s.source === 'official' || r.s.source === 'merged') && (
-                        <span className="text-amber-700">🏛 官方</span>
+                        <span className="inline-flex items-center gap-0.5 text-amber-700">
+                          <Landmark className="h-3 w-3" strokeWidth={2.4} />
+                          官方
+                        </span>
                       )}
                       {r.s.bottles_saved > 0 && (
-                        <span className="ml-auto text-[10px] text-emerald-600">
-                          ♻ {r.s.bottles_saved}
+                        <span className="ml-auto inline-flex items-center gap-0.5 text-[10px] text-emerald-600 tabular">
+                          <Recycle className="h-3 w-3" strokeWidth={2.4} />
+                          {r.s.bottles_saved}
                         </span>
                       )}
                     </div>
@@ -167,9 +173,10 @@ export function NearbyFountainsCard({ stations, onLocate, onRefill }: Props) {
                       e.stopPropagation();
                       onRefill(r.s);
                     }}
-                    className="mt-1.5 w-full rounded-md bg-sky-600 px-2 py-1 text-[11px] font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-sky-700"
+                    className="mt-1.5 inline-flex w-full items-center justify-center gap-1 rounded-md bg-brand-600 px-2 py-1 text-[11px] font-medium text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-brand-700"
                   >
-                    ♻ 我用它裝了水（+1 減塑）
+                    <Recycle className="h-3 w-3" strokeWidth={2.4} />
+                    我用它裝了水 (+1 減塑)
                   </button>
                 )}
               </li>
