@@ -1,0 +1,96 @@
+
+> ntu-water-risk-map@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.7s
+ ○ Compiling / ...
+ ✓ Compiled / in 4.6s (881 modules)
+ GET / 200 in 4937ms
+ GET / 200 in 53ms
+ ✓ Compiled /api/water-stations in 430ms (506 modules)
+ ✓ Compiled (512 modules)
+ GET /api/water-stations 200 in 688ms
+ GET /api/water-stations 200 in 685ms
+ GET /api/reports 200 in 776ms
+ GET /api/reports 200 in 774ms
+ GET /api/forecast 200 in 1417ms
+ GET /api/forecast 200 in 1406ms
+ ○ Compiling /dashboard ...
+ ✓ Compiled /dashboard in 3.6s (2038 modules)
+ GET /dashboard 200 in 3815ms
+ ✓ Compiled /api/stats in 281ms (1059 modules)
+ GET /api/stats 200 in 368ms
+ GET /api/stats 200 in 374ms
+ ○ Compiling /route ...
+ ✓ Compiled /route in 691ms (2063 modules)
+ GET /route 200 in 870ms
+ GET /api/reports 200 in 27ms
+ ✓ Compiled /api/route in 265ms (1083 modules)
+ GET /api/reports 200 in 507ms
+ POST /api/route 200 in 699ms
+ ○ Compiling /forecast ...
+ ✓ Compiled /forecast in 522ms (2082 modules)
+ GET /forecast 200 in 631ms
+ GET /api/reports 200 in 29ms
+ GET /api/forecast 200 in 102ms
+ GET /api/forecast 200 in 98ms
+ GET /api/reports 200 in 107ms
+ ✓ Compiled /me in 501ms (2110 modules)
+ GET /me 200 in 585ms
+ GET /me 200 in 769ms
+ GET /dashboard 200 in 593ms
+ GET /api/stats 200 in 217ms
+ GET /api/stats 200 in 211ms
+ GET / 200 in 458ms
+ GET / 200 in 83ms
+ GET /api/reports 200 in 155ms
+ GET /api/reports 200 in 154ms
+ GET /api/water-stations 200 in 165ms
+ GET /api/water-stations 200 in 165ms
+ GET /api/forecast 200 in 809ms
+ GET /api/forecast 200 in 1137ms
+ GET /route 200 in 105ms
+ POST /api/route 200 in 268ms
+ GET /api/reports 200 in 276ms
+ GET /api/reports 200 in 276ms
+ GET /forecast 200 in 71ms
+ GET /api/reports 200 in 28ms
+ GET /api/reports 200 in 20ms
+ GET /api/forecast 200 in 44ms
+ GET /api/forecast 200 in 40ms
+ GET /dashboard 200 in 63ms
+ GET /api/stats 200 in 20ms
+ GET /api/stats 200 in 18ms
+ GET /me 200 in 61ms
+ ✓ Compiled in 1575ms (2028 modules)
+ ✓ Compiled in 753ms (2028 modules)
+ ✓ Compiled in 1533ms (2028 modules)
+ GET / 200 in 330ms
+ GET / 200 in 58ms
+ ✓ Compiled /api/reports in 314ms (1092 modules)
+ ✓ Compiled (1098 modules)
+ GET /api/water-stations 200 in 812ms
+ GET /api/water-stations 200 in 816ms
+ GET /api/forecast 200 in 985ms
+ GET /api/forecast 200 in 969ms
+ GET /api/reports 200 in 988ms
+ GET /api/reports 200 in 975ms
+ GET /route 200 in 243ms
+ GET /api/reports 200 in 65ms
+ GET /api/reports 200 in 57ms
+ ○ Compiling /api/route ...
+ ✓ Compiled /api/route in 509ms (1103 modules)
+ POST /api/route 200 in 840ms
+ GET /forecast 200 in 182ms
+ GET /api/reports 200 in 60ms
+ GET /api/reports 200 in 50ms
+ GET /api/forecast 200 in 141ms
+ GET /api/forecast 200 in 130ms
+ ✓ Compiled in 1561ms (2028 modules)
+ ✓ Compiled in 1208ms (2028 modules)
+ ✓ Compiled in 567ms (2028 modules)

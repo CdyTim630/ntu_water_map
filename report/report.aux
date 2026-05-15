@@ -1,0 +1,45 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand*\HyPL@Entry[1]{}
+\HyPL@Entry{0<</S/D>>}
+\HyPL@Entry{1<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}摘要}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}動機與問題定義}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}系統架構}{2}{section.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 系統五層架構（Swim-lane 視覺化）：Client 6 個頁面 → API Routes 10 endpoints → 演算法層 → 內部資料（GeoJSON / Mock / LocalStorage）→ 外部資料源（OSM / 北水處 / CWA）。實線=內部呼叫，虛線=外部 API。\texttt  {/me} 直連 LocalStorage 不經 server 以保護隱私。}}{2}{figure.caption.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}技術選型理由}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}資料流關鍵設計}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}核心功能展示 \hskip 1em\relax \normalfont  \normalsize  \color  {mute}— 5 個面向使用者的頁面，每節含實際畫面}{4}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}地圖首頁 \texttt  {/} — 一張地圖看完校園水情}{4}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 首頁實際畫面：地圖以台大校園為中心顯示水資源回報（紅／橙／藍 = 嚴重度）與飲水機點位（藍水滴），右側為高風險地點排行（依 \texttt  {risk\_score} 排序）。}}{4}{figure.caption.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}雨天路徑規劃 \texttt  {/route} — 真實 OSM 路網 + 加權 Dijkstra}{5}{subsection.4.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 雨天路徑規劃畫面：綠粗線為防雨建議路徑，灰虛線為最短路徑對照。地圖支援「點任一處設為起終點」，server 會 snap 到最近的 OSM 路網節點。}}{5}{figure.caption.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}水災預警地圖 \texttt  {/forecast} — 90 天回報密度 $\times $ 即時雨勢}{6}{subsection.4.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 水災預警地圖：圖中所示為「不必擔心」狀態（雨勢小，仍標出 2 個基線熱點）；雨大時格網會自動加密與升溫。}}{6}{figure.caption.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}校園水資源儀表板 \texttt  {/dashboard}}{7}{subsection.4.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 儀表板上半部：4 張 KPI 卡（總回報、處理中、飲水機健康率、寶特瓶減塑）、14 天每日新增、嚴重度分布、類別／處理狀態。下方還有高風險排行與飲水機健康度。}}{7}{figure.caption.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}個人成績單 \texttt  {/me} — 把回報遊戲化}{8}{subsection.4.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces 個人成績單畫面：段位（水文學徒 → 水文大師）、4 格累積成績（連續打卡、飲水機+1、通勤路線、校園回報）、14 枚徽章牆（4 大類別）。所有資料純本機儲存（LocalStorage），零追蹤。}}{8}{figure.caption.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}演算法細節}{9}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}校園路網建構：從 OSM 到 Dijkstra-Ready Graph}{9}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}加權 Dijkstra 與動態回報整合}{9}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Risk Score 與儀表板聚合}{9}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}資料來源整合}{10}{section.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 資料源整合一覽。所有外部 API 都由 server-side 代理（\texttt  {/api/weather}、\texttt  {/api/water-stations}），API key 不暴露在 client。}}{10}{table.caption.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}部署與工程實踐}{10}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}視覺設計系統}{11}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}結論與未來工作}{11}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}未來工作}{11}{subsection.8.1}\protected@file@percent }
+\bibcite{nextjs}{1}
+\bibcite{leaflet}{2}
+\bibcite{osm}{3}
+\bibcite{cwa}{4}
+\bibcite{twd}{5}
+\bibcite{dijkstra}{6}
+\bibcite{recharts}{7}
+\bibcite{supabase}{8}
+\bibcite{tailwind}{9}
+\bibcite{vercel}{10}
+\bibcite{lucide}{11}
+\@writefile{toc}{\contentsline {section}{References}{12}{Item.8}\protected@file@percent }
+\gdef \@abspage@last{13}
