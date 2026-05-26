@@ -37,7 +37,7 @@
 \usetikzlibrary{positioning,shapes.geometric,arrows.meta,fit,backgrounds,calc}
 
 % 行距舒適
-\linespread{1.18}
+\linespread{1.12}
 
 % ─── 顏色 ───────────────────────────────────────────
 \definecolor{brand}{HTML}{0EA5E9}
@@ -147,14 +147,26 @@
   left=20pt,right=20pt,top=16pt,bottom=16pt,
 ]
 \renewcommand{\arraystretch}{1.6}
-\begin{tabularx}{\linewidth}{@{}lX@{}}
-\textbf{\color{brandDeep}課程} & 水資源工程與管理（期末專題）\\
+\begin{tabular}{@{}l p{10cm}@{}}
+\textbf{\color{brandDeep}課程} & 水資源概論 (BSE1011)\\
 \textbf{\color{brandDeep}類型} & Web Application — 互動式校園地圖平台\\
-\textbf{\color{brandDeep}技術棧} & Next.js 14 / TypeScript / React Leaflet / Recharts \\
 \textbf{\color{brandDeep}資料源} & OpenStreetMap、中央氣象署、台北自來水處 OpenData\\
-\textbf{\color{brandDeep}部署} & Vercel（hnd1 / 東京區域，10 個 API Routes）\\
-\textbf{\color{brandDeep}日期} & 2026 年 5 月 \\
-\end{tabularx}
+\textbf{\color{brandDeep}組別} & 第 31 組 \\
+\textbf{\color{brandDeep}組員} &
+\begin{tabular}[t]{@{}l@{}}
+資管二 B13705013 劉起佑 \\
+資管二 B13705020 陳鼎元 \\
+資管二 B13705029 蔡冠毅 \\
+資管二 B13705051 姜睿喆 \\
+法律二 B13A01160 羅威廷 \\
+土木二 B13501017 徐大鈞
+\end{tabular} \\
+\textbf{\color{brandDeep}Github} &
+\href{https://github.com/CdyTim630/ntu_water_map}
+{\texttt{github.com/CdyTim630/ntu\_water\_map}} \\
+\textbf{\color{brandDeep}網站} &
+\href{https://ntuwatermap.vercel.app/}{ntuwatermap.vercel.app} \\
+\end{tabular}
 \end{tcolorbox}
 
 \vfill
@@ -319,28 +331,27 @@
 \caption{系統五層架構（Swim-lane 視覺化）：Client 6 個頁面 → API Routes 10 endpoints → 演算法層 → 內部資料（GeoJSON / Mock / LocalStorage）→ 外部資料源（OSM / 北水處 / CWA）。實線=內部呼叫，虛線=外部 API。\texttt{/me} 直連 LocalStorage 不經 server 以保護隱私。}
 \end{figure}
 
-\clearpage
 
 \subsection{技術選型理由}
 
 \begin{techbox}
 \renewcommand{\arraystretch}{1.25}
-\begin{tabularx}{\linewidth}{@{}p{2.8cm}X@{}}
+\begin{tabular}{@{}p{2.8cm}p{10cm}@{}}
 \textbf{Next.js 14} & App Router 提供 server-only 模組能力，3 MB 校園路網檔（\texttt{campus-paths.geojson}）只在 server 載入，client bundle 不受影響。\\
 \textbf{React Leaflet} & 開源、無 API key 限制，可疊加自訂 GeoJSON 與多型 marker；用 \texttt{dynamic(\{ssr:false\})} 避開 SSR 的 \texttt{window} 問題。\\
 \textbf{Recharts} & 比 Chart.js 更貼合 React 心智模型，原生支援響應式容器，方便嵌入 dashboard 卡片。\\
 \textbf{Supabase（可選）} & 預設 \texttt{NEXT\_PUBLIC\_USE\_MOCK=true}，零配置可 demo；接上即得 PostgreSQL + Storage + RLS。\\
 \textbf{Vercel hnd1} & 東京區域離台灣 RTT 最低，配合 \texttt{maxDuration:30s} 容許演算法 routes 載入大 GeoJSON。\\
-\end{tabularx}
+\end{tabular}
 \end{techbox}
 
-\subsection{資料流關鍵設計}
+% \subsection{資料流關鍵設計}
 
-\begin{itemize}
-\item \textbf{Mock 與真實環境同介面}：\texttt{lib/supabase.ts} 透過環境變數切換，前端程式碼完全不變 —— demo 時零配置，正式上線時切 Supabase。
-\item \textbf{Server-side Heavy Compute}：Dijkstra 與 90 天熱力預測都在 \texttt{/api/route} 與 \texttt{/api/forecast} 計算，client 只收到 polyline 與機率格網，避免 3 MB 路網檔下載到瀏覽器。
-\item \textbf{個人資料純本機}：\texttt{/me} 的連續打卡、徽章、行動分數都用 LocalStorage，零追蹤、隱私第一。
-\end{itemize}
+% \begin{itemize}
+% \item \textbf{Mock 與真實環境同介面}：\texttt{lib/supabase.ts} 透過環境變數切換，前端程式碼完全不變 —— demo 時零配置，正式上線時切 Supabase。
+% \item \textbf{Server-side Heavy Compute}：Dijkstra 與 90 天熱力預測都在 \texttt{/api/route} 與 \texttt{/api/forecast} 計算，client 只收到 polyline 與機率格網，避免 3 MB 路網檔下載到瀏覽器。
+% \item \textbf{個人資料純本機}：\texttt{/me} 的連續打卡、徽章、行動分數都用 LocalStorage，零追蹤、隱私第一。
+% \end{itemize}
 
 \clearpage
 
@@ -457,7 +468,7 @@
 
 \subsection{校園路網建構：從 OSM 到 Dijkstra-Ready Graph}
 
-最大的工程挑戰是\textbf{真實校園路網}從哪裡來。校內的 22 個地標可以手寫，但「校門口走到綜合體育館」要經過哪些 OSM \texttt{highway=footway} 才不會穿牆？解法是用 \texttt{scripts/build-dense-graph.mjs} 透過 Overpass API 抓取台大校園 bounding box 內所有 \texttt{highway} tagged ways。
+最大的工程挑戰是\textbf{真實校園路網}從哪裡來。校內的 22 個地標可以手寫，但「校門口走到綜合體育館」要經過哪些 OSM \texttt{highway=footway} 才不會穿牆？我們用 \texttt{scripts/build-dense-graph.mjs} 透過 Overpass API 抓取台大校園 bounding box 內所有 \texttt{highway} tagged ways。
 
 \begin{techbox}
 \textbf{雙層 GeoJSON 設計}
@@ -466,18 +477,18 @@
 \item \texttt{src/data/campus-paths.geojson}：6{,}133 個路徑節點、7{,}248 條邊的\textbf{密集路網}（$\approx$ 3 MB），僅在 server-side 載入。
 \end{itemize}
 
-\textbf{邊權標註規則}（從 OSM tags 推論）
-\begin{itemize}
-\item \texttt{indoor=yes} / \texttt{tunnel=yes} / \texttt{covered=yes} / \texttt{highway=corridor} $\to$ \texttt{covered} $\approx 0.95$
-\item \texttt{arcade=yes} $\to$ \texttt{covered} $\approx 0.85$（騎樓）
-\item 手動 override 區：椰林大道兩側、行政大樓迴廊、活大周邊
-\item 易積水區（\texttt{lowLying}）：小椰林道、醉月湖、總圖前廣場、舟山路低處
-\end{itemize}
+% \textbf{邊權標註規則}（從 OSM tags 推論）
+% \begin{itemize}
+% \item \texttt{indoor=yes} / \texttt{tunnel=yes} / \texttt{covered=yes} / \texttt{highway=corridor} $\to$ \texttt{covered} $\approx 0.95$
+% \item \texttt{arcade=yes} $\to$ \texttt{covered} $\approx 0.85$（騎樓）
+% \item 手動 override 區：椰林大道兩側、行政大樓迴廊、活大周邊
+% \item 易積水區（\texttt{lowLying}）：小椰林道、醉月湖、總圖前廣場、舟山路低處
+% \end{itemize}
 \end{techbox}
 
 \subsection{加權 Dijkstra 與動態回報整合}
 
-\textbf{Dijkstra 實作}：使用二元堆 priority queue 的 $O((V+E)\log V)$ 標準版本，但在 cost function 中即時讀取「目前 active 的 \texttt{flooding} / \texttt{standing\_water} 回報」並施加懲罰。\textbf{亦即：使用者剛在地圖回報的積水，下一個雨天規劃路徑的同學就會自動繞開。}
+\textbf{Dijkstra 實作}：使用 priority queue 的 $O((V+E)\log V)$ 標準版本，但在 cost function 中即時讀取「目前 active 的 \texttt{flooding} / \texttt{standing\_water} 回報」並施加懲罰。\textbf{亦即：使用者剛在地圖回報的積水，下一個雨天規劃路徑的同學就會自動繞開。}
 
 效益：在中度雨勢（$r=0.6$）下，\emph{防雨建議路徑}相較\emph{最短路徑}可達遮蔽率提升 $\sim$30\,\%，但只多走 $\sim$50 m。$r$ 為 0 時兩者重疊（不下雨就不繞）。
 
@@ -491,7 +502,7 @@
 分數 $\geq 9$ 標記為\textcolor{danger}{\textbf{高風險}}、$\geq 4$ 為\textcolor{warn}{\textbf{中風險}}、其餘為低風險。
 這套規則直覺、無需 ML、可解釋 —— 校方看數據時可立即理解「為什麼這個地點上榜」。
 
-\clearpage
+% \clearpage
 
 % ═══════════════════════════════════════════════════════
 % 6. 資料來源
@@ -519,41 +530,41 @@ LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章�
 \caption{資料源整合一覽。所有外部 API 都由 server-side 代理（\texttt{/api/weather}、\texttt{/api/water-stations}），API key 不暴露在 client。}
 \end{table}
 
-\subsection{部署與工程實踐}
+% \subsection{部署與工程實踐}
 
-\begin{accentbox}
-\textbf{\color{accent!50!black}工程亮點}
-\begin{itemize}
-\item \textbf{10 個 API Routes 全 Node runtime}：明確排除 GitHub Pages 等純靜態託管的可能性；選 Vercel hnd1 取得最低台日 RTT。
-\item \textbf{重資料 Server-Only}：3 MB 校園路網檔絕不送 client；使用 \texttt{dynamic(\{ssr:false\})} 處理 Leaflet 的 \texttt{window} 依賴。
-\item \texttt{maxDuration:30s}：\texttt{/api/route} 與 \texttt{/api/forecast} 設置長 timeout 容納 Dijkstra 與 90 天熱力預測。
-\item \textbf{Mock / Real 雙模式}：環境變數一鍵切換，期末展示時零配置上線。
-\item \textbf{Error Boundaries}：頁面級 \texttt{error.tsx} + 全域 \texttt{global-error.tsx} 雙層保護，避免地圖載入失敗整站白屏。
-\end{itemize}
-\end{accentbox}
+% \begin{accentbox}
+% \textbf{\color{accent!50!black}工程亮點}
+% \begin{itemize}
+% \item \textbf{10 個 API Routes 全 Node runtime}：明確排除 GitHub Pages 等純靜態託管的可能性；選 Vercel hnd1 取得最低台日 RTT。
+% \item \textbf{重資料 Server-Only}：3 MB 校園路網檔絕不送 client；使用 \texttt{dynamic(\{ssr:false\})} 處理 Leaflet 的 \texttt{window} 依賴。
+% \item \texttt{maxDuration:30s}：\texttt{/api/route} 與 \texttt{/api/forecast} 設置長 timeout 容納 Dijkstra 與 90 天熱力預測。
+% \item \textbf{Mock / Real 雙模式}：環境變數一鍵切換，期末展示時零配置上線。
+% \item \textbf{Error Boundaries}：頁面級 \texttt{error.tsx} + 全域 \texttt{global-error.tsx} 雙層保護，避免地圖載入失敗整站白屏。
+% \end{itemize}
+% \end{accentbox}
 
-\vspace{0.3em}\noindent\textbf{\large\color{ink}6.2\quad API 端點清單}
-\vspace{0.5em}
+% \vspace{0.3em}\noindent\textbf{\large\color{ink}6.2\quad API 端點清單}
+% \vspace{0.5em}
 
-{\small
-\renewcommand{\arraystretch}{1.1}
-\begin{tabular}{@{}p{5.4cm}l p{7.4cm}@{}}
-\toprule
-\textbf{Endpoint} & \textbf{Method} & \textbf{用途}\\
-\midrule
-\texttt{/api/reports} & GET\,/\,POST & 取得 / 新增水資源回報（含圖片上傳）\\
-\texttt{/api/reports/[id]} & PATCH\,/\,DELETE & 管理端修改狀態 / 加管理員 note / 刪除\\
-\texttt{/api/reports/[id]/confirm} & POST & 眾包確認（\texttt{still\_exists} / \texttt{resolved}）\\
-\texttt{/api/stats} & GET & 儀表板聚合（KPI + 趨勢 + 排行 + 飲水機 SLA）\\
-\texttt{/api/weather} & GET & CWA OpenData 代理，金鑰 server-side 保護\\
-\texttt{/api/route} & POST & 雨天 Dijkstra；起終點 + mode + avoidWater\\
-\texttt{/api/forecast} & GET & 1 / 3 / 6 小時積水機率格網\\
-\texttt{/api/water-stations} & GET & 飲水機點位（OSM + 北水處融合）\\
-\texttt{/api/water-stations/[id]/report} & POST & 飲水機回報（broken / fixed / refill）\\
-\texttt{/api/path-geometry} & POST & 路徑幾何輔助（snap to road）\\
-\bottomrule
-\end{tabular}
-}
+% {\small
+% \renewcommand{\arraystretch}{1.1}
+% \begin{tabular}{@{}p{5.4cm}l p{7.4cm}@{}}
+% \toprule
+% \textbf{Endpoint} & \textbf{Method} & \textbf{用途}\\
+% \midrule
+% \texttt{/api/reports} & GET\,/\,POST & 取得 / 新增水資源回報（含圖片上傳）\\
+% \texttt{/api/reports/[id]} & PATCH\,/\,DELETE & 管理端修改狀態 / 加管理員 note / 刪除\\
+% \texttt{/api/reports/[id]/confirm} & POST & 眾包確認（\texttt{still\_exists} / \texttt{resolved}）\\
+% \texttt{/api/stats} & GET & 儀表板聚合（KPI + 趨勢 + 排行 + 飲水機 SLA）\\
+% \texttt{/api/weather} & GET & CWA OpenData 代理，金鑰 server-side 保護\\
+% \texttt{/api/route} & POST & 雨天 Dijkstra；起終點 + mode + avoidWater\\
+% \texttt{/api/forecast} & GET & 1 / 3 / 6 小時積水機率格網\\
+% \texttt{/api/water-stations} & GET & 飲水機點位（OSM + 北水處融合）\\
+% \texttt{/api/water-stations/[id]/report} & POST & 飲水機回報（broken / fixed / refill）\\
+% \texttt{/api/path-geometry} & POST & 路徑幾何輔助（snap to road）\\
+% \bottomrule
+% \end{tabular}
+% }
 
 % ═══════════════════════════════════════════════════════
 % 7. 設計 + 結論 + 參考（讓 LaTeX 自動接續，避免無謂空頁）
@@ -587,21 +598,23 @@ LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章�
 \item \textbf{校方 API 對接}：與台大總務處事務組系統 API 串接，已解決的回報自動同步。
 \end{enumerate}
 
-\clearpage
+% \clearpage
+
+\vspace{2em}
 \renewcommand{\refname}{\color{brandDeep}\Large\bfseries 參考文獻\quad References\vspace{-0.2em}\\\color{brand}\rule{\linewidth}{0.6pt}}
 \addcontentsline{toc}{section}{References}
 
 \begin{thebibliography}{99}
 \small\setlength{\itemsep}{3pt}
 
-\bibitem{nextjs} Vercel Inc. (2024). \emph{Next.js 14 — The React Framework for the Web}.\\
-\url{https://nextjs.org/docs}
+% \bibitem{nextjs} Vercel Inc. (2024). \emph{Next.js 14 — The React Framework for the Web}.\\
+% \url{https://nextjs.org/docs}
 
 \bibitem{leaflet} Agafonkin, V. (2024). \emph{Leaflet — An Open-Source JavaScript Library for Mobile-Friendly Interactive Maps}.\\
 \url{https://leafletjs.com/}
 
-\bibitem{osm} OpenStreetMap Foundation. (2024). \emph{OpenStreetMap Wiki — Map Features and Overpass API Documentation}.\\
-\url{https://wiki.openstreetmap.org/}
+% \bibitem{osm} OpenStreetMap Foundation. (2024). \emph{OpenStreetMap Wiki — Map Features and Overpass API Documentation}.\\
+% \url{https://wiki.openstreetmap.org/}
 
 \bibitem{cwa} 交通部中央氣象署 (2024). \emph{氣象資料開放平臺 —— 觀測 O-A0003-001 \& 預報 F-D0047-061}.\\
 \url{https://opendata.cwa.gov.tw/}
@@ -609,19 +622,19 @@ LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章�
 \bibitem{twd} 臺北自來水事業處 (2024). \emph{飲水機水質開放資料 OpenData}.\\
 \url{https://data.water.gov.taipei/}
 
-\bibitem{dijkstra} Dijkstra, E. W. (1959). A note on two problems in connexion with graphs. \emph{Numerische Mathematik}, 1(1), 269--271.
+% \bibitem{dijkstra} Dijkstra, E. W. (1959). A note on two problems in connexion with graphs. \emph{Numerische Mathematik}, 1(1), 269--271.
 
 \bibitem{recharts} Recharts Group. (2024). \emph{Recharts — A composable charting library built on React components}.\\
 \url{https://recharts.org/}
 
-\bibitem{supabase} Supabase Inc. (2024). \emph{Supabase — The Open Source Firebase Alternative}.\\
-\url{https://supabase.com/docs}
+% \bibitem{supabase} Supabase Inc. (2024). \emph{Supabase — The Open Source Firebase Alternative}.\\
+% \url{https://supabase.com/docs}
 
-\bibitem{tailwind} Tailwind Labs Inc. (2024). \emph{Tailwind CSS — Utility-first CSS framework}.\\
-\url{https://tailwindcss.com/}
+% \bibitem{tailwind} Tailwind Labs Inc. (2024). \emph{Tailwind CSS — Utility-first CSS framework}.\\
+% \url{https://tailwindcss.com/}
 
-\bibitem{vercel} Vercel Inc. (2024). \emph{Vercel Platform — Deploy Next.js Apps}.\\
-\url{https://vercel.com/docs}
+% \bibitem{vercel} Vercel Inc. (2024). \emph{Vercel Platform — Deploy Next.js Apps}.\\
+% \url{https://vercel.com/docs}
 
 \bibitem{lucide} Lucide Contributors. (2024). \emph{Lucide — Beautiful \& consistent icon toolkit made by the community}.\\
 \url{https://lucide.dev/}

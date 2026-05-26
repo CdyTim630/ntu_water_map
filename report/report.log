@@ -1,9 +1,10 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  15 MAY 2026 11:55
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  26 MAY 2026 23:42
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**./report.tex
-(report.tex
+**c:/Users/cdyti/Documents/Claude/Projects/ntu_water_map/report/report.tex
+(c:/Users/cdyti/Documents/Claude/Projects/ntu_water_map/report/report.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
 (C:\Users\cdyti\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -1226,15 +1227,12 @@ Package hyperref Info: Link coloring ON on input line 122.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
- [1
-
-]
 
 Package fontspec Info: Could not resolve font "Source Han Serif TW/I" (it
 (fontspec)             probably doesn't exist).
 
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 188.
+(Font)              scaled to size 9.85492pt on input line 166.
 
 Package fontspec Info: Font family 'SourceHanSerifTW(1)' created for font
 (fontspec)             'Source Han Serif TW' with options [Script={CJK}].
@@ -1252,123 +1250,94 @@ Package fontspec Info: Font family 'SourceHanSerifTW(1)' created for font
 (fontspec)             Serif TW/BI/OT:script=hani;language=dflt;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
+ [1
+
+]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/m/n' will be
-(Font)              scaled to size 8.99994pt on input line 188.
+(Font)              scaled to size 8.99994pt on input line 200.
  [1]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/m/n' will be
-(Font)              scaled to size 7.19995pt on input line 272.
+(Font)              scaled to size 7.19995pt on input line 284.
 
-Overfull \hbox (66.79616pt too wide) in paragraph at lines 318--319
+Overfull \hbox (66.79616pt too wide) in paragraph at lines 330--331
  [][] 
  []
 
 [2
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 334--334
-[]|\TU/LatinModernRoman(0)/m/n/10 App Router \TU/SourceHanSerifTW(0)/m/n/10 提 供
- \TU/LatinModernRoman(0)/m/n/10 server-only \TU/SourceHanSerifTW(0)/m/n/10 模 組 
-能 力，| \TU/LatinModernRoman(0)/m/n/10 3 MB \TU/SourceHanSerifTW(0)/m/n/10 校 園 路 
-網 檔
- []
-
-
-Underfull \hbox (badness 1226) in paragraph at lines 334--334
-[]|\TU/SourceHanSerifTW(0)/m/n/10 開 源、|  無 \TU/LatinModernRoman(0)/m/n/10 API k
-ey \TU/SourceHanSerifTW(0)/m/n/10 限 制，|  可 疊 加 自 訂 \TU/LatinModernRoman(0)/m/n/
-10 GeoJSON \TU/SourceHanSerifTW(0)/m/n/10 與 多 型 \TU/LatinModernRoman(0)/m/n/10 
-marker\TU/SourceHanSerifTW(0)/m/n/10 ；|  用
- []
-
-[3
-
-]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \hskip 10.95pt
-(hyperref)                replaced by space on input line 350.
+(hyperref)                replaced by space on input line 361.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 350.
+(hyperref)                removing `\@ifnextchar' on input line 361.
 
 
 LaTeX Font Warning: Font shape `TU/LatinModernMono(0)/b/n' undefined
-(Font)              using `TU/LatinModernMono(0)/m/n' instead on input line 352
+(Font)              using `TU/LatinModernMono(0)/m/n' instead on input line 363
 .
 
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/m/n' will be
-(Font)              scaled to size 10.79993pt on input line 352.
+(Font)              scaled to size 10.79993pt on input line 363.
 File: screens/home.png Graphic file (type bmp)
 <screens/home.png>
-[4
+[3
 
 ]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/b/n' will be
-(Font)              scaled to size 10.79993pt on input line 373.
+(Font)              scaled to size 10.79993pt on input line 384.
 File: screens/route.png Graphic file (type bmp)
 <screens/route.png>
- [5
+ [4
 
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 391.
+(hyperref)                removing `math shift' on input line 402.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 391.
+(hyperref)                removing `\times' on input line 402.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 391.
+(hyperref)                removing `math shift' on input line 402.
 
 File: screens/forecast.png Graphic file (type bmp)
 <screens/forecast.png>
-[6
+[5
 
 ]
 File: screens/dashboard.png Graphic file (type bmp)
 <screens/dashboard.png>
- [7
+ [6
 
 ]
 File: screens/me.png Graphic file (type bmp)
 <screens/me.png>
- [8
-
-] [9
+ [7
 
 ]
-Underfull \hbox (badness 2189) in paragraph at lines 513--514
+Underfull \hbox (badness 2351) in paragraph at lines 524--525
 []|\TU/SourceHanSerifTW(0)/m/n/10 與 \TU/LatinModernRoman(0)/m/n/10 OSM \TU/Lati
 nModernMono(0)/m/n/10 amenity=drinking_water \TU/SourceHanSerifTW(0)/m/n/10 點 位
  融 合  |（\TU/LatinModernMono(0)/m/n/10 source: osm /
  []
 
 
-Overfull \hbox (23.99997pt too wide) in paragraph at lines 507--519
+Overfull \hbox (23.99997pt too wide) in paragraph at lines 518--530
  [][] 
  []
 
-
-Overfull \hbox (23.03395pt too wide) in paragraph at lines 540--557
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 540--557
-
- []
-
-[10
+[8
 
 ]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 566.
- [11] [12
-
-] (report.aux)
+(Font)              scaled to size 9.85492pt on input line 577.
+ [9] (report.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/08/05>
@@ -1378,15 +1347,15 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: ABF58BCE67187F3D780531E42CC96730;3213.
+(rerunfilecheck)             Checksum: 6DB4C63DA549AD051CFB1789593080A7;2985.
  ) 
 Here is how much of TeX's memory you used:
- 32229 strings out of 409617
- 732596 string characters out of 5774014
- 1949191 words of memory out of 5000000
- 53841 multiletter control sequences out of 15000+600000
- 564543 words of font info for 126 fonts, out of 8000000 for 9000
+ 32216 strings out of 409617
+ 732462 string characters out of 5774014
+ 1953191 words of memory out of 5000000
+ 53831 multiletter control sequences out of 15000+600000
+ 564511 words of font info for 122 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 84i,13n,93p,418b,1251s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,16n,93p,478b,1251s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on report.xdv (13 pages, 227836 bytes).
+Output written on report.pdf (10 pages).
