@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  26 MAY 2026 23:42
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  27 MAY 2026 01:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1250,7 +1250,12 @@ Package fontspec Info: Font family 'SourceHanSerifTW(1)' created for font
 (fontspec)             Serif TW/BI/OT:script=hani;language=dflt;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
- [1
+
+Overfull \hbox (32.76746pt too wide) in paragraph at lines 150--170
+[][] 
+ []
+
+[1
 
 ]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/m/n' will be
