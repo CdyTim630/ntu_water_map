@@ -2,7 +2,7 @@
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Card } from '@/components/ui/Card';
-import { RoutePanel } from '@/components/route/RoutePanel';
+import { RoutePanel, type DemoRouteOption } from '@/components/route/RoutePanel';
 import { WeatherBadge } from '@/components/route/WeatherBadge';
 import { CAMPUS_NODES, getNode } from '@/lib/campus';
 import type { Report } from '@/lib/types';
@@ -88,7 +88,7 @@ export default function RoutePage() {
   const [mode, setMode] = useState<'walk' | 'bike'>('walk');
   const [avoidWater, setAvoidWater] = useState(false);
   const [pickMode, setPickMode] = useState<null | 'start' | 'end'>(null);
-  /** mock 階段的雨勢 override；null = 用即時 / cycled mock */
+  /** demo 雨勢 override；null = 用 CWA 即時 / cycled mock */
   const [mockRain, setMockRain] = useState<null | 'none' | 'drizzle' | 'light' | 'moderate' | 'heavy'>(null);
   const [showFloodOverlay, setShowFloodOverlay] = useState(true);
 
@@ -163,6 +163,7 @@ export default function RoutePage() {
 
   // 5 分鐘自動 refresh weather
   useEffect(() => {
+    if (mockRain) return;
     const t = setInterval(() => {
       fetch('/api/weather', { cache: 'no-store' })
         .then((r) => r.json())
@@ -170,7 +171,7 @@ export default function RoutePage() {
         .catch(() => undefined);
     }, 5 * 60 * 1000);
     return () => clearInterval(t);
-  }, []);
+  }, [mockRain]);
 
   const handleMapPick = useCallback(
     (lat: number, lng: number) => {
@@ -183,6 +184,15 @@ export default function RoutePage() {
     },
     [pickMode],
   );
+
+  const handleApplyDemoRoute = useCallback((demo: DemoRouteOption) => {
+    setStart({ kind: 'landmark', id: demo.startId });
+    setEnd({ kind: 'landmark', id: demo.endId });
+    setMockRain(demo.rain);
+    setAvoidWater(true);
+    setShowFloodOverlay(true);
+    setPickMode(null);
+  }, []);
 
   return (
     <div className="px-4 py-4 sm:px-6 space-y-3 animate-fade-in">
@@ -218,6 +228,7 @@ export default function RoutePage() {
           onChangeMockRain={setMockRain}
           onChangeShowFloodOverlay={setShowFloodOverlay}
           onChangePickMode={setPickMode}
+          onApplyDemoRoute={handleApplyDemoRoute}
           onSwap={() => {
             setStart(end);
             setEnd(start);

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  27 MAY 2026 01:15
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  30 MAY 2026 20:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1228,11 +1228,16 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
+Overfull \hbox (31.91682pt too wide) in paragraph at lines 158--166
+[]|[]| 
+ []
+
+
 Package fontspec Info: Could not resolve font "Source Han Serif TW/I" (it
 (fontspec)             probably doesn't exist).
 
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/m/n' will be
-(Font)              scaled to size 9.85492pt on input line 166.
+(Font)              scaled to size 9.85492pt on input line 168.
 
 Package fontspec Info: Font family 'SourceHanSerifTW(1)' created for font
 (fontspec)             'Source Han Serif TW' with options [Script={CJK}].
@@ -1250,21 +1255,16 @@ Package fontspec Info: Font family 'SourceHanSerifTW(1)' created for font
 (fontspec)             Serif TW/BI/OT:script=hani;language=dflt;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
-
-Overfull \hbox (32.76746pt too wide) in paragraph at lines 150--170
-[][] 
- []
-
 [1
 
 ]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/m/n' will be
-(Font)              scaled to size 8.99994pt on input line 200.
+(Font)              scaled to size 8.99994pt on input line 202.
  [1]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/m/n' will be
-(Font)              scaled to size 7.19995pt on input line 284.
+(Font)              scaled to size 7.19995pt on input line 286.
 
-Overfull \hbox (66.79616pt too wide) in paragraph at lines 330--331
+Overfull \hbox (66.79616pt too wide) in paragraph at lines 332--333
  [][] 
  []
 
@@ -1274,26 +1274,26 @@ Overfull \hbox (66.79616pt too wide) in paragraph at lines 330--331
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \hskip 10.95pt
-(hyperref)                replaced by space on input line 361.
+(hyperref)                replaced by space on input line 363.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 361.
+(hyperref)                removing `\@ifnextchar' on input line 363.
 
 
 LaTeX Font Warning: Font shape `TU/LatinModernMono(0)/b/n' undefined
-(Font)              using `TU/LatinModernMono(0)/m/n' instead on input line 363
+(Font)              using `TU/LatinModernMono(0)/m/n' instead on input line 365
 .
 
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/m/n' will be
-(Font)              scaled to size 10.79993pt on input line 363.
+(Font)              scaled to size 10.79993pt on input line 365.
 File: screens/home.png Graphic file (type bmp)
 <screens/home.png>
 [3
 
 ]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/b/n' will be
-(Font)              scaled to size 10.79993pt on input line 384.
+(Font)              scaled to size 10.79993pt on input line 386.
 File: screens/route.png Graphic file (type bmp)
 <screens/route.png>
  [4
@@ -1301,15 +1301,15 @@ File: screens/route.png Graphic file (type bmp)
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 402.
+(hyperref)                removing `math shift' on input line 404.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\times' on input line 402.
+(hyperref)                removing `\times' on input line 404.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 402.
+(hyperref)                removing `math shift' on input line 404.
 
 File: screens/forecast.png Graphic file (type bmp)
 <screens/forecast.png>
@@ -1326,14 +1326,14 @@ File: screens/me.png Graphic file (type bmp)
  [7
 
 ]
-Underfull \hbox (badness 2351) in paragraph at lines 524--525
+Underfull \hbox (badness 2351) in paragraph at lines 526--527
 []|\TU/SourceHanSerifTW(0)/m/n/10 與 \TU/LatinModernRoman(0)/m/n/10 OSM \TU/Lati
 nModernMono(0)/m/n/10 amenity=drinking_water \TU/SourceHanSerifTW(0)/m/n/10 點 位
  融 合  |（\TU/LatinModernMono(0)/m/n/10 source: osm /
  []
 
 
-Overfull \hbox (23.99997pt too wide) in paragraph at lines 518--530
+Overfull \hbox (23.99997pt too wide) in paragraph at lines 520--532
  [][] 
  []
 
@@ -1341,7 +1341,7 @@ Overfull \hbox (23.99997pt too wide) in paragraph at lines 518--530
 
 ]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 577.
+(Font)              scaled to size 9.85492pt on input line 579.
  [9] (report.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
@@ -1361,6 +1361,6 @@ Here is how much of TeX's memory you used:
  53831 multiletter control sequences out of 15000+600000
  564511 words of font info for 122 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 84i,16n,93p,478b,1251s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,18n,93p,478b,1251s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on report.pdf (10 pages).

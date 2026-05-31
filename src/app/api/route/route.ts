@@ -23,7 +23,7 @@ interface ReqBody {
   end: { lat: number; lng: number };
   mode: TravelMode;
   avoidWater?: boolean;
-  /** mock 模式時 override 雨勢，方便使用者測試大雨情境 */
+  /** demo override 雨勢；即使已連上 CWA，也可手動測試大雨情境 */
   mockRain?: MockRain | null;
 }
 
@@ -42,6 +42,7 @@ function applyMockRain(base: WeatherSnapshot, m: MockRain): WeatherSnapshot {
   const pick = mapping[m];
   const next: WeatherSnapshot = {
     ...base,
+    source: 'mock',
     rainfall1h: pick.mm,
     isRaining: pick.mm > 0,
     rainIntensity: pick.intensity,
@@ -89,11 +90,10 @@ export async function POST(req: NextRequest) {
       dataApi.listReports().catch(() => []),
     ]);
 
-    // mock 階段允許 override 雨勢；真實 CWA 來源會忽略 mockRain
-    const weather =
-      rawWeather.source === 'mock' && body.mockRain
-        ? applyMockRain(rawWeather, body.mockRain)
-        : rawWeather;
+    // Demo 需要穩定重現雨天情境，所以即使真實 CWA 目前無雨，也允許手動 override。
+    const weather = body.mockRain
+      ? applyMockRain(rawWeather, body.mockRain)
+      : rawWeather;
 
     const baseOpts: DenseRouteOptions = { mode, weather, reports, avoidWater };
 

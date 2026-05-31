@@ -1,6 +1,7 @@
 'use client';
 import {
   ArrowUpDown,
+  BadgeCheck,
   Target,
   MapPin,
   Footprints,
@@ -57,6 +58,7 @@ interface Props {
   onChangeMockRain: (m: MockRain) => void;
   onChangeShowFloodOverlay: (on: boolean) => void;
   onChangePickMode: (m: null | 'start' | 'end') => void;
+  onApplyDemoRoute: (demo: DemoRouteOption) => void;
   onSwap: () => void;
   recommended: PlanLike | null;
   shortest: PlanLike | null;
@@ -65,17 +67,50 @@ interface Props {
   error?: string | null;
 }
 
+export interface DemoRouteOption {
+  id: string;
+  label: string;
+  description: string;
+  startId: string;
+  endId: string;
+  rain: Exclude<MockRain, null>;
+}
+
+const DEMO_ROUTES: DemoRouteOption[] = [
+  {
+    id: 'palm-library',
+    label: '小椰林道積水',
+    description: '校門口到總圖，容易看出易積水段與遮蔽路線差異',
+    startId: 'main_gate',
+    endId: 'main_library',
+    rain: 'heavy',
+  },
+  {
+    id: 'lake-engineering',
+    label: '醉月湖周邊',
+    description: '醉月湖到工學院，示範低窪區繞行',
+    startId: 'drunk_moon_lake',
+    endId: 'engineering',
+    rain: 'moderate',
+  },
+  {
+    id: 'zhoushan-class',
+    label: '舟山路低處',
+    description: '辛亥側門到共同教學館，適合展示騎車避水',
+    startId: 'side_gate_xinhai',
+    endId: 'common_teach',
+    rain: 'heavy',
+  },
+];
+
 /** mock 雨勢模擬器 — 三排兩格更緊湊 */
 function MockRainPicker({
   value,
   onChange,
-  isMockSource,
 }: {
   value: MockRain;
   onChange: (v: MockRain) => void;
-  isMockSource: boolean;
 }) {
-  if (!isMockSource) return null;
   const options: { value: MockRain; label: string; Icon: LucideIcon }[] = [
     { value: null, label: '自動', Icon: RefreshCw },
     { value: 'none', label: '無雨', Icon: Sun },
@@ -87,13 +122,16 @@ function MockRainPicker({
   return (
     <div className="rounded-xl border border-amber-200/70 bg-amber-50/50 p-2">
       <div className="mb-1.5 flex items-center justify-between">
-        <SectionLabel className="text-amber-800">雨勢模擬</SectionLabel>
+        <SectionLabel className="text-amber-800">Demo 雨勢</SectionLabel>
         {value && (
           <span className="rounded-full bg-amber-200/60 px-1.5 py-0.5 text-[9px] font-semibold tracking-wider text-amber-800">
             OVERRIDE
           </span>
         )}
       </div>
+      <p className="mb-1.5 text-[10.5px] leading-relaxed text-amber-800/80">
+        可覆蓋 CWA 即時值，讓展示時固定呈現積水風險。
+      </p>
       <div className="grid grid-cols-3 gap-1">
         {options.map((opt) => {
           const Icon = opt.Icon;
@@ -114,6 +152,36 @@ function MockRainPicker({
             </button>
           );
         })}
+      </div>
+    </div>
+  );
+}
+
+function DemoRoutePicker({
+  onApplyDemoRoute,
+}: {
+  onApplyDemoRoute: (demo: DemoRouteOption) => void;
+}) {
+  return (
+    <div className="rounded-xl border border-brand-200/70 bg-brand-50/50 p-2">
+      <div className="mb-1.5 flex items-center gap-1.5">
+        <BadgeCheck className="h-3.5 w-3.5 text-brand-700" strokeWidth={2.2} />
+        <SectionLabel className="text-brand-800">Demo 場景</SectionLabel>
+      </div>
+      <div className="space-y-1">
+        {DEMO_ROUTES.map((demo) => (
+          <button
+            key={demo.id}
+            type="button"
+            onClick={() => onApplyDemoRoute(demo)}
+            className="w-full rounded-lg bg-white px-2.5 py-2 text-left text-[11.5px] text-slate-700 ring-1 ring-slate-200 transition-colors hover:bg-brand-50 hover:ring-brand-200"
+          >
+            <span className="block font-semibold text-slate-900">{demo.label}</span>
+            <span className="mt-0.5 block leading-snug text-slate-500">
+              {demo.description}
+            </span>
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -446,6 +514,7 @@ export function RoutePanel({
   onChangeMockRain,
   onChangeShowFloodOverlay,
   onChangePickMode,
+  onApplyDemoRoute,
   onSwap,
   recommended,
   shortest,
@@ -453,7 +522,6 @@ export function RoutePanel({
   loading,
   error,
 }: Props) {
-  const isMockSource = weather?.source === 'mock';
   const detour =
     recommended && shortest
       ? recommended.totalDistance - shortest.totalDistance
@@ -475,8 +543,9 @@ export function RoutePanel({
       <MockRainPicker
         value={mockRain}
         onChange={onChangeMockRain}
-        isMockSource={isMockSource}
       />
+
+      <DemoRoutePicker onApplyDemoRoute={onApplyDemoRoute} />
 
       <div className="space-y-2">
         <EndpointPicker
