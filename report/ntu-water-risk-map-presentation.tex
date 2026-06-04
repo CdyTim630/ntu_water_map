@@ -1,0 +1,218 @@
+% !TEX program = xelatex
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+
+\setmainfont{Arial}
+\setsansfont{Arial}
+\setCJKmainfont{Microsoft JhengHei}
+\setCJKsansfont{Microsoft JhengHei}
+
+\definecolor{ink}{HTML}{0F172A}
+\definecolor{muted}{HTML}{64748B}
+\definecolor{paper}{HTML}{F8FAFC}
+\definecolor{blue}{HTML}{0EA5E9}
+\definecolor{blueDeep}{HTML}{0369A1}
+\definecolor{green}{HTML}{10B981}
+\definecolor{amber}{HTML}{F59E0B}
+\definecolor{red}{HTML}{EF4444}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{%
+  \hbox{\hspace{0.7cm}\color{muted}\scriptsize NTU Water Risk Map\hfill\insertframenumber\hspace{0.7cm}}\vspace{0.25cm}}
+\setbeamercolor{normal text}{fg=ink,bg=paper}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+
+\newcommand{\kicker}[1]{\textcolor{blueDeep}{\textbf{\scriptsize #1}}\par\vspace{0.12cm}}
+\newcommand{\claim}[1]{{\Large\bfseries #1}\par\vspace{0.15cm}{\color{blue}\rule{\linewidth}{0.7pt}}\vspace{0.25cm}}
+\newcommand{\metric}[3]{%
+  \begin{minipage}{0.15\linewidth}\centering
+  {\Huge\bfseries\textcolor{#3}{#1}}\\[-1mm]
+  {\scriptsize\textcolor{muted}{#2}}
+  \end{minipage}}
+\newcommand{\screen}[2]{\includegraphics[width=#1\linewidth]{screens/#2}}
+
+\begin{document}
+
+\begin{frame}[plain]
+\colorbox{ink}{\begin{minipage}[c][\paperheight]{\paperwidth}
+\vspace{0.7cm}\hspace{0.8cm}{\color{blue!25!white}\large\bfseries NTU Water Resource Project}
+
+\vspace{0.5cm}\hspace{0.8cm}{\color{white}\fontsize{30}{34}\selectfont\bfseries 台大水資源問題地圖}
+
+\vspace{0.35cm}\hspace{0.8cm}\begin{minipage}{0.46\linewidth}
+{\color{white!82}把積水回報、飲水機狀態、即時雨勢與校園路網整合成可直接使用的校園工具。}
+\end{minipage}
+
+\vspace{0.8cm}\hspace{0.8cm}
+\metric{6}{主要頁面}{blue}\hspace{0.15cm}
+\metric{10}{API routes}{green}\hspace{0.15cm}
+\metric{6,133}{路網節點}{amber}\hspace{0.15cm}
+\metric{7,248}{路網邊}{red}
+
+\vspace{-4.1cm}\hfill\begin{minipage}{0.38\linewidth}
+\screen{1}{home.png}
+\end{minipage}\hspace{0.8cm}
+
+\vfill\hspace{0.8cm}{\color{white!70}\scriptsize GitHub: github.com/CdyTim630/ntu\_water\_map · Demo: ntuwatermap.vercel.app}\vspace{0.55cm}
+\end{minipage}}
+\end{frame}
+
+\begin{frame}
+\kicker{PROBLEM}
+\claim{雨天校園移動需要的不只是地圖，而是「能避開水」的決策。}
+\begin{itemize}
+\item 積水資訊分散在社群、口耳相傳或臨時公告，缺少即時、可回饋的共同資料層。
+\item Google Maps 不知道台大哪些路段有騎樓、走廊或低窪積水風險。
+\item 飲水機位置與狀態也常常只靠經驗，無法和日常通勤路線一起被使用。
+\end{itemize}
+\vspace{0.2cm}
+\begin{block}{專案解法}
+把「現在下雨、哪裡積水、怎麼走比較不濕」連成一個流程。
+\end{block}
+\end{frame}
+
+\begin{frame}
+\kicker{SYSTEM FLOW}
+\claim{產品把使用者動作一路接到資料、演算法與外部公開資料。}
+\begin{center}
+\begin{tikzpicture}[node distance=0.45cm, every node/.style={font=\small, align=center}]
+\node[draw=none, fill=white, rounded corners, minimum width=2.0cm, minimum height=1.2cm, text=blue] (a) {Client\\6 頁面};
+\node[draw=none, fill=white, rounded corners, minimum width=2.0cm, minimum height=1.2cm, right=of a, text=blueDeep] (b) {API Routes\\10 endpoints};
+\node[draw=none, fill=white, rounded corners, minimum width=2.0cm, minimum height=1.2cm, right=of b, text=green] (c) {演算法層\\Dijkstra / Risk};
+\node[draw=none, fill=white, rounded corners, minimum width=2.0cm, minimum height=1.2cm, right=of c, text=amber] (d) {內部資料\\Mock / Supabase};
+\node[draw=none, fill=white, rounded corners, minimum width=2.0cm, minimum height=1.2cm, right=of d, text=red] (e) {外部資料\\OSM / CWA / 北水處};
+\draw[-{Stealth[length=2.2mm]}, line width=1.2pt, color=muted!35] (a) -- (b);
+\draw[-{Stealth[length=2.2mm]}, line width=1.2pt, color=muted!35] (b) -- (c);
+\draw[-{Stealth[length=2.2mm]}, line width=1.2pt, color=muted!35] (c) -- (d);
+\draw[-{Stealth[length=2.2mm]}, line width=1.2pt, color=muted!35] (d) -- (e);
+\end{tikzpicture}
+\end{center}
+\vspace{0.35cm}
+\begin{columns}[T]
+\column{0.46\linewidth}
+\textbf{Heavy compute stays server-side}\\
+\textcolor{muted}{3 MB GeoJSON、Dijkstra、CWA API proxy 不丟到瀏覽器，client 只負責互動地圖與 UI。}
+\column{0.46\linewidth}
+\textbf{API key never ships to client}\\
+\textcolor{muted}{所有外部資料由 \texttt{/api/weather}、\texttt{/api/water-stations} 等 routes 代理。}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\kicker{CORE UX}
+\claim{首頁把校園水況、回報入口與可飲水資訊放在同一張地圖上。}
+\begin{columns}[T]
+\column{0.58\linewidth}\screen{1}{home.png}
+\column{0.38\linewidth}
+\textbf{\large 首頁 \texttt{/}}\\[0.2cm]
+\begin{itemize}
+\item 地圖顯示所有 reports，支援篩選、回報與高風險地點排行。
+\item Today Briefing 把雨勢與校園水況變成可讀摘要。
+\item 飲水機圖層讓「補水」也成為通勤決策的一部分。
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\kicker{ROUTING}
+\claim{路徑規劃不只畫線，而是在真實 OSM 路網上計算最低淋雨成本。}
+\begin{columns}[T]
+\column{0.56\linewidth}\screen{1}{route.png}
+\column{0.40\linewidth}
+\textbf{\large Cost function}\\[0.15cm]
+\colorbox{blue!8}{\parbox{0.95\linewidth}{\small $cost=d\times(1+r\times(2.4(1-c)+2.2l+0.8f))$}}\\[0.2cm]
+\begin{itemize}
+\item $d$ 距離、$r$ 雨勢、$c$ 遮蔽率、$l$ 低窪、$f$ 目前積水回報。
+\item 同時顯示防雨建議路徑與最短路徑。
+\item 新回報會立即影響下一次 Dijkstra。
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\kicker{FORECAST}
+\claim{水災預警用 90 天回報密度乘上即時雨勢，預先標出熱區。}
+\begin{columns}[T]
+\column{0.60\linewidth}\screen{1}{forecast.png}
+\column{0.36\linewidth}
+\begin{itemize}
+\item 1 / 3 / 6 小時 horizon，讓使用者看趨勢而不是只看當下。
+\item 使用歷史回報密度、低窪區與 CWA 即時雨勢合成風險格網。
+\item 熱點可跳回 \texttt{/route}，直接規劃避開高風險區域的路線。
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\kicker{DASHBOARD}
+\claim{儀表板把零散回報轉成可以排序、追蹤與管理的校園水況指標。}
+\begin{columns}[T]
+\column{0.60\linewidth}\screen{1}{dashboard.png}
+\column{0.36\linewidth}
+\textbf{\large risk\_score}\\[0.1cm]
+\colorbox{red!8}{\parbox{0.95\linewidth}{\small reports $\times$ 2 + high $\times$ 3 + recent7d $\times$ 2}}\\[0.25cm]
+\begin{itemize}
+\item KPI、趨勢、類別分布與高風險排行支援管理端判斷優先順序。
+\item 飲水機健康狀態與 SLA 讓水資源維護也能被量化。
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\kicker{ENGAGEMENT}
+\claim{個人頁把回報與雨天通勤變成可累積的日常行為。}
+\begin{columns}[T]
+\column{0.40\linewidth}\screen{0.95}{me.png}
+\column{0.54\linewidth}
+\begin{itemize}
+\item Streak：每天打開或完成通勤路線可累積連續紀錄。
+\item Badges：回報、確認、飲水機維護都能轉成可見成就。
+\item LocalStorage demo 模式讓沒有登入系統時仍可展示完整體驗。
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\kicker{DATA SOURCES}
+\claim{三個外部資料源加上內部回報，讓地圖有真實校園語境。}
+\begin{tabular}{p{0.22\linewidth}p{0.20\linewidth}p{0.50\linewidth}}
+\textbf{\textcolor{blue}{OpenStreetMap}} & 校園路網 & Overpass 抓取 footway / path / service，推論 covered、lowLying、bikeAllowed。\\[0.25cm]
+\textbf{\textcolor{green}{CWA OpenData}} & 即時與預報雨勢 & Server-side proxy，供 weather API、路徑權重與預警熱區使用。\\[0.25cm]
+\textbf{\textcolor{amber}{北水處 OpenData}} & 飲水機水質 & 與 OSM drinking\_water 點位融合，顯示官方狀態與採樣時間。\\[0.25cm]
+\textbf{\textcolor{red}{Mock / Supabase}} & 回報與確認 & Demo 可無後端運作；正式版可接 PostgreSQL、Storage 與 RLS。
+\end{tabular}
+\end{frame}
+
+\begin{frame}[plain]
+\colorbox{ink}{\begin{minipage}[c][\paperheight]{\paperwidth}
+\vspace{0.6cm}\hspace{0.8cm}{\color{blue!25!white}\bfseries NEXT STEPS}
+
+\vspace{0.28cm}\hspace{0.8cm}\begin{minipage}{0.78\linewidth}
+{\color{white}\LARGE\bfseries 下一步是把 demo 變成更可信、更即時、更能被校園採用的服務。}
+\end{minipage}
+
+\vspace{0.55cm}\hspace{0.95cm}\begin{minipage}{0.78\linewidth}
+{\color{white!85}
+\begin{itemize}
+\item 接入 NTU SSO 或 Magic Link，取代目前管理端密碼模式。
+\item 加入 Web Push：雨勢升高或常走路線出現積水時主動提醒。
+\item 累積 1,000+ 回報後導入 ML，從 rule-based 預警升級到資料驅動預測。
+\item 開放校園水資源 API，讓其他服務也能使用回報與飲水機資料。
+\end{itemize}}
+\end{minipage}
+
+\vfill\hspace{0.8cm}{\color{blue}\bfseries Q\&A}\hfill
+\begin{minipage}{0.34\linewidth}
+{\color{blue!25!white}\bfseries 核心結論}\\
+{\color{white}Next.js + Leaflet + OSM + Dijkstra 已能做出可立即使用的雨天校園工具。}
+\end{minipage}\hspace{0.9cm}\vspace{0.6cm}
+\end{minipage}}
+\end{frame}
+
+\end{document}

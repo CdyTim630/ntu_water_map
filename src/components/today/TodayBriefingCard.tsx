@@ -2,8 +2,8 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import {
-  Sun,
-  Umbrella,
+  CloudSun,
+  CloudDrizzle,
   CloudRain,
   Flame,
   CheckCircle2,
@@ -16,6 +16,7 @@ import { Card, SectionLabel } from '@/components/ui/Card';
 import { useStreak, nextBadgeProgress } from '@/lib/streakStore';
 import {
   RAIN_INTENSITY_LABEL,
+  type ForecastSlot,
   type WeatherSnapshot,
 } from '@/lib/weather';
 import type { WaterStation } from '@/lib/types';
@@ -24,22 +25,14 @@ interface Props {
   waterStations?: WaterStation[];
 }
 
-interface ForecastHorizon {
-  horizon: '1h' | '3h' | '6h';
-  rainFactor: number;
-  estIntensity: WeatherSnapshot['rainIntensity'];
-  pop: number;
-}
-
 /**
  * 今日水情報 — 主頁 hero。
- * 雙焦點：左 verdict（圖示 + 標語）/ 右 streak（火焰 + 大數字）
+ * 雙焦點：左當天天氣預報（圖示 + 時段摘要）/ 右 streak（火焰 + 大數字）
  * 底部 chip 列：飲水機運作狀態、徽章解鎖、新人引導。
  */
 export function TodayBriefingCard({ waterStations = [] }: Props) {
   const { state: streak, newlyUnlocked, hydrated } = useStreak();
   const [weather, setWeather] = useState<WeatherSnapshot | null>(null);
-  const [horizons, setHorizons] = useState<ForecastHorizon[]>([]);
   const [dateLabel, setDateLabel] = useState<string>('');
 
   useEffect(() => {
@@ -57,7 +50,6 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
       .then((r) => r.json())
       .then((d) => {
         setWeather(d.weather);
-        setHorizons(d.horizons ?? []);
       })
       .catch(() => undefined);
   }, []);
@@ -71,38 +63,94 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
   );
 
   type VerdictTone = 'rose' | 'sky' | 'emerald';
-  interface Verdict {
+  interface WeatherBrief {
     Icon: LucideIcon;
     label: string;
     sub: string;
+    meta: string;
+    sourceLabel: string;
     tone: VerdictTone;
   }
 
-  const verdict: Verdict = useMemo(() => {
-    const peak = horizons.reduce((mx, h) => Math.max(mx, h.rainFactor), 0);
-    if (peak >= 0.55) {
+  const brief: WeatherBrief = useMemo(() => {
+    if (!weather) {
       return {
-        Icon: CloudRain,
-        label: '強烈建議帶傘',
-        sub: '今天會下中雨以上',
-        tone: 'rose',
-      };
-    }
-    if (peak >= 0.25) {
-      return {
-        Icon: Umbrella,
-        label: '建議帶傘',
-        sub: '部分時段有雨機率',
+        Icon: CloudSun,
+        label: '今日天氣預報',
+        sub: '正在取得大安區即時預報',
+        meta: '載入中',
+        sourceLabel: 'CWA',
         tone: 'sky',
       };
     }
+
+    const now = new Date();
+    const startOfTomorrow =
+      new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() +
+      24 * 3600 * 1000;
+    const remainingToday = (weather.forecastSeries ?? [])
+      .filter((slot) => isSlotRelevantToday(slot, now.getTime(), startOfTomorrow))
+      .sort(
+        (a, b) =>
+          new Date(a.startTime).getTime() - new Date(b.startTime).getTime(),
+      );
+    const activeSlot =
+      remainingToday.find((slot) => {
+        const start = new Date(slot.startTime).getTime();
+        const end = new Date(slot.endTime).getTime();
+        return start <= now.getTime() && now.getTime() < end;
+      }) ?? remainingToday[0];
+    const todayPeakPop = Math.max(
+      activeSlot?.pop ?? weather.pop3h,
+      ...remainingToday.map((slot) => slot.pop),
+    );
+    const slotIntensity = activeSlot?.intensityHint ?? weather.rainIntensity;
+    const wx = activeSlot?.wx || weather.description || '天氣資料更新中';
+    const pop = activeSlot?.pop ?? weather.pop3h;
+    const timeRange = activeSlot
+      ? formatSlotRange(activeSlot)
+      : '目前時段';
+
+    let Icon: LucideIcon = CloudSun;
+    let tone: VerdictTone = 'emerald';
+    let label = wx;
+
+    if (slotIntensity === 'heavy' || slotIntensity === 'moderate' || pop >= 0.7) {
+      Icon = CloudRain;
+      tone = 'rose';
+      label = `${wx} · 降雨明顯`;
+    } else if (slotIntensity === 'light' || slotIntensity === 'drizzle' || pop >= 0.35) {
+      Icon = CloudDrizzle;
+      tone = 'sky';
+      label = `${wx} · 有雨機率`;
+    } else if (weather.isRaining) {
+      Icon = CloudDrizzle;
+      tone = 'sky';
+      label = `${wx} · 觀測有雨`;
+    }
+
+    const sourceLabel = weather.source === 'cwa' ? 'CWA 大安區預報' : 'Mock 模擬預報';
+
     return {
-      Icon: Sun,
-      label: '不必帶傘',
-      sub: '今天雨勢輕微',
-      tone: 'emerald',
+      Icon,
+      label,
+      sub: `${timeRange} · 降雨機率 ${Math.round(pop * 100)}%`,
+      meta: `今日剩餘最高 ${Math.round(todayPeakPop * 100)}% · ${RAIN_INTENSITY_LABEL[slotIntensity]}`,
+      sourceLabel,
+      tone,
     };
-  }, [horizons]);
+  }, [weather]);
+
+  const observationMeta = useMemo(() => {
+    if (!weather) return null;
+    const parts: string[] = [];
+    if (weather.temperature !== null) parts.push(`${weather.temperature.toFixed(0)}°C`);
+    if (weather.humidity !== null) parts.push(`濕度 ${weather.humidity.toFixed(0)}%`);
+    if (weather.rainfall1h !== null) {
+      parts.push(`觀測雨量 ${weather.rainfall1h.toFixed(1)} mm/h`);
+    }
+    return parts.join(' · ');
+  }, [weather]);
 
   const next = nextBadgeProgress(streak);
 
@@ -120,7 +168,7 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
   const isFirstDay =
     streak.currentStreak === 1 && streak.totalDistinctDays === 1;
 
-  const verdictAccent = {
+  const briefAccent = {
     rose: {
       bg: 'bg-rose-50',
       iconBg: 'bg-rose-100',
@@ -142,36 +190,39 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
       text: 'text-emerald-700',
       ring: 'ring-emerald-100',
     },
-  }[verdict.tone];
+  }[brief.tone];
 
-  const VerdictIcon = verdict.Icon;
+  const WeatherIcon = brief.Icon;
 
   return (
     <Card className="overflow-hidden bg-gradient-to-br from-white via-white to-brand-50/40 p-0 ring-1 ring-slate-200/60">
       <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] sm:items-stretch">
-        {/* 左：今天該不該帶傘 */}
+        {/* 左：今日天氣預報 */}
         <div className="flex items-center gap-4 p-4 sm:p-5">
           <div
-            className={`grid h-14 w-14 flex-none place-items-center rounded-2xl ring-1 ${verdictAccent.iconBg} ${verdictAccent.ring}`}
+            className={`grid h-14 w-14 flex-none place-items-center rounded-2xl ring-1 ${briefAccent.iconBg} ${briefAccent.ring}`}
           >
-            <VerdictIcon
-              className={`h-7 w-7 ${verdictAccent.iconText}`}
+            <WeatherIcon
+              className={`h-7 w-7 ${briefAccent.iconText}`}
               strokeWidth={2}
             />
           </div>
           <div className="min-w-0 flex-1">
             <SectionLabel className="text-slate-500">
-              {dateLabel ? `${dateLabel} · 出門帶傘？` : '今日水情報'}
+              {dateLabel ? `${dateLabel} · 今日天氣預報` : '今日天氣預報'}
             </SectionLabel>
             <h2
-              className={`mt-0.5 text-xl font-bold tracking-tight ${verdictAccent.text}`}
+              className={`mt-0.5 truncate text-xl font-bold tracking-tight ${briefAccent.text}`}
             >
-              {verdict.label}
+              {brief.label}
             </h2>
             <p className="mt-0.5 text-[12px] text-slate-500">
-              {weather
-                ? `現${RAIN_INTENSITY_LABEL[weather.rainIntensity]} · ${verdict.sub}`
-                : verdict.sub}
+              {brief.sub}
+            </p>
+            <p className="mt-1 flex flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-slate-400">
+              <span>{brief.sourceLabel}</span>
+              <span>{brief.meta}</span>
+              {observationMeta && <span>{observationMeta}</span>}
             </p>
           </div>
         </div>
@@ -248,4 +299,24 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
       </div>
     </Card>
   );
+}
+
+function isSlotRelevantToday(
+  slot: ForecastSlot,
+  nowMs: number,
+  startOfTomorrow: number,
+): boolean {
+  const start = new Date(slot.startTime).getTime();
+  const end = new Date(slot.endTime).getTime();
+  if (!Number.isFinite(start) || !Number.isFinite(end)) return false;
+  return end > nowMs && start < startOfTomorrow;
+}
+
+function formatSlotRange(slot: ForecastSlot): string {
+  const fmt = new Intl.DateTimeFormat('zh-TW', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+  return `${fmt.format(new Date(slot.startTime))}-${fmt.format(new Date(slot.endTime))}`;
 }

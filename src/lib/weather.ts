@@ -376,6 +376,26 @@ async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
     );
 }
 
+function currentOrNextForecastSlot(
+  series: ForecastSlot[],
+  nowMs = Date.now(),
+): ForecastSlot | null {
+  const slots = series
+    .map((slot) => ({
+      slot,
+      start: new Date(slot.startTime).getTime(),
+      end: new Date(slot.endTime).getTime(),
+    }))
+    .filter(({ start, end }) => Number.isFinite(start) && Number.isFinite(end))
+    .sort((a, b) => a.start - b.start);
+
+  return (
+    slots.find(({ start, end }) => start <= nowMs && nowMs < end)?.slot ??
+    slots.find(({ start }) => start > nowMs)?.slot ??
+    null
+  );
+}
+
 export async function fetchWeather(): Promise<WeatherSnapshot> {
   const apiKey = process.env.CWA_API_KEY;
   if (!apiKey) {
@@ -388,11 +408,11 @@ export async function fetchWeather(): Promise<WeatherSnapshot> {
     ]);
     const rainfall1h = obs.rainfall1h ?? null;
     const intensity = classifyIntensity(rainfall1h);
-    // pop3h 取 series 第一段（0–3h）的 pop；沒 series 退到 0
-    const firstSlot = series[0];
-    const pop3h = firstSlot ? firstSlot.pop : 0;
-    // description 優先用即時觀測 → 第一段 forecast Wx
-    const description = obs.description || firstSlot?.wx || '';
+    // pop3h 取目前覆蓋中的預報 slot；如果剛好沒有，退到下一段。
+    const currentSlot = currentOrNextForecastSlot(series);
+    const pop3h = currentSlot ? currentSlot.pop : 0;
+    // description 優先用即時觀測 → 當前 forecast Wx
+    const description = obs.description || currentSlot?.wx || '';
     return {
       source: 'cwa',
       observedAt: obs.observedAt ?? new Date().toISOString(),
