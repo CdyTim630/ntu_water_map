@@ -3,7 +3,7 @@
  * 申請金鑰：https://opendata.cwa.gov.tw/userLogin
  *
  * 主要使用兩支 API：
- * - F-D0047-061：臺北市鄉鎮天氣預報（包含逐 3 小時 PoP6h、Wx、T、RH）
+ * - F-D0047-061：臺北市鄉鎮天氣預報（包含逐 3 小時 Wx、PoP、T、RH）
  * - O-A0003-001：自動氣象站-現在天氣觀測（中央大學站 466920 / 觀測 466921 等）
  *
  * 沒有 CWA_API_KEY 時自動走 mock，介面與資料結構一致。
@@ -34,7 +34,7 @@ export interface WeatherSnapshot {
   pop3h: number;
   /** 文字描述（晴、多雲、短暫雨…） */
   description: string;
-  /** 多時段預報序列（CWA F-D0047-061 PoP6h × Wx 合成；mock 也會產一份簡化版） */
+  /** 多時段預報序列（CWA F-D0047-061 PoP × Wx 合成；mock 也會產一份簡化版） */
   forecastSeries: ForecastSlot[];
 }
 
@@ -44,7 +44,7 @@ export interface ForecastSlot {
   startTime: string;
   /** ISO8601 — slot 結束時間 */
   endTime: string;
-  /** 0~1 降雨機率（PoP）；CWA PoP6h 套用整個 6 小時視窗 */
+  /** 0~1 降雨機率（PoP）；CWA 優先使用 3 小時降雨機率 */
   pop: number;
   /** Wx 文字（如「陰短暫陣雨」），mock 模式也會給一個 */
   wx: string | null;
@@ -277,10 +277,10 @@ interface CWALocationFull {
 }
 
 /**
- * 抓 CWA F-D0047-061 完整序列：PoP6h（4 個 6h slot）× Wx（8 個 3h slot），merge 成 8 段。
+ * 抓 CWA F-D0047-061 完整序列：PoP（優先 3h，fallback 6h/12h）× Wx，merge 成多段。
  *
  * Returns: 0~24h 內、每 3h 一段的 ForecastSlot[]，依時間排序。
- * pop 值由 PoP6h 對應到該 3h slot 的母窗（同一個 6h 母窗的兩段 3h 子窗共用同一個 pop）。
+ * pop 值由 PoP 時間窗對應到該 Wx slot；3h PoP 可精準對齊，6h/12h 則用重疊時間 fallback。
  */
 async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
   const url = new URL(`${CWA_BASE}/F-D0047-061`);
@@ -288,7 +288,7 @@ async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
   url.searchParams.set('LocationName', TAIPEI_TOWN);
   url.searchParams.set(
     'ElementName',
-    ['天氣現象', '6小時降雨機率', '12小時降雨機率'].join(','),
+    ['天氣現象', '3小時降雨機率', '6小時降雨機率', '12小時降雨機率'].join(','),
   );
   url.searchParams.set('format', 'JSON');
   const res = await fetch(url, { next: { revalidate: 600 } });
@@ -309,6 +309,12 @@ async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
   const wxEl = els.find(
     (e) => e.elementName === 'Wx' || e.elementName === '天氣現象',
   );
+  const pop3El = els.find(
+    (e) =>
+      e.elementName === 'PoP' ||
+      e.elementName === 'PoP3h' ||
+      e.elementName === '3小時降雨機率',
+  );
   const pop6El = els.find(
     (e) => e.elementName === 'PoP6h' || e.elementName === '6小時降雨機率',
   );
@@ -322,7 +328,7 @@ async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
   );
   if (!wxSlots.length) return [];
 
-  // 把 PoP6h（或 12h fallback）的時間區間做成 [start..end, percent] 列表
+  // 把 PoP 的時間區間做成 [start..end, percent] 列表；優先 3h，無資料才退到 6h/12h。
   type PopWindow = { start: number; end: number; pop: number };
   const popWindows: PopWindow[] = [];
   const addPopWindows = (el?: CWAWeatherElement) => {
@@ -339,8 +345,9 @@ async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
       });
     }
   };
-  addPopWindows(pop6El);
-  if (!popWindows.length) addPopWindows(pop12El); // 沒 6h 才退而求其次
+  addPopWindows(pop3El);
+  if (!popWindows.length) addPopWindows(pop6El);
+  if (!popWindows.length) addPopWindows(pop12El); // 沒 3h/6h 才退而求其次
 
   function findPopForSlot(s: number, e: number): number {
     // 該 slot 落在哪個 PoP 窗：取重疊時間最長的那個
