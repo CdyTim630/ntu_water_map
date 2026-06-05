@@ -44,19 +44,6 @@ export default function MePage() {
     () => BADGES.filter((b) => b.isUnlocked(streak, stats)),
     [streak, stats],
   );
-
-  const hydrated = streakReady && statsReady;
-
-  if (!hydrated) {
-    return (
-      <div className="px-4 py-8 text-center text-sm text-slate-500">
-        載入中…
-      </div>
-    );
-  }
-
-  const isNewbie = streak.totalDistinctDays <= 1 && score < 5;
-  const LevelIcon = level.Icon;
   const sharePayload = useMemo(
     () =>
       buildSharePayload({
@@ -70,6 +57,19 @@ export default function MePage() {
       }),
     [level.level, level.name, routes.length, score, stats, streak, unlocked],
   );
+
+  const hydrated = streakReady && statsReady;
+
+  if (!hydrated) {
+    return (
+      <div className="px-4 py-8 text-center text-sm text-slate-500">
+        載入中…
+      </div>
+    );
+  }
+
+  const isNewbie = streak.totalDistinctDays <= 1 && score < 5;
+  const LevelIcon = level.Icon;
 
   return (
     <div className="px-4 py-4 sm:px-6 space-y-3 animate-fade-in">
