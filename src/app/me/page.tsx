@@ -32,33 +32,78 @@ import {
 } from '@/lib/badges';
 import { useCommuteRoutes } from '@/lib/commuteStore';
 
+const DEMO_STREAK: StreakState = {
+  lastVisitDate: null,
+  currentStreak: 18,
+  longestStreak: 24,
+  totalDistinctDays: 42,
+  badges: ['streak_3', 'streak_7'],
+};
+
+const DEMO_STATS: StatsState = {
+  commute_run: 31,
+  water_refill: 68,
+  report_filed: 7,
+  broken_reported: 4,
+  currentMonth: 'demo',
+};
+
+const DEMO_ROUTE_COUNT = 3;
+
+function hasAnyProfileData(streak: StreakState, stats: StatsState, routesCount: number) {
+  return (
+    streak.totalDistinctDays > 0 ||
+    streak.currentStreak > 0 ||
+    stats.water_refill > 0 ||
+    stats.commute_run > 0 ||
+    stats.report_filed > 0 ||
+    stats.broken_reported > 0 ||
+    routesCount > 0
+  );
+}
+
 export default function MePage() {
   const { state: streak, hydrated: streakReady } = useStreakReadOnly();
   const { state: stats, hydrated: statsReady } = useStats();
   const { routes } = useCommuteRoutes();
 
-  const score = actionScore(stats, streak.currentStreak);
+  const hydrated = streakReady && statsReady;
+  const useDemoProfile =
+    hydrated && !hasAnyProfileData(streak, stats, routes.length);
+  const profileStreak = useDemoProfile ? DEMO_STREAK : streak;
+  const profileStats = useDemoProfile ? DEMO_STATS : stats;
+  const profileRoutesCount = useDemoProfile ? DEMO_ROUTE_COUNT : routes.length;
+
+  const score = actionScore(profileStats, profileStreak.currentStreak);
   const level = computeLevel(score);
   const grouped = badgesByCategory();
   const unlocked = useMemo(
-    () => BADGES.filter((b) => b.isUnlocked(streak, stats)),
-    [streak, stats],
+    () => BADGES.filter((b) => b.isUnlocked(profileStreak, profileStats)),
+    [profileStats, profileStreak],
   );
   const sharePayload = useMemo(
     () =>
       buildSharePayload({
-        streak,
-        stats,
+        streak: profileStreak,
+        stats: profileStats,
         score,
         levelName: level.name,
         level: level.level,
         unlocked,
-        routesCount: routes.length,
+        routesCount: profileRoutesCount,
+        isDemo: useDemoProfile,
       }),
-    [level.level, level.name, routes.length, score, stats, streak, unlocked],
+    [
+      level.level,
+      level.name,
+      profileRoutesCount,
+      profileStats,
+      profileStreak,
+      score,
+      unlocked,
+      useDemoProfile,
+    ],
   );
-
-  const hydrated = streakReady && statsReady;
 
   if (!hydrated) {
     return (
@@ -68,7 +113,8 @@ export default function MePage() {
     );
   }
 
-  const isNewbie = streak.totalDistinctDays <= 1 && score < 5;
+  const isNewbie =
+    !useDemoProfile && profileStreak.totalDistinctDays <= 1 && score < 5;
   const LevelIcon = level.Icon;
 
   return (
@@ -77,6 +123,11 @@ export default function MePage() {
         <h1 className="text-lg font-semibold text-slate-900">個人成績單</h1>
         <p className="text-[11.5px] text-slate-500">
           你在台大水資源地圖累積的足跡 · 純本機儲存（不上 server）
+          {useDemoProfile && (
+            <span className="ml-1 rounded-full bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-100">
+              Demo 資料
+            </span>
+          )}
         </p>
       </div>
 
@@ -140,6 +191,11 @@ export default function MePage() {
             </div>
           </div>
         </div>
+        {useDemoProfile && (
+          <div className="mt-3 rounded-lg bg-amber-50/80 p-2.5 text-[11.5px] text-amber-800 ring-1 ring-amber-100">
+            目前尚未累積本機使用紀錄，這裡先用一組 demo 成績呈現分享效果；開始打卡、裝水或回報後會自動切回你的真實資料。
+          </div>
+        )}
         {isNewbie && (
           <div className="mt-3 rounded-lg bg-white/80 p-2.5 text-[11.5px] text-slate-700 ring-1 ring-slate-200/60">
             歡迎！每天打開、用通勤路線、按飲水機 +1、回報問題都能累積分數。
@@ -156,33 +212,33 @@ export default function MePage() {
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           <Stat
             label="連續打卡"
-            value={streak.currentStreak}
+            value={profileStreak.currentStreak}
             unit="天"
-            sub={`歷史最長 ${streak.longestStreak} 天`}
+            sub={`歷史最長 ${profileStreak.longestStreak} 天`}
             tone="orange"
             Icon={Flame}
           />
           <Stat
             label="飲水機 +1"
-            value={stats.water_refill}
+            value={profileStats.water_refill}
             unit="次"
-            sub={`省 ${stats.water_refill} 瓶 600ml = ${(stats.water_refill * 0.014).toFixed(1)} kg CO₂`}
+            sub={`省 ${profileStats.water_refill} 瓶 600ml = ${(profileStats.water_refill * 0.014).toFixed(1)} kg CO₂`}
             tone="sky"
             Icon={Droplet}
           />
           <Stat
             label="通勤路線"
-            value={stats.commute_run}
+            value={profileStats.commute_run}
             unit="次"
-            sub={`已建立 ${routes.length} 條常用路線`}
+            sub={`已建立 ${profileRoutesCount} 條常用路線`}
             tone="emerald"
             Icon={Footprints}
           />
           <Stat
             label="校園回報"
-            value={stats.report_filed + stats.broken_reported}
+            value={profileStats.report_filed + profileStats.broken_reported}
             unit="筆"
-            sub={`水資源 ${stats.report_filed} · 飲水機 ${stats.broken_reported}`}
+            sub={`水資源 ${profileStats.report_filed} · 飲水機 ${profileStats.broken_reported}`}
             tone="rose"
             Icon={Megaphone}
           />
@@ -206,8 +262,8 @@ export default function MePage() {
                   <BadgeCard
                     key={b.id}
                     badge={b}
-                    streak={streak}
-                    stats={stats}
+                    streak={profileStreak}
+                    stats={profileStats}
                   />
                 ))}
               </div>
@@ -317,6 +373,7 @@ interface SharePayload {
   unlockedCount: number;
   badgeCount: number;
   unlockedBadges: string[];
+  isDemo: boolean;
 }
 
 function buildSharePayload({
@@ -327,6 +384,7 @@ function buildSharePayload({
   level,
   unlocked,
   routesCount,
+  isDemo,
 }: {
   streak: StreakState;
   stats: StatsState;
@@ -335,6 +393,7 @@ function buildSharePayload({
   level: number;
   unlocked: Badge[];
   routesCount: number;
+  isDemo: boolean;
 }): SharePayload {
   const reportCount = stats.report_filed + stats.broken_reported;
   return {
@@ -358,6 +417,7 @@ function buildSharePayload({
     unlockedCount: unlocked.length,
     badgeCount: BADGES.length,
     unlockedBadges: unlocked.slice(-5).map((b) => b.name),
+    isDemo,
   };
 }
 
@@ -376,6 +436,7 @@ function SharePreview({ payload }: { payload: SharePayload }) {
             </h3>
             <p className="mt-1 text-[11px] text-white/75">
               {payload.dateLabel}
+              {payload.isDemo && ' · Demo'}
             </p>
           </div>
           <div className="grid h-12 w-12 place-items-center rounded-2xl bg-white/95 text-brand-700 shadow-lg">
@@ -390,9 +451,14 @@ function SharePreview({ payload }: { payload: SharePayload }) {
               <div className="mt-1 text-3xl font-black tracking-tight text-slate-950">
                 {payload.levelName}
               </div>
-              <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-brand-50 px-2 py-0.5 text-[11px] font-semibold text-brand-700">
-                Lv.{payload.level} · {payload.score} 行動分數
-              </div>
+          <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-brand-50 px-2 py-0.5 text-[11px] font-semibold text-brand-700">
+            Lv.{payload.level} · {payload.score} 行動分數
+          </div>
+          {payload.isDemo && (
+            <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700 ring-1 ring-amber-100">
+              Demo profile
+            </div>
+          )}
             </div>
             <div className="grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 text-orange-600 ring-1 ring-orange-200">
               <Trophy className="h-8 w-8" strokeWidth={2.1} />
@@ -485,7 +551,7 @@ function MiniStat({ label, value }: { label: string; value: string }) {
 }
 
 function buildShareText(payload: SharePayload) {
-  return `我的台大水資源地圖成績單
+  return `${payload.isDemo ? 'Demo ' : ''}我的台大水資源地圖成績單
 ${payload.levelName} Lv.${payload.level} · ${payload.score} 分
 連續打卡 ${payload.streakDays} 天，最長 ${payload.longestStreak} 天
 飲水機 +1 ${payload.waterRefill} 次，省下 ${payload.bottlesSaved} 瓶寶特瓶
@@ -530,7 +596,7 @@ function makeShareCanvas(payload: SharePayload): HTMLCanvasElement {
   ctx.font = `600 25px ${font}`;
   ctx.fillStyle = '#64748b';
   ctx.fillText('NTU Water Risk Map', 132, 218);
-  ctx.fillText(payload.dateLabel, 132, 252);
+  ctx.fillText(`${payload.dateLabel}${payload.isDemo ? ' · Demo' : ''}`, 132, 252);
 
   drawWaterMark(ctx, 875, 162);
 
@@ -553,6 +619,14 @@ function makeShareCanvas(payload: SharePayload): HTMLCanvasElement {
   ctx.fillStyle = '#2563eb';
   ctx.font = `800 42px ${font}`;
   ctx.fillText(`${payload.score} 行動分數`, 178, 510);
+  if (payload.isDemo) {
+    roundRect(ctx, 592, 466, 135, 42, 21);
+    ctx.fillStyle = '#fef3c7';
+    ctx.fill();
+    ctx.fillStyle = '#92400e';
+    ctx.font = `800 22px ${font}`;
+    ctx.fillText('DEMO', 625, 494);
+  }
   drawMedal(ctx, 805, 425);
 
   const statY = 610;
