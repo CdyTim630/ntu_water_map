@@ -128,6 +128,51 @@ export interface DashboardStats {
   };
 }
 
+export interface DashboardAiAnomaly {
+  title: string;
+  severity: 'critical' | 'warning' | 'info';
+  evidence: string;
+  recommendation: string;
+}
+
+export interface DashboardAiPriority {
+  rank: number;
+  target: string;
+  type: 'risk_hotspot' | 'water_station' | 'stale_case';
+  priority: 'P0' | 'P1' | 'P2';
+  reason: string;
+  action: string;
+  ownerHint: string;
+  slaHint: string;
+}
+
+export interface DashboardAiCsvRow {
+  priority: string;
+  type: string;
+  target: string;
+  reason: string;
+  recommendedAction: string;
+  ownerHint: string;
+  slaHint: string;
+}
+
+export interface DashboardAiInsights {
+  source: 'gemini' | 'local';
+  model: string | null;
+  generatedAt: string;
+  headline: string;
+  executiveSummary: string;
+  anomalyScore: number;
+  anomalies: DashboardAiAnomaly[];
+  priorities: DashboardAiPriority[];
+  monthlyNarrative: {
+    title: string;
+    body: string;
+  };
+  csvRows: DashboardAiCsvRow[];
+  aiError?: string;
+}
+
 export const CATEGORY_LABEL: Record<ReportCategory, string> = {
   flooding: '淹水',
   standing_water: '積水',

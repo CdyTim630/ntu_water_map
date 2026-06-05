@@ -11,6 +11,7 @@ import { SeverityBar } from '@/components/dashboard/SeverityBar';
 import { RiskRanking } from '@/components/dashboard/RiskRanking';
 import { WaterStationHealth } from '@/components/dashboard/WaterStationHealth';
 import { PuddleRegressionCard } from '@/components/dashboard/PuddleRegressionCard';
+import { AiInsightsPanel } from '@/components/dashboard/AiInsightsPanel';
 import type { DashboardStats } from '@/lib/types';
 
 export default function DashboardPage() {
@@ -77,6 +78,9 @@ export default function DashboardPage() {
         <div className="space-y-4">
           {/* ── 1. Hero KPI ── */}
           <StatsCards stats={stats} />
+
+          {/* ── 1.5 AI 管理分析 ── */}
+          <AiInsightsPanel />
 
           {/* ── 2. 趨勢 + 嚴重度 ── */}
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[2fr_1fr]">
