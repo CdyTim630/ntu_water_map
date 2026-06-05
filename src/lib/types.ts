@@ -89,6 +89,22 @@ export interface DashboardStats {
   // Trend — 14 天每日新增
   trend14d: { date: string; count: number }[];
 
+  // Demo regression — 雨量與積水回報關係
+  puddleRegression: {
+    slope: number;
+    intercept: number;
+    rSquared: number;
+    correlation: number;
+    sampleSize: number;
+    expectedAt10mm: number;
+    series: {
+      date: string;
+      rainfallMm: number;
+      puddleReports: number;
+      predicted: number;
+    }[];
+  };
+
   // 高風險排行
   ranking: RiskRankingEntry[];
 

@@ -10,6 +10,7 @@ import { StatusDonut } from '@/components/dashboard/StatusDonut';
 import { SeverityBar } from '@/components/dashboard/SeverityBar';
 import { RiskRanking } from '@/components/dashboard/RiskRanking';
 import { WaterStationHealth } from '@/components/dashboard/WaterStationHealth';
+import { PuddleRegressionCard } from '@/components/dashboard/PuddleRegressionCard';
 import type { DashboardStats } from '@/lib/types';
 
 export default function DashboardPage() {
@@ -83,9 +84,14 @@ export default function DashboardPage() {
             <SeverityBar data={stats.bySeverity} />
           </div>
 
-          {/* ── 3. 類別 + 處理狀態 ── */}
+          {/* ── 3. 回歸 + 類別 ── */}
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <PuddleRegressionCard data={stats.puddleRegression} />
             <CategoryChart data={stats.byCategory} />
+          </div>
+
+          {/* ── 4. 處理狀態 ── */}
+          <div className="grid grid-cols-1 gap-4">
             <StatusDonut
               data={stats.byStatus}
               total={stats.totalReports}
@@ -94,7 +100,7 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* ── 4. 高風險地點 + 飲水機健康度 ── */}
+          {/* ── 5. 高風險地點 + 飲水機健康度 ── */}
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[3fr_2fr]">
             <RiskRanking ranking={stats.ranking} />
             <WaterStationHealth data={stats.waterStations} />

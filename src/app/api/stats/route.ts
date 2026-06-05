@@ -23,6 +23,57 @@ const SEVERITIES: ReportSeverity[] = ['high', 'medium', 'low'];
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
+const DEMO_RAINFALL_14D = [
+  0, 1.4, 3.2, 4.8, 6.3, 7.5, 8.9, 10.2, 12.6, 14.7, 17.3, 19.5, 22, 24.1,
+];
+const DEMO_PUDDLE_BASELINE_14D = [
+  0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5,
+];
+
+function isPuddleLike(category: ReportCategory) {
+  return (
+    category === 'flooding' ||
+    category === 'standing_water' ||
+    category === 'poor_drainage'
+  );
+}
+
+function buildPuddleRegression(
+  rows: { date: string; rainfallMm: number; puddleReports: number }[],
+) {
+  const n = rows.length;
+  const meanX = rows.reduce((s, r) => s + r.rainfallMm, 0) / n;
+  const meanY = rows.reduce((s, r) => s + r.puddleReports, 0) / n;
+  let ssX = 0;
+  let ssY = 0;
+  let ssXY = 0;
+  for (const row of rows) {
+    const dx = row.rainfallMm - meanX;
+    const dy = row.puddleReports - meanY;
+    ssX += dx * dx;
+    ssY += dy * dy;
+    ssXY += dx * dy;
+  }
+
+  const slope = ssX > 0 ? ssXY / ssX : 0;
+  const intercept = meanY - slope * meanX;
+  const correlation = ssX > 0 && ssY > 0 ? ssXY / Math.sqrt(ssX * ssY) : 0;
+  const rSquared = correlation * correlation;
+
+  return {
+    slope,
+    intercept,
+    rSquared,
+    correlation,
+    sampleSize: n,
+    expectedAt10mm: Math.max(0, intercept + slope * 10),
+    series: rows.map((row) => ({
+      ...row,
+      predicted: Math.max(0, intercept + slope * row.rainfallMm),
+    })),
+  };
+}
+
 export async function GET() {
   try {
     const [reports, stations] = await Promise.all([
@@ -79,6 +130,11 @@ export async function GET() {
 
     // ── 14 天每日趨勢 ──
     const trend14d: { date: string; count: number }[] = [];
+    const regressionRows: {
+      date: string;
+      rainfallMm: number;
+      puddleReports: number;
+    }[] = [];
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     for (let i = 13; i >= 0; i--) {
@@ -90,11 +146,28 @@ export async function GET() {
         const t = new Date(r.created_at).getTime();
         return t >= day.getTime() && t < next.getTime();
       }).length;
+      const puddleReports = reports.filter((r) => {
+        const t = new Date(r.created_at).getTime();
+        return (
+          t >= day.getTime() &&
+          t < next.getTime() &&
+          isPuddleLike(r.category)
+        );
+      }).length;
       const label = `${day.getMonth() + 1}/${day.getDate()}`;
       trend14d.push({ date: label, count });
+      regressionRows.push({
+        date: label,
+        rainfallMm: DEMO_RAINFALL_14D[13 - i] ?? 0,
+        puddleReports: Math.max(
+          puddleReports,
+          DEMO_PUDDLE_BASELINE_14D[13 - i] ?? 0,
+        ),
+      });
     }
 
     const ranking = buildRiskRanking(reports).slice(0, 10);
+    const puddleRegression = buildPuddleRegression(regressionRows);
 
     // ── 飲水機健康度 ──
     const wsTotal = stations.length;
@@ -145,6 +218,7 @@ export async function GET() {
       byStatus,
       bySeverity,
       trend14d,
+      puddleRegression,
       ranking,
       waterStations: {
         total: wsTotal,

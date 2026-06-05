@@ -201,14 +201,83 @@ interface CWAObservationResponse {
     Station?: {
       StationName?: string;
       ObsTime?: { DateTime?: string };
+      GeoInfo?: {
+        CountyName?: string;
+        TownName?: string;
+        Coordinates?: {
+          CoordinateName?: string;
+          StationLatitude?: number | string;
+          StationLongitude?: number | string;
+        }[];
+      };
       WeatherElement?: {
-        Now?: { Precipitation?: number };
-        AirTemperature?: number;
-        RelativeHumidity?: number;
+        Now?: { Precipitation?: number | string };
+        AirTemperature?: number | string;
+        RelativeHumidity?: number | string;
         Weather?: string;
       };
     }[];
   };
+}
+
+const NTU_COORD = { lat: 25.01734, lng: 121.53975 };
+const PREFERRED_OBSERVATION_STATIONS = [
+  '臺灣大學',
+  '大安森林',
+  '臺北',
+  '文山',
+];
+
+function parseCwaNumber(v: unknown): number | null {
+  if (typeof v === 'number') return Number.isFinite(v) ? v : null;
+  if (typeof v !== 'string') return null;
+  const trimmed = v.trim();
+  if (!trimmed || trimmed === '-' || trimmed === '--' || trimmed === 'T') {
+    return 0;
+  }
+  const n = Number.parseFloat(trimmed);
+  return Number.isFinite(n) ? n : null;
+}
+
+function stationCoordinate(station: {
+  GeoInfo?: {
+    Coordinates?: {
+      CoordinateName?: string;
+      StationLatitude?: number | string;
+      StationLongitude?: number | string;
+    }[];
+  };
+}): { lat: number; lng: number } | null {
+  const coords = station.GeoInfo?.Coordinates ?? [];
+  const coord =
+    coords.find((c) => c.CoordinateName === 'WGS84') ?? coords[0];
+  const lat = parseCwaNumber(coord?.StationLatitude);
+  const lng = parseCwaNumber(coord?.StationLongitude);
+  return lat !== null && lng !== null ? { lat, lng } : null;
+}
+
+function distanceSq(a: { lat: number; lng: number }, b: { lat: number; lng: number }) {
+  const dLat = a.lat - b.lat;
+  const dLng = a.lng - b.lng;
+  return dLat * dLat + dLng * dLng;
+}
+
+function chooseObservationStation(
+  stations: NonNullable<CWAObservationResponse['records']>['Station'],
+) {
+  const usable = stations ?? [];
+  for (const name of PREFERRED_OBSERVATION_STATIONS) {
+    const hit = usable.find((s) => s.StationName === name);
+    if (hit) return hit;
+  }
+
+  return usable
+    .map((station) => ({ station, coord: stationCoordinate(station) }))
+    .filter((x): x is { station: (typeof usable)[number]; coord: { lat: number; lng: number } } =>
+      Boolean(x.coord),
+    )
+    .sort((a, b) => distanceSq(a.coord, NTU_COORD) - distanceSq(b.coord, NTU_COORD))[0]
+    ?.station;
 }
 
 async function fetchCWAObservation(
@@ -216,28 +285,21 @@ async function fetchCWAObservation(
 ): Promise<Partial<WeatherSnapshot>> {
   const url = new URL(`${CWA_BASE}/O-A0003-001`);
   url.searchParams.set('Authorization', apiKey);
-  url.searchParams.set('StationName', '臺北');
   url.searchParams.set('format', 'JSON');
   const res = await fetch(url, { next: { revalidate: 300 } });
   if (!res.ok) throw new Error(`CWA observation HTTP ${res.status}`);
   const data = (await res.json()) as CWAObservationResponse;
-  const station = data.records?.Station?.[0];
+  const station = chooseObservationStation(data.records?.Station);
   if (!station) return {};
   const we = station.WeatherElement ?? {};
+  const temperature = parseCwaNumber(we.AirTemperature);
+  const humidity = parseCwaNumber(we.RelativeHumidity);
+  const precipitation = parseCwaNumber(we.Now?.Precipitation);
   return {
     observedAt: station.ObsTime?.DateTime ?? new Date().toISOString(),
-    temperature:
-      typeof we.AirTemperature === 'number' && we.AirTemperature > -90
-        ? we.AirTemperature
-        : null,
-    humidity:
-      typeof we.RelativeHumidity === 'number' && we.RelativeHumidity >= 0
-        ? we.RelativeHumidity
-        : null,
-    rainfall1h:
-      typeof we.Now?.Precipitation === 'number' && we.Now.Precipitation >= 0
-        ? we.Now.Precipitation
-        : 0,
+    temperature: temperature !== null && temperature > -90 ? temperature : null,
+    humidity: humidity !== null && humidity >= 0 ? humidity : null,
+    rainfall1h: precipitation !== null && precipitation >= 0 ? precipitation : null,
     description: we.Weather ?? '',
   };
 }
@@ -259,21 +321,62 @@ function wxToIntensity(wx: string | null | undefined): RainIntensity {
 }
 
 interface CWATimeEntry {
+  StartTime?: string;
+  EndTime?: string;
+  DataTime?: string;
   startTime?: string;
   endTime?: string;
   /** 部分 element 用 dataTime（瞬間時刻），但 PoP6h / Wx 都是 startTime/endTime */
   dataTime?: string;
-  elementValue?: { value?: string }[];
+  ElementValue?: Record<string, string | number | undefined>[];
+  elementValue?: Record<string, string | number | undefined>[];
 }
 
 interface CWAWeatherElement {
+  ElementName?: string;
+  Time?: CWATimeEntry[];
   elementName?: string;
   time?: CWATimeEntry[];
 }
 
 interface CWALocationFull {
+  LocationName?: string;
+  WeatherElement?: CWAWeatherElement[];
   locationName?: string;
   weatherElement?: CWAWeatherElement[];
+}
+
+function getLocationName(location: CWALocationFull): string | undefined {
+  return location.LocationName ?? location.locationName;
+}
+
+function getWeatherElements(location: CWALocationFull): CWAWeatherElement[] {
+  return location.WeatherElement ?? location.weatherElement ?? [];
+}
+
+function getElementName(element: CWAWeatherElement): string | undefined {
+  return element.ElementName ?? element.elementName;
+}
+
+function getTimes(element: CWAWeatherElement): CWATimeEntry[] {
+  return element.Time ?? element.time ?? [];
+}
+
+function getStartTime(time: CWATimeEntry): string | undefined {
+  return time.StartTime ?? time.startTime ?? time.DataTime ?? time.dataTime;
+}
+
+function getEndTime(time: CWATimeEntry): string | undefined {
+  return time.EndTime ?? time.endTime ?? time.StartTime ?? time.startTime;
+}
+
+function getElementValue(time: CWATimeEntry): string | null {
+  const first = (time.ElementValue ?? time.elementValue ?? [])[0];
+  if (!first) return null;
+  const direct = first.value ?? first.Value;
+  if (direct !== undefined) return String(direct);
+  const value = Object.values(first).find((v) => v !== undefined && v !== null);
+  return value === undefined ? null : String(value);
 }
 
 /**
@@ -285,11 +388,6 @@ interface CWALocationFull {
 async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
   const url = new URL(`${CWA_BASE}/F-D0047-061`);
   url.searchParams.set('Authorization', apiKey);
-  url.searchParams.set('LocationName', TAIPEI_TOWN);
-  url.searchParams.set(
-    'ElementName',
-    ['天氣現象', '3小時降雨機率', '6小時降雨機率', '12小時降雨機率'].join(','),
-  );
   url.searchParams.set('format', 'JSON');
   const res = await fetch(url, { next: { revalidate: 600 } });
   if (!res.ok) throw new Error(`CWA forecast HTTP ${res.status}`);
@@ -302,29 +400,29 @@ async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
     data.records?.locations?.[0]?.location ??
     [];
   const target =
-    locs.find((l) => l.locationName === TAIPEI_TOWN) ?? locs[0];
+    locs.find((l) => getLocationName(l) === TAIPEI_TOWN) ?? locs[0];
   if (!target) return [];
-  const els = target.weatherElement ?? [];
+  const els = getWeatherElements(target);
 
   const wxEl = els.find(
-    (e) => e.elementName === 'Wx' || e.elementName === '天氣現象',
+    (e) => getElementName(e) === 'Wx' || getElementName(e) === '天氣現象',
   );
   const pop3El = els.find(
     (e) =>
-      e.elementName === 'PoP' ||
-      e.elementName === 'PoP3h' ||
-      e.elementName === '3小時降雨機率',
+      getElementName(e) === 'PoP' ||
+      getElementName(e) === 'PoP3h' ||
+      getElementName(e) === '3小時降雨機率',
   );
   const pop6El = els.find(
-    (e) => e.elementName === 'PoP6h' || e.elementName === '6小時降雨機率',
+    (e) => getElementName(e) === 'PoP6h' || getElementName(e) === '6小時降雨機率',
   );
   const pop12El = els.find(
-    (e) => e.elementName === 'PoP12h' || e.elementName === '12小時降雨機率',
+    (e) => getElementName(e) === 'PoP12h' || getElementName(e) === '12小時降雨機率',
   );
 
-  const wxSlots = (wxEl?.time ?? []).filter(
+  const wxSlots = (wxEl ? getTimes(wxEl) : []).filter(
     (t): t is Required<Pick<CWATimeEntry, 'startTime' | 'endTime'>> & CWATimeEntry =>
-      Boolean(t.startTime && t.endTime),
+      Boolean(getStartTime(t) && getEndTime(t)),
   );
   if (!wxSlots.length) return [];
 
@@ -332,16 +430,17 @@ async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
   type PopWindow = { start: number; end: number; pop: number };
   const popWindows: PopWindow[] = [];
   const addPopWindows = (el?: CWAWeatherElement) => {
-    if (!el?.time) return;
-    for (const t of el.time) {
-      if (!t.startTime || !t.endTime) continue;
-      const raw = t.elementValue?.[0]?.value;
-      const pct = raw ? Number.parseFloat(raw) : NaN;
+    if (!el) return;
+    for (const t of getTimes(el)) {
+      const start = getStartTime(t);
+      const end = getEndTime(t);
+      if (!start || !end) continue;
+      const pct = parseCwaNumber(getElementValue(t));
       if (!Number.isFinite(pct)) continue;
       popWindows.push({
-        start: new Date(t.startTime).getTime(),
-        end: new Date(t.endTime).getTime(),
-        pop: Math.max(0, Math.min(1, pct / 100)),
+        start: new Date(start).getTime(),
+        end: new Date(end).getTime(),
+        pop: Math.max(0, Math.min(1, (pct ?? 0) / 100)),
       });
     }
   };
@@ -365,12 +464,14 @@ async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
 
   return wxSlots
     .map((t) => {
-      const wx = t.elementValue?.[0]?.value ?? null;
-      const startMs = new Date(t.startTime).getTime();
-      const endMs = new Date(t.endTime).getTime();
+      const wx = getElementValue(t);
+      const startTime = getStartTime(t)!;
+      const endTime = getEndTime(t)!;
+      const startMs = new Date(startTime).getTime();
+      const endMs = new Date(endTime).getTime();
       return {
-        startTime: t.startTime,
-        endTime: t.endTime,
+        startTime,
+        endTime,
         pop: findPopForSlot(startMs, endMs),
         wx,
         intensityHint: wxToIntensity(wx),
