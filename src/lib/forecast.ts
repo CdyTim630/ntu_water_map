@@ -1,12 +1,13 @@
 /**
  * 預測式水災熱圖 — 統計法（無 ML）
  *
- * 三個資料源：
+ * 四個資料源：
  * 1. 歷史回報密度（過去 90 天 flooding/standing_water/poor_drainage 在點周圍 80m 加權密度）
  * 2. OSM 路網低窪標記（沿用 flood-areas.json，與 dense graph 同源）
- * 3. 當下 active 回報（status=active|reviewing 的淹水/積水，50m 範圍）
+ * 3. 依低窪/排水事實建立的 demo 水窪校準點（雨量愈大，越接近校準點分數越高）
+ * 4. 當下 active 回報（status=active|reviewing 的淹水/積水/排水不良，90m 範圍）
  *
- * 三層 × 雨勢係數疊加，產出每個 50m 網格 cell 在 1h / 3h / 6h 時段的 0..1 風險分數。
+ * 四層 × 雨勢係數疊加，產出每個 50m 網格 cell 在 1h / 3h / 6h 時段的 0..1 風險分數。
  *
  * 只在 server 端使用（讀 flood-areas.json、flood-roads-source.json，client bundle 不需要）。
  */
@@ -42,7 +43,65 @@ const HIST_RADIUS_M = 80;
 const HIST_DAYS = 90;
 
 /** Active 回報影響半徑（公尺） */
-const ACTIVE_RADIUS_M = 50;
+const ACTIVE_RADIUS_M = 90;
+
+/** Demo 校準點：依校園低窪/排水事實模擬「雨量 → 水窪」反應，不等同真實感測器。 */
+const PUDDLE_EVIDENCE_POINTS = [
+  {
+    name: '舟山路西段下凹處',
+    lat: 25.0150,
+    lng: 121.5359,
+    radiusM: 130,
+    thresholdMm: 6,
+    drainageScore: 0.95,
+    historyCount: 5,
+  },
+  {
+    name: '醉月湖東岸步道',
+    lat: 25.01995,
+    lng: 121.53775,
+    radiusM: 120,
+    thresholdMm: 5,
+    drainageScore: 0.9,
+    historyCount: 4,
+  },
+  {
+    name: '小椰林道低窪帶',
+    lat: 25.01775,
+    lng: 121.54035,
+    radiusM: 125,
+    thresholdMm: 8,
+    drainageScore: 0.88,
+    historyCount: 5,
+  },
+  {
+    name: '總圖前廣場鋪面',
+    lat: 25.01735,
+    lng: 121.53495,
+    radiusM: 115,
+    thresholdMm: 10,
+    drainageScore: 0.72,
+    historyCount: 3,
+  },
+  {
+    name: '共同教學館前動線',
+    lat: 25.01665,
+    lng: 121.54055,
+    radiusM: 110,
+    thresholdMm: 9,
+    drainageScore: 0.78,
+    historyCount: 3,
+  },
+  {
+    name: '行政大樓後方走道',
+    lat: 25.0161,
+    lng: 121.53685,
+    radiusM: 100,
+    thresholdMm: 12,
+    drainageScore: 0.58,
+    historyCount: 2,
+  },
+] as const;
 
 export type Horizon = '1h' | '3h' | '6h';
 export const HORIZONS: Horizon[] = ['1h', '3h', '6h'];
@@ -70,6 +129,7 @@ export interface HorizonForecast {
 export interface ForecastBreakdown {
   /** 各分量對 score 的「貢獻值」（已乘權重，可加總 ≈ score） */
   baseline: number;
+  evidence: number;
   history: number;
   lowLying: number;
   active: number;
@@ -320,6 +380,47 @@ interface ActiveResult {
   count: number;
 }
 
+interface EvidenceResult {
+  risk: number;
+  count: number;
+  label: string | null;
+}
+
+function puddleEvidenceAt(
+  lat: number,
+  lng: number,
+  rainfall1h: number | null,
+): EvidenceResult {
+  const rain = Math.max(0, rainfall1h ?? 0);
+  let risk = 0;
+  let count = 0;
+  let label: string | null = null;
+
+  for (const point of PUDDLE_EVIDENCE_POINTS) {
+    const d = haversine({ lat, lng }, point);
+    if (d > point.radiusM) continue;
+
+    const rainActivation =
+      rain <= 0
+        ? 0
+        : Math.min(1, rain / Math.max(1, point.thresholdMm * 1.8));
+    const distanceFactor = 1 - (d / point.radiusM) * 0.45;
+    const historyFactor = Math.min(1, point.historyCount / 5);
+    const localRisk =
+      point.drainageScore *
+      distanceFactor *
+      (0.45 + historyFactor * 0.25 + rainActivation * 0.55);
+
+    if (localRisk > risk) {
+      risk = localRisk;
+      label = point.name;
+    }
+    count += 1;
+  }
+
+  return { risk: Math.min(1, risk), count, label };
+}
+
 function activeReportsAt(
   lat: number,
   lng: number,
@@ -329,10 +430,18 @@ function activeReportsAt(
   let count = 0;
   for (const r of reports) {
     if (r.status !== 'active' && r.status !== 'reviewing') continue;
-    if (r.category !== 'flooding' && r.category !== 'standing_water') continue;
+    if (
+      r.category !== 'flooding' &&
+      r.category !== 'standing_water' &&
+      r.category !== 'poor_drainage'
+    )
+      continue;
     const d = haversine({ lat, lng }, { lat: r.latitude, lng: r.longitude });
     if (d > ACTIVE_RADIUS_M) continue;
-    const sev = r.severity === 'high' ? 1 : r.severity === 'medium' ? 0.65 : 0.4;
+    const categoryWeight = r.category === 'poor_drainage' ? 0.75 : 1;
+    const sev =
+      (r.severity === 'high' ? 1 : r.severity === 'medium' ? 0.65 : 0.4) *
+      categoryWeight;
     s += sev * (1 - d / ACTIVE_RADIUS_M);
     count += 1;
   }
@@ -421,16 +530,20 @@ function buildFromSeries(
     1,
     nowI * blend + worstFactor * (1 - blend) + weightedPop * 0.1,
   );
+  const effectivePop = Math.max(
+    weightedPop,
+    nowI > 0 ? Math.min(0.95, nowI * 0.9) : 0,
+  );
 
-  // 1h 內若當下已在下，估計強度沿用當下；其他取 worst
+  // 若觀測已在下雨，不能只看 CWA PoP/Wx；用混合後 factor 反映有效雨勢。
   const estIntensity =
-    horizon === '1h' && nowI > 0 ? intensityFromFactor(factor) : worstIntensity;
+    nowI > 0 || factor > worstFactor ? intensityFromFactor(factor) : worstIntensity;
 
   return {
     horizon,
     rainFactor: factor,
     estIntensity,
-    pop: weightedPop,
+    pop: effectivePop,
     source: 'series',
     wx: wxAccum || null,
   };
@@ -481,6 +594,7 @@ interface CellInputs {
   lat: number;
   lng: number;
   hist: HistResult;
+  evidence: EvidenceResult;
   ll: { score: number; areaName: string | null };
   active: ActiveResult;
 }
@@ -489,15 +603,21 @@ function scoreForRain(
   inputs: CellInputs,
   rainFactor: number,
 ): { score: number; breakdown: ForecastBreakdown } {
-  const baseline = 0.10 * rainFactor * 0.6; // 全圖底色：大雨時人見人怕
-  const histTerm = 0.35 * inputs.hist.density * (0.4 + 1.0 * rainFactor);
-  const llTerm = 0.45 * inputs.ll.score * (0.25 + 1.5 * rainFactor);
-  const activeTerm = 0.30 * inputs.active.intensity * (0.5 + 0.7 * rainFactor);
+  const baseline = 0.12 * rainFactor; // 全圖底色：大雨時人見人怕
+  const evidenceTerm =
+    0.38 * inputs.evidence.risk * (0.35 + 1.1 * rainFactor);
+  const histTerm = 0.32 * inputs.hist.density * (0.35 + 1.0 * rainFactor);
+  const llTerm = 0.42 * inputs.ll.score * (0.25 + 1.55 * rainFactor);
+  const activeTerm = 0.42 * inputs.active.intensity * (0.45 + 0.9 * rainFactor);
 
-  const score = Math.min(1, baseline + histTerm + llTerm + activeTerm);
+  const score = Math.min(
+    1,
+    baseline + evidenceTerm + histTerm + llTerm + activeTerm,
+  );
 
   // 主要原因
   const parts: { label: string; value: number }[] = [
+    { label: inputs.evidence.label ?? '雨量校準點', value: evidenceTerm },
     { label: '低窪地形', value: llTerm },
     { label: '歷史熱點', value: histTerm },
     { label: '當前回報', value: activeTerm },
@@ -509,6 +629,7 @@ function scoreForRain(
     score,
     breakdown: {
       baseline,
+      evidence: evidenceTerm,
       history: histTerm,
       lowLying: llTerm,
       active: activeTerm,
@@ -559,10 +680,11 @@ export function computeForecast(opts: ComputeOptions): ForecastResult {
 
       const ll = lowLyingHit(lat, lng);
       const hist = historicalDensity(lat, lng, reports, now);
+      const evidence = puddleEvidenceAt(lat, lng, weather.rainfall1h);
       const active = activeReportsAt(lat, lng, reports);
 
       // 三個 horizon 算分
-      const inputs: CellInputs = { lat, lng, hist, ll, active };
+      const inputs: CellInputs = { lat, lng, hist, evidence, ll, active };
       const scoreMap: Record<Horizon, number> = { '1h': 0, '3h': 0, '6h': 0 };
       let peakBreakdown: ForecastBreakdown | null = null;
       let peakScore = -1;
@@ -658,9 +780,11 @@ function buildHotspotEntry(
 ): ForecastHotspot {
   const ll = lowLyingHit(cell.lat, cell.lng);
   const hist = historicalDensity(cell.lat, cell.lng, reports, now);
+  const evidence = puddleEvidenceAt(cell.lat, cell.lng, null);
   const active = activeReportsAt(cell.lat, cell.lng, reports);
 
   const reasons: string[] = [];
+  if (evidence.label) reasons.push(`校準點：${evidence.label}`);
   if (ll.score >= 0.5) reasons.push(`低窪地形 (${(ll.score * 100).toFixed(0)}%)`);
   if (hist.count >= 2) reasons.push(`歷史 ${hist.count} 筆回報`);
   if (active.count >= 1)

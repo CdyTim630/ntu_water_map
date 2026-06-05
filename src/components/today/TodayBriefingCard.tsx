@@ -101,12 +101,13 @@ export function TodayBriefingCard({ waterStations = [] }: Props) {
         return start <= now.getTime() && now.getTime() < end;
       }) ?? remainingToday[0];
     const todayPeakPop = Math.max(
+      weather.pop3h,
       activeSlot?.pop ?? weather.pop3h,
       ...remainingToday.map((slot) => slot.pop),
     );
     const slotIntensity = activeSlot?.intensityHint ?? weather.rainIntensity;
     const wx = activeSlot?.wx || weather.description || '天氣資料更新中';
-    const pop = activeSlot?.pop ?? weather.pop3h;
+    const pop = Math.max(activeSlot?.pop ?? 0, weather.pop3h);
     const timeRange = activeSlot
       ? formatSlotRange(activeSlot)
       : '目前時段';

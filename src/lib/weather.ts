@@ -198,25 +198,27 @@ export function synthesizeMockSeries(
 
 interface CWAObservationResponse {
   records?: {
-    Station?: {
-      StationName?: string;
-      ObsTime?: { DateTime?: string };
-      GeoInfo?: {
-        CountyName?: string;
-        TownName?: string;
-        Coordinates?: {
-          CoordinateName?: string;
-          StationLatitude?: number | string;
-          StationLongitude?: number | string;
-        }[];
-      };
+    Station?: (CWAStationMeta & {
       WeatherElement?: {
         Now?: { Precipitation?: number | string };
         AirTemperature?: number | string;
         RelativeHumidity?: number | string;
         Weather?: string;
       };
-    }[];
+    })[];
+  };
+}
+
+interface CWARainfallResponse {
+  records?: {
+    Station?: (CWAStationMeta & {
+      RainfallElement?: {
+        Now?: { Precipitation?: number | string };
+        Past10Min?: { Precipitation?: number | string };
+        Past1hr?: { Precipitation?: number | string };
+        Past3hr?: { Precipitation?: number | string };
+      };
+    })[];
   };
 }
 
@@ -227,6 +229,20 @@ const PREFERRED_OBSERVATION_STATIONS = [
   '臺北',
   '文山',
 ];
+
+interface CWAStationMeta {
+  StationName?: string;
+  ObsTime?: { DateTime?: string };
+  GeoInfo?: {
+    CountyName?: string;
+    TownName?: string;
+    Coordinates?: {
+      CoordinateName?: string;
+      StationLatitude?: number | string;
+      StationLongitude?: number | string;
+    }[];
+  };
+}
 
 function parseCwaNumber(v: unknown): number | null {
   if (typeof v === 'number') return Number.isFinite(v) ? v : null;
@@ -262,9 +278,7 @@ function distanceSq(a: { lat: number; lng: number }, b: { lat: number; lng: numb
   return dLat * dLat + dLng * dLng;
 }
 
-function chooseObservationStation(
-  stations: NonNullable<CWAObservationResponse['records']>['Station'],
-) {
+function chooseNearestStation<T extends CWAStationMeta>(stations: T[] | undefined): T | undefined {
   const usable = stations ?? [];
   for (const name of PREFERRED_OBSERVATION_STATIONS) {
     const hit = usable.find((s) => s.StationName === name);
@@ -289,7 +303,7 @@ async function fetchCWAObservation(
   const res = await fetch(url, { next: { revalidate: 300 } });
   if (!res.ok) throw new Error(`CWA observation HTTP ${res.status}`);
   const data = (await res.json()) as CWAObservationResponse;
-  const station = chooseObservationStation(data.records?.Station);
+  const station = chooseNearestStation(data.records?.Station);
   if (!station) return {};
   const we = station.WeatherElement ?? {};
   const temperature = parseCwaNumber(we.AirTemperature);
@@ -301,6 +315,29 @@ async function fetchCWAObservation(
     humidity: humidity !== null && humidity >= 0 ? humidity : null,
     rainfall1h: precipitation !== null && precipitation >= 0 ? precipitation : null,
     description: we.Weather ?? '',
+  };
+}
+
+async function fetchCWARainfall(
+  apiKey: string,
+): Promise<Partial<Pick<WeatherSnapshot, 'observedAt' | 'rainfall1h'>>> {
+  const url = new URL(`${CWA_BASE}/O-A0002-001`);
+  url.searchParams.set('Authorization', apiKey);
+  url.searchParams.set('format', 'JSON');
+  const res = await fetch(url, { next: { revalidate: 300 } });
+  if (!res.ok) throw new Error(`CWA rainfall HTTP ${res.status}`);
+  const data = (await res.json()) as CWARainfallResponse;
+  const station = chooseNearestStation(data.records?.Station);
+  if (!station) return {};
+
+  const rain = station.RainfallElement;
+  const past1h = parseCwaNumber(rain?.Past1hr?.Precipitation);
+  const now = parseCwaNumber(rain?.Now?.Precipitation);
+  const past10 = parseCwaNumber(rain?.Past10Min?.Precipitation);
+  const value = past1h ?? now ?? past10;
+  return {
+    observedAt: station.ObsTime?.DateTime,
+    rainfall1h: value !== null && value >= 0 ? value : null,
   };
 }
 
@@ -318,6 +355,21 @@ function wxToIntensity(wx: string | null | undefined): RainIntensity {
   if (wx.includes('短暫雨')) return 'light';
   if (wx.includes('雨')) return 'light'; // 兜底
   return 'none';
+}
+
+function probabilityFloorForIntensity(i: RainIntensity): number {
+  switch (i) {
+    case 'heavy':
+      return 0.9;
+    case 'moderate':
+      return 0.75;
+    case 'light':
+      return 0.55;
+    case 'drizzle':
+      return 0.35;
+    case 'none':
+      return 0;
+  }
 }
 
 interface CWATimeEntry {
@@ -510,20 +562,24 @@ export async function fetchWeather(): Promise<WeatherSnapshot> {
     return mockWeather();
   }
   try {
-    const [obs, series] = await Promise.all([
+    const [obs, rainObs, series] = await Promise.all([
       fetchCWAObservation(apiKey).catch(() => ({} as Partial<WeatherSnapshot>)),
+      fetchCWARainfall(apiKey).catch(() => ({} as Partial<Pick<WeatherSnapshot, 'observedAt' | 'rainfall1h'>>)),
       fetchCWAForecastSeries(apiKey).catch(() => [] as ForecastSlot[]),
     ]);
-    const rainfall1h = obs.rainfall1h ?? null;
+    const rainfall1h = rainObs.rainfall1h ?? obs.rainfall1h ?? null;
     const intensity = classifyIntensity(rainfall1h);
     // pop3h 取目前覆蓋中的預報 slot；如果剛好沒有，退到下一段。
     const currentSlot = currentOrNextForecastSlot(series);
-    const pop3h = currentSlot ? currentSlot.pop : 0;
+    const pop3h = Math.max(
+      currentSlot?.pop ?? 0,
+      probabilityFloorForIntensity(intensity),
+    );
     // description 優先用即時觀測 → 當前 forecast Wx
     const description = obs.description || currentSlot?.wx || '';
     return {
       source: 'cwa',
-      observedAt: obs.observedAt ?? new Date().toISOString(),
+      observedAt: rainObs.observedAt ?? obs.observedAt ?? new Date().toISOString(),
       temperature: obs.temperature ?? null,
       humidity: obs.humidity ?? null,
       rainfall1h,

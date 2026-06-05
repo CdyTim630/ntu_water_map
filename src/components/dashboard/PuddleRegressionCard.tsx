@@ -25,7 +25,7 @@ export function PuddleRegressionCard({ data }: Props) {
     <Card>
       <CardHeader
         title="水漥回歸分析"
-        description="Demo 樣本：14 天雨量 × 積水類回報，建立線性預測線"
+        description="Demo 樣本：依低窪鋪面與排水慢區校準 14 天雨量 × 積水回報"
         action={
           <div className="grid grid-cols-2 gap-3 text-right">
             <div>
@@ -119,7 +119,7 @@ export function PuddleRegressionCard({ data }: Props) {
 
       <p className="mt-1 text-[10.5px] leading-relaxed text-slate-400">
         y = {slopeLabel} × rain(mm) + {data.intercept.toFixed(2)}；樣本{' '}
-        {data.sampleSize} 天。此卡使用 demo 雨量序列，用來呈現分析流程與決策口徑。
+        {data.sampleSize} 天。此卡使用依校園低窪/排水事實校準的 demo 雨量序列，用來呈現分析流程與決策口徑。
       </p>
     </Card>
   );

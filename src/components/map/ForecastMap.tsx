@@ -28,6 +28,7 @@ interface ForecastCellLite {
   scores: Record<Horizon, number>;
   breakdown: {
     baseline: number;
+    evidence: number;
     history: number;
     lowLying: number;
     active: number;
@@ -311,6 +312,7 @@ function CellTooltip({
       </div>
       <div className="mt-0.5 text-[10px] text-slate-400">
         低窪 {(breakdown.lowLying * 100).toFixed(0)} ·
+        校準 {(breakdown.evidence * 100).toFixed(0)} ·
         歷史 {(breakdown.history * 100).toFixed(0)} ·
         現場 {(breakdown.active * 100).toFixed(0)} ·
         基底 {(breakdown.baseline * 100).toFixed(0)}

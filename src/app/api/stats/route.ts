@@ -23,6 +23,10 @@ const SEVERITIES: ReportSeverity[] = ['high', 'medium', 'low'];
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
+// Demo rainfall/puddle baseline:
+// Values follow a simple hydrology assumption used in the forecast map:
+// low-lying paved paths and slow-drainage plazas start showing puddles after
+// roughly 5-12 mm/h rain, then reports rise near-linearly with rainfall.
 const DEMO_RAINFALL_14D = [
   0, 1.4, 3.2, 4.8, 6.3, 7.5, 8.9, 10.2, 12.6, 14.7, 17.3, 19.5, 22, 24.1,
 ];
