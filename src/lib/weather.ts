@@ -245,14 +245,24 @@ interface CWAStationMeta {
 }
 
 function parseCwaNumber(v: unknown): number | null {
-  if (typeof v === 'number') return Number.isFinite(v) ? v : null;
+  if (typeof v === 'number') {
+    return Number.isFinite(v) && v > -90 ? v : null;
+  }
   if (typeof v !== 'string') return null;
   const trimmed = v.trim();
   if (!trimmed || trimmed === '-' || trimmed === '--' || trimmed === 'T') {
     return 0;
   }
   const n = Number.parseFloat(trimmed);
-  return Number.isFinite(n) ? n : null;
+  return Number.isFinite(n) && n > -90 ? n : null;
+}
+
+function parseCwaText(v: unknown): string {
+  if (v === null || v === undefined) return '';
+  const text = String(v).trim();
+  if (!text || text === '-' || text === '--') return '';
+  const n = Number.parseFloat(text);
+  return Number.isFinite(n) && n <= -90 ? '' : text;
 }
 
 function stationCoordinate(station: {
@@ -314,7 +324,7 @@ async function fetchCWAObservation(
     temperature: temperature !== null && temperature > -90 ? temperature : null,
     humidity: humidity !== null && humidity >= 0 ? humidity : null,
     rainfall1h: precipitation !== null && precipitation >= 0 ? precipitation : null,
-    description: we.Weather ?? '',
+    description: parseCwaText(we.Weather),
   };
 }
 
@@ -516,7 +526,7 @@ async function fetchCWAForecastSeries(apiKey: string): Promise<ForecastSlot[]> {
 
   return wxSlots
     .map((t) => {
-      const wx = getElementValue(t);
+      const wx = parseCwaText(getElementValue(t)) || null;
       const startTime = getStartTime(t)!;
       const endTime = getEndTime(t)!;
       const startMs = new Date(startTime).getTime();
@@ -576,7 +586,8 @@ export async function fetchWeather(): Promise<WeatherSnapshot> {
       probabilityFloorForIntensity(intensity),
     );
     // description 優先用即時觀測 → 當前 forecast Wx
-    const description = obs.description || currentSlot?.wx || '';
+    const description =
+      parseCwaText(obs.description) || parseCwaText(currentSlot?.wx);
     return {
       source: 'cwa',
       observedAt: rainObs.observedAt ?? obs.observedAt ?? new Date().toISOString(),

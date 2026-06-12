@@ -1,10 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  30 MAY 2026 20:39
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  5 JUN 2026 12:02
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/cdyti/Documents/Claude/Projects/ntu_water_map/report/report.tex
-(c:/Users/cdyti/Documents/Claude/Projects/ntu_water_map/report/report.tex
+**./report.tex
+(report.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
 (C:\Users\cdyti\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -1326,14 +1325,14 @@ File: screens/me.png Graphic file (type bmp)
  [7
 
 ]
-Underfull \hbox (badness 2351) in paragraph at lines 526--527
+Underfull \hbox (badness 2351) in paragraph at lines 532--533
 []|\TU/SourceHanSerifTW(0)/m/n/10 與 \TU/LatinModernRoman(0)/m/n/10 OSM \TU/Lati
 nModernMono(0)/m/n/10 amenity=drinking_water \TU/SourceHanSerifTW(0)/m/n/10 點 位
  融 合  |（\TU/LatinModernMono(0)/m/n/10 source: osm /
  []
 
 
-Overfull \hbox (23.99997pt too wide) in paragraph at lines 520--532
+Overfull \hbox (23.99997pt too wide) in paragraph at lines 526--539
  [][] 
  []
 
@@ -1341,8 +1340,8 @@ Overfull \hbox (23.99997pt too wide) in paragraph at lines 520--532
 
 ]
 LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 579.
- [9] (report.aux)
+(Font)              scaled to size 9.85492pt on input line 587.
+ [9] [10] (report.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/08/05>
@@ -1352,15 +1351,15 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 6DB4C63DA549AD051CFB1789593080A7;2985.
+(rerunfilecheck)             Checksum: EA7F18D4B227EF4E2EA10BED80C9C13B;2985.
  ) 
 Here is how much of TeX's memory you used:
- 32216 strings out of 409617
- 732462 string characters out of 5774014
+ 32215 strings out of 409617
+ 732278 string characters out of 5774014
  1953191 words of memory out of 5000000
  53831 multiletter control sequences out of 15000+600000
  564511 words of font info for 122 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 84i,18n,93p,478b,1251s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,18n,93p,418b,1251s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on report.pdf (10 pages).
+Output written on report.xdv (11 pages, 212528 bytes).

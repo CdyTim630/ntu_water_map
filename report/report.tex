@@ -191,8 +191,8 @@
 本專題以「水資源問題」為核心，為台大師生開發一套\textbf{校園即時水情平台} —— 結合
 \emph{眾包回報}、\emph{即時氣象}、\emph{校園路網最佳化}與\emph{數據儀表板}，把分散在校園各角落的積水、漏水、淹水資訊集中視覺化，並進一步轉化為「下一步該怎麼走、該怎麼避」的具體建議。
 
-不同於傳統紙本問卷或單向公告，本平台採取\textbf{雙向數據迴圈}：使用者回報的問題會即時影響其他人的雨天路徑規劃；\emph{校方管理端}可從儀表板與 CSV 匯出觀察高風險點，作為改善決策依據。
-全站共 6 個主要頁面、10 個 Node.js API Routes，整合 3 項外部資料源，路徑規劃部分以 Dijkstra（雙層 GeoJSON 路網，6{,}133 節點、7{,}248 條邊）即時計算最低淋雨成本。
+不同於傳統紙本問卷或單向公告，本平台採取\textbf{雙向數據迴圈}：使用者回報的問題會即時影響其他人的雨天路徑規劃；\emph{校方管理端}可從儀表板、AI 管理摘要與 CSV 匯出觀察高風險點，作為改善決策依據。
+全站共 6 個主要頁面、11 個 Node.js API Routes，整合 3 項外部公開資料源與 Gemini AI API，路徑規劃部分以 Dijkstra（雙層 GeoJSON 路網，6{,}133 節點、7{,}248 條邊）即時計算最低淋雨成本。
 
 \begin{infobox}
 \textbf{\color{brandDeep}核心成果一覽}
@@ -216,7 +216,7 @@
 \begin{enumerate}
 \item \textbf{回報沒人理}：傳統表單填了之後不知道有沒有人看 $\Rightarrow$ 用\emph{眾包確認機制（still\_exists / resolved）}讓社群相互驗證。
 \item \textbf{雨天還是用 Google Maps}：但 GMaps 不知道椰林大道哪段有騎樓 $\Rightarrow$ 用\emph{OSM 抓的密集路網} + \emph{雨勢加權 Dijkstra} 給出真正避雨的走法。
-\item \textbf{看數據的人不在地圖前}：校方需要的是趨勢與排行 $\Rightarrow$ 用\emph{14 天趨勢 + 風險分數排行 + 處理 SLA} 的儀表板。
+\item \textbf{看數據的人不在地圖前}：校方需要的是趨勢與排行，也需要一句能直接決策的摘要 $\Rightarrow$ 用\emph{14 天趨勢 + 風險分數排行 + 處理 SLA + AI 管理分析} 的儀表板。
 \end{enumerate}
 \end{warnbox}
 
@@ -267,7 +267,7 @@
 
 % ── Lane tags (right-side, vertical-centered with each band) ──
 \node[lanetag=brand!70!black]    at (16.7, \yClient) {Client \\ \scriptsize\color{mute}\textmd{6 個頁面}};
-\node[lanetag=brandDeep!70]      at (16.7, \yApi)    {API \\ \scriptsize\color{mute}\textmd{10 endpoints}};
+\node[lanetag=brandDeep!70]      at (16.7, \yApi)    {API \\ \scriptsize\color{mute}\textmd{11 endpoints}};
 \node[lanetag=accent!50!black]   at (16.7, \yLogic)  {Logic \\ \scriptsize\color{mute}\textmd{演算法}};
 \node[lanetag=accent!50!black]   at (16.7, \yData)   {Data \\ \scriptsize\color{mute}\textmd{內部儲存}};
 \node[lanetag=warn!60!black]     at (16.7, \ySource) {Source \\ \scriptsize\color{mute}\textmd{外部 API}};
@@ -282,13 +282,13 @@
 
 % ── Layer 2: API Routes ──
 \node[api] (apibox) at (7.95, \yApi) {%
-  \textbf{Next.js API Routes}（10 endpoints, server-side）\\[1pt]
-  \texttt{/api/\{reports, route, forecast, weather, stats, water-stations, path-geometry\}}
+  \textbf{Next.js API Routes}（11 endpoints, server-side）\\[1pt]
+  \texttt{/api/\{reports, route, forecast, weather, stats, dashboard/ai-insights, water-stations\}}
 };
 
 % ── Layer 3: Algorithm ──
 \node[algo] (algobox) at (7.95, \yLogic) {%
-  \textbf{演算法層}\;\;Dijkstra (denseGraph) $\cdot$ Risk Score $\cdot$ 90 天熱力預測 $\cdot$ Mock/Real 切換
+  \textbf{演算法層}\;\;Dijkstra $\cdot$ Risk Score $\cdot$ 90 天熱力預測 $\cdot$ Gemini 摘要 / 本機 fallback
 };
 
 % ── Layer 4: Internal Data ──
@@ -330,7 +330,7 @@
    \tikz{\draw[arrext] (0,0) -- (0.55,0);}\;\;外部 API（透過 server proxy）};
 
 \end{tikzpicture}
-\caption{系統五層架構（Swim-lane 視覺化）：Client 6 個頁面 → API Routes 10 endpoints → 演算法層 → 內部資料（GeoJSON / Mock / LocalStorage）→ 外部資料源（OSM / 北水處 / CWA）。實線=內部呼叫，虛線=外部 API。\texttt{/me} 直連 LocalStorage 不經 server 以保護隱私。}
+\caption{系統五層架構（Swim-lane 視覺化）：Client 6 個頁面 → API Routes 11 endpoints → 演算法層 → 內部資料（GeoJSON / Mock / LocalStorage）→ 外部資料源（OSM / 北水處 / CWA）與 Gemini AI API。實線=內部呼叫，虛線=外部 API。\texttt{/me} 直連 LocalStorage 不經 server 以保護隱私。}
 \end{figure}
 
 
@@ -424,18 +424,21 @@
 
 儀表板\textbf{不是 markers 的條形圖版}，而是設計給「\emph{校方總務處決策者}」看的：\textbf{解決率}、\textbf{平均處理天數}、\textbf{WoW 變化}（本週 vs 上週）、\textbf{飲水機 SLA}（故障件 / 待換濾心件） —— 都是直接對應 KPI 的指標。資料完全由 \texttt{/api/stats} 即時聚合，零快取，方便 demo 時 console 改 mock 立即生效。
 
+最新版本進一步加入 \textbf{AI 管理分析助理}：\texttt{/api/dashboard/ai-insights} 會先用本機規則引擎計算可信的異常偵測與維修優先序，再於 server-side 呼叫 Gemini API 產生管理摘要。若沒有設定 \texttt{GEMINI\_API\_KEY} 或 Gemini 暫時失敗，系統會自動 fallback 到本機分析，因此 demo 不會因外部 AI 服務中斷而空白。
+
 \begin{figure}[H]\centering
 \includegraphics[width=0.96\linewidth]{screens/dashboard.png}
 \caption{儀表板上半部：4 張 KPI 卡（總回報、處理中、飲水機健康率、寶特瓶減塑）、14 天每日新增、嚴重度分布、類別／處理狀態。下方還有高風險排行與飲水機健康度。}
 \end{figure}
 
 \begin{infobox}
-\textbf{\color{brandDeep}儀表板核心 KPI（給校方決策層看）}
+\textbf{\color{brandDeep}儀表板核心 KPI 與 AI 分析（給校方決策層看）}
 \begin{itemize}
 \item \textbf{總回報數} 與 \textbf{WoW 變化}：本週相比上週是急升還是趨緩？$\uparrow 200\,\%$ 直接觸發人力盤點。
 \item \textbf{處理中件數} 與 \textbf{高嚴重度子集}：判斷積壓量；嚴重件需獨立處理流程。
 \item \textbf{飲水機運作率}（健康件 / 總件）+ \textbf{累積減塑寶特瓶}：定期向永續長報告的 ESG 指標。
 \item \textbf{14 天日新增趨勢線}：早期辨識梅雨季 onset。
+\item \textbf{AI 管理摘要}：自動生成「本週回報增加、集中地點、異常原因、建議處理順序」等自然語言說明，並輸出可下載的維修優先序 CSV。
 \end{itemize}
 \end{infobox}
 
@@ -443,12 +446,13 @@
 
 \subsection{個人成績單 \texttt{/me} — 把回報遊戲化}
 
-設計動機：\textbf{回報意願是專案存活的關鍵}。我們把抽象的「\emph{做好事}」轉化為立即可見的回饋 —— 連續打卡天數（Streak）、行動分數（4 維加權）、徽章解鎖、社群分享文。
+設計動機：\textbf{回報意願是專案存活的關鍵}。我們把抽象的「\emph{做好事}」轉化為立即可見的回饋 —— 連續打卡天數（Streak）、行動分數（4 維加權）、徽章解鎖、社群分享文與可下載的個人成績單。
 14 枚徽章橫跨「\textbf{連續打卡}」「\textbf{飲水機 / 減塑}」「\textbf{通勤路線}」「\textbf{校園回報}」四個行為類別，從新手「\emph{初次入坑}」到極限「\emph{一年水文皇帝}」（連續打卡 365 天），涵蓋短期與長期動機。
+最新版本加入 \textbf{Share Report Card}：使用者可將目前成績轉成 1080 $\times$ 1350 的社群分享圖、匯出 PDF，或用 Web Share API 分享文字。若使用者尚未累積足夠本機紀錄，頁面會先顯示一組 demo profile，讓分享功能在期末展示時不會是空白狀態；一旦開始打卡、裝水或回報，即自動切回真實 LocalStorage 資料。
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.96\linewidth]{screens/me.png}
-\caption{個人成績單畫面：段位（水文學徒 → 水文大師）、4 格累積成績（連續打卡、飲水機+1、通勤路線、校園回報）、14 枚徽章牆（4 大類別）。所有資料純本機儲存（LocalStorage），零追蹤。}
+\caption{個人成績單畫面：段位（水文學徒 → 水文大師）、4 格累積成績（連續打卡、飲水機+1、通勤路線、校園回報）、14 枚徽章牆與分享卡。所有真實使用紀錄純本機儲存（LocalStorage），零追蹤。}
 \end{figure}
 
 \begin{infobox}
@@ -504,6 +508,8 @@
 分數 $\geq 9$ 標記為\textcolor{danger}{\textbf{高風險}}、$\geq 4$ 為\textcolor{warn}{\textbf{中風險}}、其餘為低風險。
 這套規則直覺、無需 ML、可解釋 —— 校方看數據時可立即理解「為什麼這個地點上榜」。
 
+\textbf{AI 管理分析層}則建立在上述可解釋分數之上，而不是取代它。系統先由 \texttt{dashboardAi.ts} 產生 deterministic fallback：週比異常、熱點集中、逾期案件、飲水機健康度下降、維修優先序與 CSV 欄位；接著才交給 Gemini API 改寫成管理者可讀的摘要與月報。這樣兼顧了 AI 的文字整理能力與工程系統的穩定性。
+
 % \clearpage
 
 % ═══════════════════════════════════════════════════════
@@ -511,7 +517,7 @@
 % ═══════════════════════════════════════════════════════
 \section{資料來源整合}
 
-本平台整合\textbf{三項外部公開資料}與\textbf{兩項內部資料}：
+本平台整合\textbf{三項外部公開資料}、\textbf{一項外部 AI API} 與\textbf{兩項內部資料}：
 
 \begin{table}[H]
 \centering
@@ -524,12 +530,13 @@
 OpenStreetMap & 地理路網（Overpass） & 抓取台大校內所有 \texttt{highway=footway/path/service}，產生 6{,}133 節點路網；用 \texttt{indoor/tunnel/arcade} 推論遮蔽率。\\
 中央氣象署 OpenData & 即時氣象 & 觀測 \texttt{O-A0003-001} + 預報 \texttt{F-D0047-061}，抓取大安區雨量、降雨機率、氣溫、濕度。無 \texttt{CWA\_API\_KEY} 時 fallback 至 mock。\\
 北水處 OpenData & 飲水機水質 & 與 OSM \texttt{amenity=drinking\_water} 點位融合（\texttt{source: osm / official / merged}），含水質採樣時間與官方狀態。\\
+Gemini API & AI 摘要生成 & \texttt{/api/dashboard/ai-insights} server-side 呼叫，將儀表板統計、異常偵測與維修優先序改寫成管理摘要；無 \texttt{GEMINI\_API\_KEY} 時使用本機 fallback。\\
 \midrule
 內建 Mock Store & In-memory & demo 模式預設啟用，無 Supabase 也可完整跑通；冷啟動會 reset。\\
 LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章狀態純本機，零追蹤。\\
 \bottomrule
 \end{tabular}
-\caption{資料源整合一覽。所有外部 API 都由 server-side 代理（\texttt{/api/weather}、\texttt{/api/water-stations}），API key 不暴露在 client。}
+\caption{資料源整合一覽。所有外部 API 都由 server-side 代理（\texttt{/api/weather}、\texttt{/api/water-stations}、\texttt{/api/dashboard/ai-insights}），API key 不暴露在 client。}
 \end{table}
 
 % \subsection{部署與工程實踐}
@@ -537,7 +544,7 @@ LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章�
 % \begin{accentbox}
 % \textbf{\color{accent!50!black}工程亮點}
 % \begin{itemize}
-% \item \textbf{10 個 API Routes 全 Node runtime}：明確排除 GitHub Pages 等純靜態託管的可能性；選 Vercel hnd1 取得最低台日 RTT。
+% \item \textbf{11 個 API Routes 全 Node runtime}：明確排除 GitHub Pages 等純靜態託管的可能性；選 Vercel hnd1 取得最低台日 RTT。
 % \item \textbf{重資料 Server-Only}：3 MB 校園路網檔絕不送 client；使用 \texttt{dynamic(\{ssr:false\})} 處理 Leaflet 的 \texttt{window} 依賴。
 % \item \texttt{maxDuration:30s}：\texttt{/api/route} 與 \texttt{/api/forecast} 設置長 timeout 容納 Dijkstra 與 90 天熱力預測。
 % \item \textbf{Mock / Real 雙模式}：環境變數一鍵切換，期末展示時零配置上線。
@@ -558,6 +565,7 @@ LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章�
 % \texttt{/api/reports/[id]} & PATCH\,/\,DELETE & 管理端修改狀態 / 加管理員 note / 刪除\\
 % \texttt{/api/reports/[id]/confirm} & POST & 眾包確認（\texttt{still\_exists} / \texttt{resolved}）\\
 % \texttt{/api/stats} & GET & 儀表板聚合（KPI + 趨勢 + 排行 + 飲水機 SLA）\\
+% \texttt{/api/dashboard/ai-insights} & GET & Gemini / fallback 管理摘要、異常偵測、維修優先序與 CSV rows\\
 % \texttt{/api/weather} & GET & CWA OpenData 代理，金鑰 server-side 保護\\
 % \texttt{/api/route} & POST & 雨天 Dijkstra；起終點 + mode + avoidWater\\
 % \texttt{/api/forecast} & GET & 1 / 3 / 6 小時積水機率格網\\
@@ -586,7 +594,7 @@ LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章�
 \section{結論與未來工作}
 
 本專題完成了一套\textbf{可上線、可擴充、有實證價值}的校園水資源 web app，
-不只是課堂作業 demo，而是已部署於 Vercel、有 6 個頁面、10 個 API、整合 3 個外部資料源的\emph{產品級實作}。
+不只是課堂作業 demo，而是已部署於 Vercel、有 6 個頁面、11 個 API、整合 3 個外部公開資料源與 Gemini AI API 的\emph{產品級實作}。
 我們把「水資源管理」這個傳統工程議題，重新詮釋為「\emph{資料 + 介面 + 行為}」的三層問題，
 並用最務實的技術組合 —— Next.js + Leaflet + OSM + Dijkstra —— 做出可立即使用的工具。
 
@@ -596,6 +604,7 @@ LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章�
 \item \textbf{接入 NTU SSO 或 Magic Link}：取代目前的密碼登入，提升管理端安全性。
 \item \textbf{推播通知}：當使用者通勤路線上出現新積水回報，主動推送 Web Push。
 \item \textbf{歷史趨勢回放}：把 90 天熱力預測加上 timeline scrubber，可回看 1 個月前的某天校園水情。
+\item \textbf{AI 分析擴充}：目前 Gemini 主要負責管理摘要與維修優先序；未來可加入 embedding 合併相似回報、偵測重複案件，並讓月報自動附上「本月改善前後」對照。
 \item \textbf{ML 路徑預測}：當回報數 $> 1{,}000$ 時，可嘗試以 LightGBM 取代手動係數，預測「未來 1 小時哪段路會出現新積水」。
 \item \textbf{校方 API 對接}：與台大總務處事務組系統 API 串接，已解決的回報自動同步。
 \end{enumerate}
