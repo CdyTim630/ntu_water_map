@@ -189,7 +189,7 @@
 \section{摘要}
 
 本專題以「水資源問題」為核心，為台大師生開發一套\textbf{校園即時水情平台} —— 結合
-\emph{眾包回報}、\emph{即時氣象}、\emph{校園路網最佳化}與\emph{數據儀表板}，把分散在校園各角落的積水、漏水、淹水資訊集中視覺化，並進一步轉化為「下一步該怎麼走、該怎麼避」的具體建議。
+\emph{社群回報}、\emph{即時氣象}、\emph{校園路網最佳化}與\emph{數據儀表板}，把分散在校園各角落的積水、漏水、淹水資訊集中視覺化，並進一步轉化為「下一步該怎麼走、該怎麼避」的具體建議。
 
 不同於傳統紙本問卷或單向公告，本平台採取\textbf{雙向數據迴圈}：使用者回報的問題會即時影響其他人的雨天路徑規劃；\emph{校方管理端}可從儀表板、AI 管理摘要與 CSV 匯出觀察高風險點，作為改善決策依據。
 全站共 6 個主要頁面、11 個 Node.js API Routes，整合 3 項外部公開資料源與 Gemini AI API，路徑規劃部分以 Dijkstra（雙層 GeoJSON 路網，6{,}133 節點、7{,}248 條邊）即時計算最低淋雨成本。
@@ -200,7 +200,7 @@
 \item \textbf{6 頁面}：地圖首頁、雨天路徑、水災預警、儀表板、個人成績單、管理後台
 \item \textbf{4 大問題類別}：淹水 / 積水 / 設施漏水 / 排水不良；3 級嚴重度與 4 種處理狀態
 \item \textbf{路徑演算法}：以 OSM tags 推論遮蔽率（\texttt{indoor/tunnel/covered/arcade}），雨大時可在僅多走 $\sim$50 m 的條件下將遮蔽率提升 30\,\%+
-\item \textbf{眾包飲水機地圖}：融合 OSM 社群 + 北水處官方 OpenData，26 台校內飲水機可即時報修、+1 減塑
+\item \textbf{社群飲水機地圖}：融合 OSM 社群 + 北水處官方 OpenData，26 台校內飲水機可即時報修、+1 減塑
 \item \textbf{減塑量化}：每 +1 換算為一個 600 mL 寶特瓶與 14 g CO\textsubscript{2}\,e 節省量
 \end{itemize}
 \end{infobox}
@@ -214,7 +214,7 @@
 \begin{warnbox}
 \textbf{\color{warn!70!black}三個底層問題與解法}
 \begin{enumerate}
-\item \textbf{回報沒人理}：傳統表單填了之後不知道有沒有人看 $\Rightarrow$ 用\emph{眾包確認機制（still\_exists / resolved）}讓社群相互驗證。
+\item \textbf{回報沒人理}：傳統表單填了之後不知道有沒有人看 $\Rightarrow$ 用\emph{社群確認機制（still\_exists / resolved）}讓使用者相互驗證。
 \item \textbf{雨天還是用 Google Maps}：但 GMaps 不知道椰林大道哪段有騎樓 $\Rightarrow$ 用\emph{OSM 抓的密集路網} + \emph{雨勢加權 Dijkstra} 給出真正避雨的走法。
 \item \textbf{看數據的人不在地圖前}：校方需要的是趨勢與排行，也需要一句能直接決策的摘要 $\Rightarrow$ 用\emph{14 天趨勢 + 風險分數排行 + 處理 SLA + AI 管理分析} 的儀表板。
 \end{enumerate}
@@ -377,7 +377,7 @@
 \item \textbf{今日水情報（Today Briefing）}：根據即時氣象在頁面頂端動態生成「不必擔心」「準備雨具」「強烈建議帶傘」等口語化提示。
 \item \textbf{雙層 markers 圖層切換}：可獨立顯示／隱藏 26 台飲水機與校園水資源回報，避免視覺擁擠。
 \item \textbf{高風險地點排行（Risk Ranking）}：依分組座標計算 \texttt{risk\_score = reports$\times$2 + high$\times$3 + recent7d$\times$2}，點擊即跳到地圖該位置。
-\item \textbf{回報眾包確認}：每筆 report 支援「\emph{還在}」「\emph{已解決}」雙向投票，自動更新 \texttt{upvote\_count} / \texttt{resolved\_count}。
+\item \textbf{回報社群確認}：每筆 report 支援「\emph{還在}」「\emph{已解決}」雙向投票，自動更新 \texttt{upvote\_count} / \texttt{resolved\_count}。
 \end{itemize}
 \end{infobox}
 
@@ -474,14 +474,7 @@
 
 \subsection{校園路網建構：從 OSM 到 Dijkstra-Ready Graph}
 
-最大的工程挑戰是\textbf{真實校園路網}從哪裡來。校內的 22 個地標可以手寫，但「校門口走到綜合體育館」要經過哪些 OSM \texttt{highway=footway} 才不會穿牆？我們用 \texttt{scripts/build-dense-graph.mjs} 透過 Overpass API 抓取台大校園 bounding box 內所有 \texttt{highway} tagged ways。
-
-\begin{techbox}
-\textbf{雙層 GeoJSON 設計}
-\begin{itemize}
-\item \texttt{src/data/campus.geojson}：22 個\textbf{有名稱的地標}（校門口、傅鐘、共教、活大 \ldots）—— 給 UI start/end 下拉選單用。
-\item \texttt{src/data/campus-paths.geojson}：6{,}133 個路徑節點、7{,}248 條邊的\textbf{密集路網}（$\approx$ 3 MB），僅在 server-side 載入。
-\end{itemize}
+路網由 \texttt{scripts/build-dense-graph.mjs} 透過 Overpass API 抓取台大 bounding box 內所有 \texttt{highway} ways，再轉成 Dijkstra 可用的 graph。資料分成兩層：\texttt{campus.geojson} 保存 22 個具名地標供 UI 選單使用；\texttt{campus-paths.geojson} 保存 6{,}133 節點、7{,}248 邊的密集路網（$\approx$3 MB），只在 server-side 載入，避免拖慢 client。
 
 % \textbf{邊權標註規則}（從 OSM tags 推論）
 % \begin{itemize}
@@ -490,13 +483,10 @@
 % \item 手動 override 區：椰林大道兩側、行政大樓迴廊、活大周邊
 % \item 易積水區（\texttt{lowLying}）：小椰林道、醉月湖、總圖前廣場、舟山路低處
 % \end{itemize}
-\end{techbox}
 
 \subsection{加權 Dijkstra 與動態回報整合}
 
-\textbf{Dijkstra 實作}：使用 priority queue 的 $O((V+E)\log V)$ 標準版本，但在 cost function 中即時讀取「目前 active 的 \texttt{flooding} / \texttt{standing\_water} 回報」並施加懲罰。\textbf{亦即：使用者剛在地圖回報的積水，下一個雨天規劃路徑的同學就會自動繞開。}
-
-效益：在中度雨勢（$r=0.6$）下，\emph{防雨建議路徑}相較\emph{最短路徑}可達遮蔽率提升 $\sim$30\,\%，但只多走 $\sim$50 m。$r$ 為 0 時兩者重疊（不下雨就不繞）。
+\textbf{Dijkstra 實作}使用 priority queue，時間複雜度為 $O((V+E)\log V)$。cost function 同時讀取 OSM 遮蔽標籤（\texttt{indoor/tunnel/covered/arcade}）、雨勢係數 $r$，以及 active 的 \texttt{flooding} / \texttt{standing\_water} 回報；雨越大，系統越願意繞去有騎樓或室內走廊的路。中度雨勢（$r=0.6$）下，防雨路徑相較最短路徑可提升遮蔽率 $\sim$30\,\%，僅多走 $\sim$50 m；$r=0$ 時兩者重疊。
 
 \subsection{Risk Score 與儀表板聚合}
 
@@ -505,10 +495,7 @@
 \mathrm{risk\_score} = \mathrm{report\_count} \times 2 + \mathrm{high\_severity\_count} \times 3 + \mathrm{recent\_7d\_count} \times 2
 \]
 
-分數 $\geq 9$ 標記為\textcolor{danger}{\textbf{高風險}}、$\geq 4$ 為\textcolor{warn}{\textbf{中風險}}、其餘為低風險。
-這套規則直覺、無需 ML、可解釋 —— 校方看數據時可立即理解「為什麼這個地點上榜」。
-
-\textbf{AI 管理分析層}則建立在上述可解釋分數之上，而不是取代它。系統先由 \texttt{dashboardAi.ts} 產生 deterministic fallback：週比異常、熱點集中、逾期案件、飲水機健康度下降、維修優先序與 CSV 欄位；接著才交給 Gemini API 改寫成管理者可讀的摘要與月報。這樣兼顧了 AI 的文字整理能力與工程系統的穩定性。
+分數 $\geq 9$ 標記為\textcolor{danger}{\textbf{高風險}}、$\geq 4$ 為\textcolor{warn}{\textbf{中風險}}，其餘為低風險。AI 管理分析層不取代此規則，而是先由 \texttt{dashboardAi.ts} 產生 deterministic fallback（異常、熱點、逾期案件、飲水機健康度、維修優先序與 CSV 欄位），再交給 Gemini API 改寫成管理摘要與月報。
 
 % \clearpage
 
@@ -521,21 +508,21 @@
 
 \begin{table}[H]
 \centering
-\small
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{@{}p{3.2cm}p{3.2cm}p{10cm}@{}}
+\footnotesize
+\renewcommand{\arraystretch}{1.16}
+\begin{tabularx}{\linewidth}{@{}p{2.75cm}p{2.65cm}X@{}}
 \toprule
 \textbf{資料源} & \textbf{類型} & \textbf{用途與處理}\\
 \midrule
-OpenStreetMap & 地理路網（Overpass） & 抓取台大校內所有 \texttt{highway=footway/path/service}，產生 6{,}133 節點路網；用 \texttt{indoor/tunnel/arcade} 推論遮蔽率。\\
-中央氣象署 OpenData & 即時氣象 & 觀測 \texttt{O-A0003-001} + 預報 \texttt{F-D0047-061}，抓取大安區雨量、降雨機率、氣溫、濕度。無 \texttt{CWA\_API\_KEY} 時 fallback 至 mock。\\
-北水處 OpenData & 飲水機水質 & 與 OSM \texttt{amenity=drinking\_water} 點位融合（\texttt{source: osm / official / merged}），含水質採樣時間與官方狀態。\\
-Gemini API & AI 摘要生成 & \texttt{/api/dashboard/ai-insights} server-side 呼叫，將儀表板統計、異常偵測與維修優先序改寫成管理摘要；無 \texttt{GEMINI\_API\_KEY} 時使用本機 fallback。\\
+OpenStreetMap & 地理路網（Overpass） & 抓取校內 \texttt{highway=footway/path/service} 產生 6{,}133 節點路網，並以 \texttt{indoor/tunnel/arcade} 推論遮蔽率。\\
+中央氣象署 OpenData & 即時氣象 & 觀測 \texttt{O-A0003-001} 與預報 \texttt{F-D0047-061} 提供雨量、降雨機率、溫溼度；無 \texttt{CWA\_API\_KEY} 時 fallback 至 mock。\\
+北水處 OpenData & 飲水機水質 & 與 OSM \texttt{amenity=drinking\_water} 融合（\texttt{source: osm / official / merged}），保留採樣時間與官方狀態。\\
+Gemini API & AI 摘要生成 & \texttt{/api/dashboard/ai-insights} server-side 呼叫，將統計、異常與維修優先序改寫成管理摘要；無 key 時使用本機 fallback。\\
 \midrule
-內建 Mock Store & In-memory & demo 模式預設啟用，無 Supabase 也可完整跑通；冷啟動會 reset。\\
-LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章狀態純本機，零追蹤。\\
+內建 Mock Store & In-memory & demo 模式預設啟用，無 Supabase 也可跑通；冷啟動會 reset。\\
+LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章狀態留在本機，零追蹤。\\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \caption{資料源整合一覽。所有外部 API 都由 server-side 代理（\texttt{/api/weather}、\texttt{/api/water-stations}、\texttt{/api/dashboard/ai-insights}），API key 不暴露在 client。}
 \end{table}
 
@@ -563,7 +550,7 @@ LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章�
 % \midrule
 % \texttt{/api/reports} & GET\,/\,POST & 取得 / 新增水資源回報（含圖片上傳）\\
 % \texttt{/api/reports/[id]} & PATCH\,/\,DELETE & 管理端修改狀態 / 加管理員 note / 刪除\\
-% \texttt{/api/reports/[id]/confirm} & POST & 眾包確認（\texttt{still\_exists} / \texttt{resolved}）\\
+% \texttt{/api/reports/[id]/confirm} & POST & 社群確認（\texttt{still\_exists} / \texttt{resolved}）\\
 % \texttt{/api/stats} & GET & 儀表板聚合（KPI + 趨勢 + 排行 + 飲水機 SLA）\\
 % \texttt{/api/dashboard/ai-insights} & GET & Gemini / fallback 管理摘要、異常偵測、維修優先序與 CSV rows\\
 % \texttt{/api/weather} & GET & CWA OpenData 代理，金鑰 server-side 保護\\
@@ -575,6 +562,8 @@ LocalStorage（client） & 個人成績 & 連續打卡、行動分數、徽章�
 % \bottomrule
 % \end{tabular}
 % }
+
+
 
 % ═══════════════════════════════════════════════════════
 % 7. 設計 + 結論 + 參考（讓 LaTeX 自動接續，避免無謂空頁）

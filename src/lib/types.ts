@@ -114,7 +114,7 @@ export interface DashboardStats {
     normal: number;
     broken: number;
     filterDue: number;
-    /** 累積眾包減塑寶特瓶數 */
+    /** 累積使用者共同減塑寶特瓶數 */
     totalBottlesSaved: number;
     /** 故障清單 — 上限 5 筆，依 last_reported_at 排序 */
     brokenList: {
@@ -232,7 +232,7 @@ export interface WaterStation {
   last_reported_at: string | null;
   /** 累積回報次數（壞/修） */
   report_count: number;
-  /** 該飲水機今年已替使用者省下幾個 600ml 寶特瓶（眾包 +1）給 ESG 教育用 */
+  /** 該飲水機今年已替使用者省下幾個 600ml 寶特瓶（使用者 +1 累積）給 ESG 教育用 */
   bottles_saved: number;
   /** 資料來源 */
   source: WaterStationSource;

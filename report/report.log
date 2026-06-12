@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  5 JUN 2026 12:02
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.9.3)  12 JUN 2026 10:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1325,23 +1325,22 @@ File: screens/me.png Graphic file (type bmp)
  [7
 
 ]
-Underfull \hbox (badness 2351) in paragraph at lines 532--533
-[]|\TU/SourceHanSerifTW(0)/m/n/10 與 \TU/LatinModernRoman(0)/m/n/10 OSM \TU/Lati
-nModernMono(0)/m/n/10 amenity=drinking_water \TU/SourceHanSerifTW(0)/m/n/10 點 位
- 融 合  |（\TU/LatinModernMono(0)/m/n/10 source: osm /
+Underfull \hbox (badness 5475) in paragraph at lines 525--525
+[]|\TU/SourceHanSerifTW(0)/m/n/9 與 \TU/LatinModernRoman(0)/m/n/9 OSM \TU/LatinM
+odernMono(0)/m/n/9 amenity=drinking_water \TU/SourceHanSerifTW(0)/m/n/9 融 合  |（
+\TU/LatinModernMono(0)/m/n/9 source: osm / official /
  []
 
 
-Overfull \hbox (23.99997pt too wide) in paragraph at lines 526--539
- [][] 
+Underfull \hbox (badness 10000) in paragraph at lines 525--525
+[]|\TU/LatinModernRoman(0)/m/n/9 LocalStorage
  []
 
+LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/b/n' will be
+(Font)              scaled to size 9.85492pt on input line 576.
 [8
 
-]
-LaTeX Font Info:    Font shape `TU/LatinModernMono(0)/b/n' will be
-(Font)              scaled to size 9.85492pt on input line 587.
- [9] [10] (report.aux)
+] [9] (report.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/08/05>
@@ -1354,12 +1353,12 @@ Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: EA7F18D4B227EF4E2EA10BED80C9C13B;2985.
  ) 
 Here is how much of TeX's memory you used:
- 32215 strings out of 409617
- 732278 string characters out of 5774014
+ 32258 strings out of 409617
+ 734415 string characters out of 5774014
  1953191 words of memory out of 5000000
- 53831 multiletter control sequences out of 15000+600000
- 564511 words of font info for 122 fonts, out of 8000000 for 9000
+ 53867 multiletter control sequences out of 15000+600000
+ 565672 words of font info for 129 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  84i,18n,93p,418b,1251s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on report.xdv (11 pages, 212528 bytes).
+Output written on report.xdv (10 pages, 205848 bytes).
